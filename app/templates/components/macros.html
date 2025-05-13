@@ -1,0 +1,135 @@
+<!-- templates/components/macros.html -->
+
+{% macro inner_page_hero(
+    title,
+    subtitle=None,
+    description=None,
+    background_image=None,
+    primary_button_text=None,
+    primary_button_link=None,
+    secondary_button_text=None,
+    secondary_button_link=None,
+    breadcrumbs=[]
+) %}
+<section class="relative overflow-hidden pt-20">
+  <!-- Background image with overlay -->
+  <div class="absolute inset-0 z-0">
+    <img 
+      src="{{ background_image or url_for('static', filename='img/default-hero-bg.jpg') }}" 
+      alt="{{ title }}" 
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-[#003366]/90 to-[#003366]/70"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="container mx-auto px-4 py-16 md:py-24 relative z-10">
+    <div class="max-w-3xl">
+      <!-- Breadcrumb -->
+      {% if breadcrumbs %}
+        <div 
+          class="flex items-center gap-2 text-white/80 mb-6 opacity-0 translate-y-6"
+          x-data="{}"
+          x-init="setTimeout(() => {
+            $el.classList.add('opacity-100', 'translate-y-0');
+            $el.classList.remove('opacity-0', 'translate-y-6');
+          }, 100)"
+          class="transition-all duration-500"
+        >
+          <a href="/" class="hover:text-[#2D8C9E] transition-colors">Home</a>
+          {% for crumb in breadcrumbs %}
+            <div class="flex items-center">
+              <span class="mx-2 text-white/60">/</span>
+              {% if loop.last %}
+                <span class="text-white">{{ crumb.label }}</span>
+              {% else %}
+                <a 
+                  href="{{ crumb.link }}" 
+                  class="hover:text-[#2D8C9E] transition-colors"
+                >
+                  {{ crumb.label }}
+                </a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+      <!-- Main heading -->
+      <h1 
+        class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 opacity-0 translate-y-6"
+        x-data="{}"
+        x-init="setTimeout(() => {
+          $el.classList.add('opacity-100', 'translate-y-0');
+          $el.classList.remove('opacity-0', 'translate-y-6');
+        }, 200)"
+        class="transition-all duration-500"
+      >
+        {{ title }}
+      </h1>
+      
+      <!-- Subtitle -->
+      {% if subtitle %}
+        <div 
+          class="inline-block px-4 py-1 rounded-full mb-6 bg-[#2D8C9E] text-white opacity-0 translate-y-6"
+          x-data="{}"
+          x-init="setTimeout(() => {
+            $el.classList.add('opacity-100', 'translate-y-0');
+            $el.classList.remove('opacity-0', 'translate-y-6');
+          }, 300)"
+          class="transition-all duration-500"
+        >
+          <span class="font-medium">{{ subtitle }}</span>
+        </div>
+      {% endif %}
+      
+      <!-- Description -->
+      {% if description %}
+        <p 
+          class="text-lg md:text-xl text-white/90 mb-8 leading-relaxed opacity-0 translate-y-6"
+          x-data="{}"
+          x-init="setTimeout(() => {
+            $el.classList.add('opacity-100', 'translate-y-0');
+            $el.classList.remove('opacity-0', 'translate-y-6');
+          }, 400)"
+          class="transition-all duration-500"
+        >
+          {{ description }}
+        </p>
+      {% endif %}
+      
+      <!-- Buttons -->
+      {% if primary_button_text or secondary_button_text %}
+        <div 
+          class="flex flex-wrap gap-4 opacity-0 translate-y-6"
+          x-data="{}"
+          x-init="setTimeout(() => {
+            $el.classList.add('opacity-100', 'translate-y-0');
+            $el.classList.remove('opacity-0', 'translate-y-6');
+          }, 500)"
+          class="transition-all duration-500"
+        >
+          {% if primary_button_text %}
+            <a 
+              href="{{ primary_button_link or '#' }}"
+              class="inline-block bg-[#D4AF37] text-[#003366] hover:bg-[#c29b2a] rounded-full px-6 py-3 font-medium shadow-md transition-colors"
+            >
+              {{ primary_button_text }}
+            </a>
+          {% endif %}
+          
+          {% if secondary_button_text %}
+            <a 
+              href="{{ secondary_button_link or '#' }}"
+              class="inline-flex items-center border border-white text-white hover:bg-white/20 rounded-full px-6 py-3 shadow-sm transition-colors"
+            >
+              {{ secondary_button_text }}
+              <i data-lucide="chevron-right" class="size-5 ml-2"></i>
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endmacro %}

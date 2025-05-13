@@ -23,4 +23,3 @@ class CMSClient:
             current_app.logger.error(f"CMS API Error: {str(e)}")
             return None
         
-    

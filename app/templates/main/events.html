@@ -1,0 +1,525 @@
+<!-- templates/main/events.html -->
+
+{% extends "base.html" %}
+{% from "components/macros.html" import inner_page_hero %}
+
+{% block title %}Events - Swahili Afro Jamboree{% endblock %}
+
+{% block content %}
+  <!-- Inner Page Hero -->
+  {{ inner_page_hero(
+    title="Celebrate Swahili Culture",
+    subtitle="Join Our Upcoming Events",
+    description="Connect with a global community of Swahili speakers and enthusiasts through our vibrant cultural events that showcase language, arts, cuisine, and traditions.",
+    background_image=url_for('static', filename='img/events-hero.jpg'),
+    primary_button_text="Register Now",
+    primary_button_link="#upcoming-events",
+    secondary_button_text="View Calendar",
+    secondary_button_link="#event-calendar",
+    breadcrumbs=[{ "label": "Events", "link": "/events" }]
+  ) }}
+
+  <!-- Introduction Section -->
+  <section class="py-16 md:py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-4">
+          Experience Swahili Culture Firsthand
+        </h2>
+        <p class="text-lg text-[#0F2B4C] mb-10">
+          Immerse yourself in the rich cultural heritage spanning East Africa and beyond
+        </p>
+        
+        <div class="text-left space-y-4">
+          <p class="text-[#0F2B4C]">
+            Swahili Afro Jamboree hosts a variety of events designed to celebrate, preserve, and promote Swahili language and culture. From our signature annual Jamboree to specialized conferences and cultural showcases, each event offers unique opportunities to experience authentic Swahili traditions, forge connections, and deepen cultural understanding.
+          </p>
+          <p class="text-[#0F2B4C]">
+            Our events bring together cultural practitioners, language experts, artists, culinary specialists, and community members from across the globe, creating spaces for meaningful exchange and celebration. Whether you're a fluent speaker, a cultural enthusiast, or simply curious about Swahili heritage, there's something for everyone in our diverse programming.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Showcase Section -->
+  <section id="upcoming-events" class="py-16 md:py-24 bg-[#F0F8FF]/50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#003366] mb-2 text-center">2025 Event Highlights</h2>
+        <p class="text-[#0F2B4C] text-center mb-12 max-w-3xl mx-auto">
+          Join us for these signature events celebrating Swahili culture, language, and community
+        </p>
+        
+        <div class="space-y-12">
+          {% for event in upcoming_events %}
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+              <div class="grid grid-cols-1 md:grid-cols-3">
+                <!-- Event Image -->
+                <div class="relative md:col-span-1">
+                  <img 
+                    src="{{ event.image }}" 
+                    alt="{{ event.title }}"
+                    class="w-full h-full object-cover"
+                    style="max-height: 300px"
+                  />
+                  <div class="absolute top-4 left-4">
+                    <span class="inline-block bg-[#D4AF37] text-[#003366] font-medium px-3 py-1 rounded-full text-sm">
+                      {{ event.tag }}
+                    </span>
+                  </div>
+                  {% if event.is_hybrid %}
+                    <div class="absolute bottom-4 left-4">
+                      <span class="inline-block bg-[#2D8C9E] text-white px-3 py-1 rounded-full text-sm">
+                        In-Person & Virtual
+                      </span>
+                    </div>
+                  {% endif %}
+                </div>
+                
+                <!-- Event Details -->
+                <div class="p-6 md:col-span-2">
+                  <h3 class="text-2xl font-bold text-[#003366] mb-2">{{ event.title }}</h3>
+                  
+                  <div class="flex flex-wrap gap-4 mb-4">
+                    <div class="flex items-center gap-1 text-[#0F2B4C]">
+                      <i data-lucide="calendar" class="size-4 text-[#2D8C9E]"></i>
+                      <span>{{ event.date }}</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-[#0F2B4C]">
+                      <i data-lucide="clock" class="size-4 text-[#2D8C9E]"></i>
+                      <span>{{ event.time }}</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-[#0F2B4C]">
+                      <i data-lucide="map-pin" class="size-4 text-[#2D8C9E]"></i>
+                      <span>{{ event.location }}</span>
+                    </div>
+                  </div>
+                  
+                  <p class="text-[#0F2B4C] mb-4">{{ event.description }}</p>
+                  
+                  <div class="mb-6">
+                    <p class="text-sm font-medium text-[#0F2B4C] mb-2">Event Features:</p>
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {% for feature in event.features %}
+                        <li class="flex items-start gap-2">
+                          <i data-lucide="check-circle" class="size-4 text-[#2D8C9E] mt-1 flex-shrink-0"></i>
+                          <span class="text-sm text-[#0F2B4C]">{{ feature }}</span>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  
+                  <p class="text-sm text-[#0F2B4C] mb-4">
+                    <span class="font-medium">Location: </span>
+                    {{ event.location_detail }}
+                  </p>
+                  
+                  <div class="flex flex-wrap gap-3">
+                    <a href="/events/register/{{ event.id }}" class="inline-block bg-[#003366] text-white hover:bg-[#0A4380] rounded-full py-2 px-4 shadow-sm transition-colors">
+                      Register Now
+                    </a>
+                    <a href="/events/{{ event.id }}" class="inline-block border border-[#2D8C9E] text-[#003366] hover:bg-[#F0F8FF] rounded-full py-2 px-4 transition-colors">
+                      Event Details
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Participation Section -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#003366] mb-2 text-center">How to Participate</h2>
+        <p class="text-[#0F2B4C] text-center mb-12 max-w-3xl mx-auto">
+          Multiple ways to engage with our events and be part of the Swahili cultural movement
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Attend in Person -->
+          <div class="bg-[#F0F8FF] hover:shadow-md transition-shadow rounded-lg overflow-hidden">
+            <div class="p-6">
+              <div class="w-12 h-12 rounded-full bg-[#003366]/10 flex items-center justify-center mb-4">
+                <i data-lucide="ticket" class="size-6 text-[#003366]"></i>
+              </div>
+              <h3 class="text-xl font-bold text-[#003366] mb-2">Attend in Person</h3>
+              <p class="text-[#0F2B4C] text-sm">
+                Register through our secure online platform to reserve your spot at any of our physical events. Early registration is recommended as spaces are limited for some venues.
+              </p>
+            </div>
+            <div class="px-6 pb-6">
+              <a href="/events/register" class="block w-full text-center py-2 bg-white text-[#003366] hover:bg-[#003366] hover:text-white border border-[#003366] rounded-full transition-colors">
+                Register
+              </a>
+            </div>
+          </div>
+          
+          <!-- Join Virtually -->
+          <div class="bg-[#F0F8FF] hover:shadow-md transition-shadow rounded-lg overflow-hidden">
+            <div class="p-6">
+              <div class="w-12 h-12 rounded-full bg-[#003366]/10 flex items-center justify-center mb-4">
+                <i data-lucide="globe" class="size-6 text-[#003366]"></i>
+              </div>
+              <h3 class="text-xl font-bold text-[#003366] mb-2">Join Virtually</h3>
+              <p class="text-[#0F2B4C] text-sm">
+                Many of our events offer livestreaming and interactive online components. Virtual registrants receive access links and digital materials prior to the event.
+              </p>
+            </div>
+            <div class="px-6 pb-6">
+              <a href="/events/virtual" class="block w-full text-center py-2 bg-white text-[#003366] hover:bg-[#003366] hover:text-white border border-[#003366] rounded-full transition-colors">
+                Virtual Access
+              </a>
+            </div>
+          </div>
+          
+          <!-- Volunteer -->
+          <div class="bg-[#F0F8FF] hover:shadow-md transition-shadow rounded-lg overflow-hidden">
+            <div class="p-6">
+              <div class="w-12 h-12 rounded-full bg-[#003366]/10 flex items-center justify-center mb-4">
+                <i data-lucide="users" class="size-6 text-[#003366]"></i>
+              </div>
+              <h3 class="text-xl font-bold text-[#003366] mb-2">Volunteer</h3>
+              <p class="text-[#0F2B4C] text-sm">
+                Help make our events successful by volunteering. We need assistance with event coordination, translation, hosting, and more. Volunteers receive special recognition and benefits.
+              </p>
+            </div>
+            <div class="px-6 pb-6">
+              <a href="/volunteer" class="block w-full text-center py-2 bg-white text-[#003366] hover:bg-[#003366] hover:text-white border border-[#003366] rounded-full transition-colors">
+                Join Our Team
+              </a>
+            </div>
+          </div>
+          
+          <!-- Sponsor -->
+          <div class="bg-[#F0F8FF] hover:shadow-md transition-shadow rounded-lg overflow-hidden">
+            <div class="p-6">
+              <div class="w-12 h-12 rounded-full bg-[#003366]/10 flex items-center justify-center mb-4">
+                <i data-lucide="external-link" class="size-6 text-[#003366]"></i>
+              </div>
+              <h3 class="text-xl font-bold text-[#003366] mb-2">Sponsor</h3>
+              <p class="text-[#0F2B4C] text-sm">
+                Support Swahili cultural promotion by becoming an event sponsor or partner organization. Various sponsorship levels are available with corresponding recognition and benefits.
+              </p>
+            </div>
+            <div class="px-6 pb-6">
+              <a href="/partnership" class="block w-full text-center py-2 bg-white text-[#003366] hover:bg-[#003366] hover:text-white border border-[#003366] rounded-full transition-colors">
+                Partnership Info
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendar Section -->
+  <section id="event-calendar" class="py-16 md:py-24 bg-[#F0F8FF]/70" x-data="{
+    viewMode: 'calendar',
+    currentMonth: 6, // July (0-indexed)
+    currentYear: 2025,
+    months: [
+      'January', 'February', 'March', 'April', 'May', 'June', 
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ],
+    eventDates: {
+      '2025-7-5': { event: 'EAKC Conference Day 1', id: 2 },
+      '2025-7-6': { event: 'EAKC Conference Day 2', id: 2 },
+      '2025-7-7': { event: 'World Kiswahili Day / EAKC Day 3', id: 1 },
+      '2025-8-15': { event: 'Swahili Jamboree Gathering', id: 3 }
+    },
+    
+    get daysInMonth() {
+      return new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+    },
+    
+    get firstDayOfMonth() {
+      return new Date(this.currentYear, this.currentMonth, 1).getDay();
+    },
+    
+    previousMonth() {
+      if (this.currentMonth === 0) {
+        this.currentMonth = 11;
+        this.currentYear--;
+      } else {
+        this.currentMonth--;
+      }
+    },
+    
+    nextMonth() {
+      if (this.currentMonth === 11) {
+        this.currentMonth = 0;
+        this.currentYear++;
+      } else {
+        this.currentMonth++;
+      }
+    },
+    
+    getEventsForDate(day) {
+      const dateKey = `${this.currentYear}-${this.currentMonth + 1}-${day}`;
+      return this.eventDates[dateKey] || null;
+    }
+  }">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#003366] mb-2 text-center">Event Calendar</h2>
+        <p class="text-[#0F2B4C] text-center mb-8 max-w-3xl mx-auto">
+          Plan your participation in our upcoming events
+        </p>
+        
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <!-- Calendar Controls -->
+          <div class="flex justify-between items-center p-4 border-b border-gray-100">
+            <div class="flex gap-2">
+              <button 
+                @click="viewMode = 'calendar'" 
+                :class="`px-4 py-2 rounded-full border ${viewMode === 'calendar' ? 'bg-[#003366] text-white' : 'text-[#003366] border-[#003366]'}`"
+              >
+                Calendar View
+              </button>
+              <button 
+                @click="viewMode = 'list'" 
+                :class="`px-4 py-2 rounded-full border ${viewMode === 'list' ? 'bg-[#003366] text-white' : 'text-[#003366] border-[#003366]'}`"
+              >
+                List View
+              </button>
+            </div>
+            
+            <div class="flex items-center gap-4">
+              <button 
+                @click="previousMonth" 
+                class="p-2 rounded-full hover:bg-[#F0F8FF]"
+              >
+                <i data-lucide="chevron-left" class="size-5 text-[#003366]"></i>
+              </button>
+              <h3 class="text-lg font-bold text-[#003366]" x-text="months[currentMonth] + ' ' + currentYear"></h3>
+              <button 
+                @click="nextMonth" 
+                class="p-2 rounded-full hover:bg-[#F0F8FF]"
+              >
+                <i data-lucide="chevron-right" class="size-5 text-[#003366]"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Calendar View -->
+          <div x-show="viewMode === 'calendar'" class="p-4">
+            <!-- Days of the Week -->
+            <div class="grid grid-cols-7 mb-2">
+              <template x-for="day in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
+                <div class="text-center text-sm font-medium text-[#0F2B4C] py-2" x-text="day"></div>
+              </template>
+            </div>
+            
+            <!-- Calendar Days Grid -->
+            <div class="grid grid-cols-7 gap-1">
+              <!-- Empty cells for days before the first of the month -->
+              <template x-for="i in firstDayOfMonth" :key="`empty-${i}`">
+                <div class="h-24 p-1"></div>
+              </template>
+              
+              <!-- Days of the month -->
+              <template x-for="day in daysInMonth" :key="`day-${day}`">
+                <div 
+                  :class="`h-24 p-1 border border-gray-100 rounded-md ${getEventsForDate(day) ? 'bg-[#F0F8FF]' : ''}`"
+                >
+                  <div class="h-full flex flex-col">
+                    <div class="text-right p-1">
+                      <span class="text-sm text-[#0F2B4C]" x-text="day"></span>
+                    </div>
+                    
+                    <template x-if="getEventsForDate(day)">
+                      <div class="flex-1 p-1">
+                        <div class="text-xs bg-[#2D8C9E] text-white p-1 rounded" x-text="getEventsForDate(day).event"></div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+          
+          <!-- List View -->
+          <div x-show="viewMode === 'list'" class="p-4">
+            <div class="space-y-4">
+              {% for event in upcoming_events %}
+                <div class="border-b border-gray-100 pb-4 flex flex-col sm:flex-row gap-4">
+                  <div class="sm:w-32 flex-shrink-0">
+                    <span class="inline-block px-3 py-1 bg-[#003366] text-white rounded-full text-sm">{{ event.date }}</span>
+                  </div>
+                  
+                  <div class="flex-1">
+                    <h4 class="font-bold text-[#003366]">{{ event.title }}</h4>
+                    <div class="flex items-center gap-2 text-[#0F2B4C] text-sm mt-1">
+                      <i data-lucide="clock" class="size-4 text-[#2D8C9E]"></i>
+                      <span>{{ event.time }}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-[#0F2B4C] text-sm mt-1">
+                      <i data-lucide="map-pin" class="size-4 text-[#2D8C9E]"></i>
+                      <span>{{ event.location }}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center">
+                    <a 
+                      href="/events/{{ event.id }}" 
+                      class="inline-flex items-center text-[#003366] hover:text-[#2D8C9E]"
+                    >
+                      Details <i data-lucide="chevron-right" class="size-4 ml-1"></i>
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Past Events Gallery -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#003366] mb-2 text-center">Past Events Gallery</h2>
+        <p class="text-[#0F2B4C] text-center mb-12 max-w-3xl mx-auto">
+          Explore highlights from our previous cultural celebrations
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {% for event in past_events %}
+            <div class="rounded-lg overflow-hidden border-none shadow-md">
+              <div class="relative h-48">
+                <img 
+                  src="{{ event.image }}" 
+                  alt="{{ event.title }}"
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#003366]/80 to-transparent p-3">
+                  <h4 class="text-white font-bold">{{ event.title }}</h4>
+                  <div class="flex justify-between text-white/80 text-sm">
+                    <span>{{ event.date }}</span>
+                    <span>{{ event.location }}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-4">
+                <div class="flex items-start gap-2">
+                  <span class="text-[#2D8C9E] text-3xl leading-none">"</span>
+                  <p class="text-sm text-[#0F2B4C] italic">
+                    {{ event.testimonial }}
+                  </p>
+                </div>
+              </div>
+              
+              <div class="p-4 pt-0">
+                <a 
+                  href="/events/gallery/{{ event.id }}" 
+                  class="inline-flex items-center text-[#003366] hover:text-[#2D8C9E]"
+                >
+                  <i data-lucide="image" class="size-4 mr-1"></i>
+                  <span>View Gallery</span>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+        <div class="mt-12 text-center">
+          <a href="/events/past" class="inline-block bg-[#003366] text-white hover:bg-[#0A4380] rounded-full px-6 py-3 shadow-md transition-colors">
+            View All Past Events
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16 md:py-24 bg-[#F0F8FF]/50" x-data="{ openFaq: null }">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#003366] mb-2 text-center">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-[#0F2B4C] text-center mb-12 max-w-3xl mx-auto">
+          Answers to common questions about our events and participation
+        </p>
+        
+        <div class="space-y-4">
+          {% for faq in faqs %}
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+              <button
+                @click="openFaq = openFaq === {{ loop.index0 }} ? null : {{ loop.index0 }}"
+                class="w-full flex justify-between items-center p-4 text-left"
+              >
+                <h3 class="font-bold text-[#003366]">{{ faq.question }}</h3>
+                <i 
+                  data-lucide="chevron-right" 
+                  :class="openFaq === {{ loop.index0 }} ? 'rotate-90' : ''"
+                  class="size-5 text-[#003366] transition-transform"
+                ></i>
+              </button>
+              
+              <div x-show="openFaq === {{ loop.index0 }}" class="px-4 pb-4">
+                <p class="text-[#0F2B4C]">{{ faq.answer }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+        <div class="mt-12 p-6 bg-white rounded-lg shadow-sm">
+          <p class="text-[#0F2B4C] mb-4">
+            Don't see your question answered here? Contact our events team for more information.
+          </p>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div class="flex items-center gap-2">
+              <i data-lucide="mail" class="size-4 text-[#2D8C9E]"></i>
+              <span class="text-[#0F2B4C]">events@swahiliafrojamboree.org</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i data-lucide="phone" class="size-4 text-[#2D8C9E]"></i>
+              <span class="text-[#0F2B4C]">+1 (240) 614-1598</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="py-16 md:py-24 bg-[#003366] text-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-6">
+          Join the Swahili Cultural Movement
+        </h2>
+        <p class="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
+          Become part of our global community celebrating the rich heritage of Swahili culture. Register for our upcoming events and help us build bridges across continents.
+        </p>
+        
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/events/register" class="inline-block bg-[#D4AF37] text-[#003366] hover:bg-[#c29b2a] rounded-full px-8 py-3 font-medium shadow-md transition-colors">
+            Register for Events
+          </a>
+          <a href="/subscribe" class="inline-block border border-white text-white hover:bg-white/10 rounded-full px-8 py-3 shadow-sm transition-colors">
+            Subscribe to Updates
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+  });
+</script>
+{% endblock %}

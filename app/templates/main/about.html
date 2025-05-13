@@ -1,0 +1,867 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import inner_page_hero %}
+
+{% block title %}About - Swahili Afro Jamboree{% endblock %}
+
+{% block content %}
+  <!-- Inner Page Hero -->
+  {{ inner_page_hero(
+    title="About Swahili Afro Jamboree",
+    subtitle="Our Mission, Vision, and Journey",
+    description="Swahili Afro Jamboree (SAJ) is a non-governmental organization bringing together Swahili and non-Swahili speakers globally.",
+    background_image=url_for('static', filename='img/about-hero.jpg'),
+    primary_button_text="Our Team",
+    primary_button_link="#team",
+    secondary_button_text="Our Mission",
+    secondary_button_link="#mission",
+    breadcrumbs=[{ "label": "About", "link": "/about" }]
+  ) }}
+
+  <!-- Who We Are Section -->
+  <section class="relative py-16 md:py-24 overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      <div class="absolute -top-20 -left-20 w-64 h-64 rounded-full opacity-10" style="background-color: #2D8C9E"></div>
+      <div class="absolute bottom-20 -right-20 w-80 h-80 rounded-full opacity-5" style="background-color: #003366"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Content -->
+        <div 
+          x-data="{ visible: false }"
+          x-intersect="visible = true"
+          :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+          class="transition-all duration-700 ease-out"
+        >
+          <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+            Who We Are
+          </h2>
+          <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-6">
+            Swahili Afro Jamboree
+          </h3>
+
+          <p class="text-lg text-[#0F2B4C] mb-6">
+            Swahili Afro Jamboree (SAJ) is a social platform brought into existence for a purpose of bringing together Swahili speakers and non-Swahili speakers around the globe for sharing, learning, promoting, celebrating, and educating each other about Swahili culture.
+          </p>
+
+          <p class="text-lg text-[#0F2B4C] mb-6">
+            Founded in 2024 in the United States, our organization is dedicated to creating meaningful cultural exchange through events, educational initiatives, and community building.
+          </p>
+        </div>
+
+        <!-- Image -->
+        <div 
+          x-data="{ visible: false }"
+          x-intersect="visible = true"
+          :class="visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'"
+          class="transition-all duration-700 ease-out relative"
+        >
+          <div class="relative z-10 rounded-2xl overflow-hidden shadow-xl">
+            <img
+              src="{{ url_for('static', filename='img/dance.jpeg') }}"
+              alt="Swahili Afro Jamboree Gathering"
+              class="w-full h-auto object-cover"
+            />
+            <!-- Overlay -->
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#003366]/80 to-transparent p-6">
+              <p class="text-white text-lg font-medium">Bringing people together through culture</p>
+            </div>
+          </div>
+
+          <!-- Decorative elements -->
+          <div class="absolute top-4 -right-4 w-24 h-24 bg-[#D4AF37]/20 rounded-full -z-1"></div>
+          <div class="absolute -bottom-4 -left-4 w-40 h-40 bg-[#F0F8FF] rounded-full -z-1"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision & Mission Section -->
+  <section id="mission" class="py-16 md:py-24 bg-[#F0F8FF]/50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+          Our Purpose
+        </h2>
+        <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-6">
+          Vision & Mission
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Vision Card -->
+        <div 
+          x-data="{ visible: false }"
+          x-intersect="visible = true"
+          :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+          class="transition-all duration-700 ease-out rounded-2xl overflow-hidden shadow-lg bg-white relative"
+        >
+          <!-- Top Accent -->
+          <div class="h-2 bg-[#D4AF37]"></div>
+
+          <div class="p-8">
+            <div class="w-16 h-16 bg-[#F0F8FF] rounded-full flex items-center justify-center mb-6">
+              <i data-lucide="eye" class="h-8 w-8 text-[#2D8C9E]"></i>
+            </div>
+
+            <h4 class="text-2xl font-bold text-[#003366] mb-4">Our Vision</h4>
+
+            <p class="text-lg text-[#0F2B4C] mb-6">
+              To bring and spread Swahili culture to the world
+            </p>
+
+            <div class="mt-8 pt-8 border-t border-gray-100">
+              <p class="text-sm text-[#0F2B4C] italic">
+                "Connecting cultures, celebrating heritage, and building global understanding"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mission Card -->
+        <div 
+          x-data="{ visible: false }"
+          x-intersect="visible = true"
+          :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+          class="transition-all duration-700 ease-out rounded-2xl overflow-hidden shadow-lg bg-white relative"
+        >
+          <!-- Top Accent -->
+          <div class="h-2 bg-[#003366]"></div>
+
+          <div class="p-8">
+            <div class="w-16 h-16 bg-[#F0F8FF] rounded-full flex items-center justify-center mb-6">
+              <i data-lucide="flag" class="h-8 w-8 text-[#003366]"></i>
+            </div>
+
+            <h4 class="text-2xl font-bold text-[#003366] mb-4">Our Mission</h4>
+
+            <p class="text-lg text-[#0F2B4C] mb-6">
+              The mission of Swahili Afro Jamboree is to enable intercultural relationship between Swahili and other cultures at a global stage in various cultural aspects including Swahili knowledge, food, music and dancing, fashion, and showcasing of Swahili trading through gathering, promotion and celebration.
+            </p>
+
+            <div class="mt-8 pt-8 border-t border-gray-100">
+              <p class="text-sm text-[#0F2B4C] italic">
+                "Creating spaces for learning, sharing, and celebrating the richness of Swahili culture"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Do Section -->
+  <section class="py-16 md:py-24 bg-white relative">
+    <!-- Background pattern -->
+    <div class="absolute inset-0 z-0 opacity-5">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern
+            id="smallGrid"
+            width="20"
+            height="20"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 20 0 L 0 0 0 20"
+              fill="none"
+              stroke="#003366"
+              strokeWidth="0.5"
+            />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#smallGrid)" />
+      </svg>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+          Our Initiatives
+        </h2>
+        <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-6">
+          What We Do
+        </h3>
+        <p class="text-lg text-[#0F2B4C]">
+          We focus our efforts on spreading Swahili culture to the world community through various initiatives and activities.
+        </p>
+      </div>
+
+      <div 
+        x-data="{
+          activities: [
+            {
+              icon: '🌍',
+              title: 'Intercultural Diversity',
+              description: 'Promoting intercultural diversity between Swahili and other cultures'
+            },
+            {
+              icon: '📚',
+              title: 'Language Knowledge',
+              description: 'Promoting Swahili language and bridging gaps with other languages'
+            },
+            {
+              icon: '🤝',
+              title: 'Global Trade',
+              description: 'Promoting intertrade among Swahili speakers and non-Swahili speakers globally'
+            },
+            {
+              icon: '🎵',
+              title: 'Music & Dance',
+              description: 'Promoting Swahili music and dancing globally'
+            },
+            {
+              icon: '🍲',
+              title: 'Culinary Traditions',
+              description: 'Promotion of Swahili foods and cooking traditions'
+            },
+            {
+              icon: '👗',
+              title: 'Fashion & Design',
+              description: 'Promoting Swahili fashion and textile arts'
+            }
+          ]
+        }"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
+        <template x-for="(activity, index) in activities" :key="index">
+          <div
+            x-data="{ visible: false }"
+            x-intersect="visible = true"
+            :class="visible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'"
+            class="transition-all duration-700 ease-out bg-[#F0F8FF]/80 rounded-xl p-6 hover:scale-105 hover:shadow-lg"
+            :style="`transition-delay: ${index * 100}ms`"
+          >
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl mb-4 shadow-sm">
+              <span x-text="activity.icon"></span>
+            </div>
+
+            <h4 class="text-xl font-bold text-[#003366] mb-2" x-text="activity.title"></h4>
+            <p class="text-[#0F2B4C]" x-text="activity.description"></p>
+          </div>
+        </template>
+      </div>
+
+      <div class="mt-16 text-center">
+        <p class="text-lg text-[#0F2B4C] max-w-2xl mx-auto mb-8">
+          Our activities are designed to foster deep understanding and appreciation of Swahili culture while creating meaningful connections across cultural boundaries.
+        </p>
+
+        <a href="/events" class="inline-flex items-center gap-2 bg-[#003366] text-white px-6 py-3 rounded-full hover:bg-[#0A4380] transition-colors shadow-md">
+          Explore Our Events
+          <i data-lucide="arrow-right" class="h-5 w-5"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Goals & Objectives Section -->
+  <section class="py-16 md:py-24 bg-[#003366] text-white">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Content -->
+        <div 
+          x-data="{ visible: false }"
+          x-intersect="visible = true"
+          :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+          class="transition-all duration-700 ease-out"
+        >
+          <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+            Looking Forward
+          </h2>
+          <h3 class="text-3xl sm:text-4xl font-bold mb-6">
+            Our Objectives & Goals
+          </h3>
+
+          <div class="mb-8">
+            <h4 class="text-xl font-semibold mb-3">Primary Objective</h4>
+            <p class="text-lg text-white/80 mb-6">
+              Bringing together Swahili speakers and non-Swahili speakers from around the globe for a purpose of sharing, interacting, learning, promoting, celebrating, and educating each other about Swahili culture.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="text-xl font-semibold mb-3">Long-term Goal</h4>
+            <p class="text-lg text-white/80">
+              Supporting global efforts aimed at spreading and increasing deep understanding of Swahili culture and growing Swahili speakers from current 230 million to 300 million by 2030.
+            </p>
+          </div>
+        </div>
+
+        <!-- Visual Stats -->
+        <div
+          x-data="{ visible: false }"
+          x-intersect="visible = true"
+          :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+          class="transition-all duration-700 ease-out relative"
+        >
+          <!-- Growth Chart -->
+          <div class="bg-white/10 rounded-2xl p-8 backdrop-blur-sm">
+            <h4 class="text-xl font-bold mb-6 text-center">Speaker Growth Goal</h4>
+
+            <div class="flex flex-col gap-6">
+              <!-- Current -->
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span>Current (2024)</span>
+                  <span class="font-bold">230M</span>
+                </div>
+                <div class="h-4 bg-white/20 rounded-full">
+                  <div class="h-4 bg-[#D4AF37] rounded-full w-[77%]"></div>
+                </div>
+              </div>
+
+              <!-- Target -->
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span>Target (2030)</span>
+                  <span class="font-bold">300M</span>
+                </div>
+                <div class="h-4 bg-white/20 rounded-full">
+                  <div class="h-4 bg-[#D4AF37]/30 rounded-full w-full"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 text-center">
+              <div class="inline-block px-4 py-2 bg-white/10 rounded-full text-sm">
+                <span class="text-[#D4AF37] font-bold">+30%</span> growth target over 6 years
+              </div>
+            </div>
+          </div>
+
+          <!-- Decorative elements -->
+          <div class="absolute -top-6 -right-6 w-24 h-24 bg-[#2D8C9E]/20 rounded-full -z-1"></div>
+          <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-[#2D8C9E]/10 rounded-full -z-1"></div>
+        </div>
+      </div>
+
+      <div class="mt-16 pt-16 border-t border-white/10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="text-3xl sm:text-4xl font-bold text-[#D4AF37] mb-2">230M+</div>
+            <p class="text-white/80">Current Swahili Speakers</p>
+          </div>
+
+          <div class="text-center">
+            <div class="text-3xl sm:text-4xl font-bold text-[#D4AF37] mb-2">2024</div>
+            <p class="text-white/80">Year Founded</p>
+          </div>
+
+          <div class="text-center">
+            <div class="text-3xl sm:text-4xl font-bold text-[#D4AF37] mb-2">2</div>
+            <p class="text-white/80">Global Offices</p>
+          </div>
+
+          <div class="text-center">
+            <div class="text-3xl sm:text-4xl font-bold text-[#D4AF37] mb-2">4+</div>
+            <p class="text-white/80">Annual Events</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+          Meet The Team
+        </h2>
+        <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-6">
+          Our Team
+        </h3>
+        <p class="text-lg text-[#0F2B4C]">
+          Swahili Afro Jamboree comprises a team of multi-talented professionals who have joined efforts to bring cultural impact to the world.
+        </p>
+      </div>
+
+      <div 
+        x-data="{
+          teamMembers: [
+            {
+              name: 'Mr. Paul Mabeba',
+              title: 'President',
+              role: 'Global coordination',
+              location: 'Maryland, USA',
+              image: '{{ url_for('static', filename='img/team/paul.jpg') }}'
+            },
+            {
+              name: 'Miss. Akundael NNKO',
+              title: 'Vice President',
+              role: 'Global coordination',
+              location: 'California, USA',
+              image: '{{ url_for('static', filename='img/team/akundael.jpg') }}'
+            },
+            {
+              name: 'Miss. E.K.A.E.I Mabeba',
+              title: 'Secretary and Treasury',
+              role: 'Administration',
+              location: 'Maryland, USA',
+              image: '{{ url_for('static', filename='img/team/mabeba.jpg') }}'
+            }
+          ]
+        }"
+        class="grid grid-cols-1 md:grid-cols-3 gap-8"
+      >
+        <template x-for="(member, index) in teamMembers" :key="index">
+          <div
+            x-data="{ visible: false }"
+            x-intersect="visible = true"
+            :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+            class="transition-all duration-700 ease-out bg-[#F0F8FF]/50 rounded-xl overflow-hidden hover:shadow-xl"
+            :style="`transition-delay: ${index * 100}ms`"
+          >
+            <div class="relative h-64 overflow-hidden">
+              <img
+                :src="member.image"
+                :alt="member.name"
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/80 via-transparent to-transparent"></div>
+            </div>
+
+            <div class="p-6">
+              <h4 class="text-xl font-bold text-[#003366]" x-text="member.name"></h4>
+              <p class="font-medium text-[#2D8C9E] mb-2" x-text="member.title"></p>
+              <p class="text-[#0F2B4C] mb-1" x-text="member.role"></p>
+              <p class="text-sm text-[#0F2B4C]/80" x-text="member.location"></p>
+
+              <div class="mt-6 pt-6 border-t border-[#003366]/10 flex justify-center gap-4">
+                <a href="#" class="text-[#0F2B4C] hover:text-[#2D8C9E] transition-colors">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                  </svg>
+                </a>
+                <a href="#" class="text-[#0F2B4C] hover:text-[#2D8C9E] transition-colors">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                  </svg>
+                </a>
+                <a href="#" class="text-[#0F2B4C] hover:text-[#2D8C9E] transition-colors">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="mt-16 text-center">
+        <a href="/contact" class="inline-flex items-center gap-2 bg-[#003366] text-white px-6 py-3 rounded-full hover:bg-[#0A4380] transition-colors shadow-md">
+          Contact Our Team
+          <i data-lucide="arrow-right" class="h-5 w-5"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Locations Section -->
+  <section class="py-16 md:py-24 bg-[#F0F8FF]/50 relative overflow-hidden">
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+          Global Presence
+        </h2>
+        <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-6">
+          Where We Work From
+        </h3>
+        <p class="text-lg text-[#0F2B4C]">
+          With offices in two continents, we bridge cultures across the globe
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- North America Office -->
+        <div
+          x-data="{ visible: false }"
+          x-intersect="visible = true"
+          :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+          class="transition-all duration-700 ease-out bg-white rounded-2xl overflow-hidden shadow-lg"
+        >
+          <div class="h-64 overflow-hidden">
+            <img
+              src="{{ url_for('static', filename='img/offices/maryland.jpg') }}"
+              alt="Maryland Office"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <i data-lucide="home" class="h-6 w-6 text-[#2D8C9E]"></i>
+              <h4 class="text-xl font-bold text-[#003366]">North America Office</h4>
+            </div>
+
+            <div class="space-y-3 mb-6">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="map-pin" class="h-5 w-5 text-[#0F2B4C] mt-1 flex-shrink-0"></i>
+                    <div>
+                      <p class="text-[#0F2B4C]">Registered Office, Swahili Afro Jamboree</p>
+                      <p class="text-[#0F2B4C]">6208 Alan Linton BLVD W</p>
+                      <p class="text-[#0F2B4C]">Fredrick, Maryland 21703, USA</p>
+                    </div>
+                  </div>
+    
+                  <div class="flex items-start gap-3">
+                    <i data-lucide="phone" class="h-5 w-5 text-[#0F2B4C] mt-1 flex-shrink-0"></i>
+                    <div>
+                      <p class="text-[#0F2B4C]">Landline: +1 240 614 1598</p>
+                      <p class="text-[#0F2B4C]">Mobile: +1 240 614 1598</p>
+                    </div>
+                  </div>
+    
+                  <div class="flex items-start gap-3">
+                    <i data-lucide="mail" class="h-5 w-5 text-[#0F2B4C] mt-1 flex-shrink-0"></i>
+                    <p class="text-[#0F2B4C]">Email: pmabby@gmail.com</p>
+                  </div>
+                </div>
+    
+                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#2D8C9E] hover:text-[#003366] font-medium transition-colors">
+                  View on Map
+                  <i data-lucide="external-link" class="h-4 w-4"></i>
+                </a>
+              </div>
+            </div>
+    
+            <!-- Africa Office -->
+            <div 
+              x-data="{ visible: false }"
+              x-intersect="visible = true"
+              :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+              class="transition-all duration-700 ease-out bg-white rounded-2xl overflow-hidden shadow-lg"
+            >
+              <div class="h-64 overflow-hidden">
+                <img
+                  src="{{ url_for('static', filename='img/offices/dar-es-salaam.jpg') }}"
+                  alt="Dar es Salaam Office"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+    
+              <div class="p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <i data-lucide="home" class="h-6 w-6 text-[#2D8C9E]"></i>
+                  <h4 class="text-xl font-bold text-[#003366]">Africa Office</h4>
+                </div>
+    
+                <div class="space-y-3 mb-6">
+                  <div class="flex items-start gap-3">
+                    <i data-lucide="map-pin" class="h-5 w-5 text-[#0F2B4C] mt-1 flex-shrink-0"></i>
+                    <div>
+                      <p class="text-[#0F2B4C]">8TH Floor Salamanda towers [GSM Building]</p>
+                      <p class="text-[#0F2B4C]">Samora avenue</p>
+                      <p class="text-[#0F2B4C]">P.o. Box 90342, Dar es Salaam, Tanzania</p>
+                    </div>
+                  </div>
+    
+                  <div class="flex items-start gap-3">
+                    <i data-lucide="phone" class="h-5 w-5 text-[#0F2B4C] mt-1 flex-shrink-0"></i>
+                    <div>
+                      <p class="text-[#0F2B4C]">Cell: +255 764 114 444</p>
+                      <p class="text-[#0F2B4C]">WhatsApp: +255 764 114 444</p>
+                    </div>
+                  </div>
+    
+                  <div class="flex items-start gap-3">
+                    <i data-lucide="mail" class="h-5 w-5 text-[#0F2B4C] mt-1 flex-shrink-0"></i>
+                    <p class="text-[#0F2B4C]">Email: piimswaz@gmail.com</p>
+                  </div>
+                </div>
+    
+                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#2D8C9E] hover:text-[#003366] font-medium transition-colors">
+                  View on Map
+                  <i data-lucide="external-link" class="h-4 w-4"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Map Background -->
+        <div class="absolute inset-0 opacity-5 z-0">
+          <svg width="100%" height="100%" viewBox="0 0 1728 1101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1728 0H0V1101H1728V0Z" fill="#003366" />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M1728 0H0V1101H1728V0ZM26.4 31.1L1694.6 31.1V1062.1H26.4V31.1Z" fill="#003366" />
+            <path d="M1694.6 31.1H26.4V1062.1H1694.6V31.1Z" fill="white" />
+            <path d="M150 571.5C150 571.5 399 530.5 525 405C651 279.5 746 322 816 405C886 488 1009.5 321 1106.5 321C1203.5 321 1251 359.5 1308.5 321C1366 282.5 1478.5 356 1536 405" stroke="#003366" stroke-width="2" />
+            <circle cx="523" cy="403" r="6" fill="#2D8C9E" />
+            <circle cx="816" cy="405" r="6" fill="#2D8C9E" />
+            <circle cx="1108" cy="321" r="6" fill="#2D8C9E" />
+            <circle cx="1306" cy="321" r="6" fill="#2D8C9E" />
+            <circle cx="1535" cy="405" r="6" fill="#2D8C9E" />
+          </svg>
+        </div>
+      </section>
+    
+      <!-- Get Involved Section -->
+      <section class="py-16 md:py-24 bg-[#003366] text-white">
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+              Be Part of Our Community
+            </h2>
+            <h3 class="text-3xl sm:text-4xl font-bold mb-6">
+              Join Our Cultural Journey
+            </h3>
+            <p class="text-lg text-white/80 mb-10 max-w-2xl mx-auto">
+              From attending events to becoming a member, there are many ways to engage with Swahili Afro Jamboree and help us achieve our mission of spreading Swahili culture worldwide.
+            </p>
+    
+            <div 
+              x-data="{ 
+                options: [
+                  {
+                    icon: 'calendar',
+                    title: 'Attend Events',
+                    description: 'Join our cultural showcases and celebrations'
+                  },
+                  {
+                    icon: 'user-plus',
+                    title: 'Become a Member',
+                    description: 'Join our community and access exclusive benefits'
+                  },
+                  {
+                    icon: 'megaphone',
+                    title: 'Spread the Word',
+                    description: 'Share our mission with your network'
+                  },
+                  {
+                    icon: 'banknote',
+                    title: 'Support Our Work',
+                    description: 'Contribute to our cultural initiatives'
+                  }
+                ]
+              }"
+              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12"
+            >
+              <template x-for="(option, index) in options" :key="index">
+                <div 
+                  x-data="{ visible: false }"
+                  x-intersect="visible = true"
+                  :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+                  class="transition-all duration-700 ease-out bg-white/10 rounded-xl p-6 backdrop-blur-sm hover:bg-white/15 transition-colors"
+                  :style="`transition-delay: ${index * 100}ms`"
+                >
+                  <div class="w-12 h-12 bg-[#D4AF37] rounded-full flex items-center justify-center text-white mb-4 mx-auto">
+                    <i :data-lucide="option.icon" class="h-6 w-6"></i>
+                  </div>
+                  <h4 class="text-xl font-bold mb-2 text-center" x-text="option.title"></h4>
+                  <p class="text-white/70 text-center" x-text="option.description"></p>
+                </div>
+              </template>
+            </div>
+    
+            <div class="flex flex-wrap justify-center gap-4">
+              <a href="/events" class="bg-[#D4AF37] hover:bg-[#c29b2a] text-[#003366] font-medium px-6 py-3 rounded-full transition-colors shadow-md">
+                Upcoming Events
+              </a>
+              <a href="/membership" class="bg-transparent hover:bg-white/10 text-white border border-white px-6 py-3 rounded-full transition-colors shadow-sm">
+                Join as Member
+              </a>
+              <a href="/contact" class="bg-transparent hover:bg-white/10 text-white border border-white px-6 py-3 rounded-full transition-colors shadow-sm">
+                Contact Us
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+      <!-- Contact Form Section -->
+      <section class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              <!-- Contact Info -->
+              <div
+                x-data="{ visible: false }"
+                x-intersect="visible = true"
+                :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+                class="transition-all duration-700 ease-out"
+              >
+                <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+                  Get in Touch
+                </h2>
+                <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-6">
+                  Contact Us
+                </h3>
+                <p class="text-lg text-[#0F2B4C] mb-8">
+                  Have questions about Swahili Afro Jamboree or want to get involved? We'd love to hear from you. Use the form or reach out directly through the contact information below.
+                </p>
+    
+                <div class="space-y-6 mb-8">
+                  <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#F0F8FF] flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="mail" class="h-5 w-5 text-[#2D8C9E]"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold text-[#003366] mb-1">Email Us</h4>
+                      <p class="text-[#0F2B4C]">pmabby@gmail.com (North America)</p>
+                      <p class="text-[#0F2B4C]">piimswaz@gmail.com (Africa)</p>
+                    </div>
+                  </div>
+    
+                  <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#F0F8FF] flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="phone" class="h-5 w-5 text-[#2D8C9E]"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold text-[#003366] mb-1">Call Us</h4>
+                      <p class="text-[#0F2B4C]">+1 240 614 1598 (North America)</p>
+                      <p class="text-[#0F2B4C]">+255 764 114 444 (Africa)</p>
+                    </div>
+                  </div>
+    
+                  <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-[#F0F8FF] flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="message-square" class="h-5 w-5 text-[#2D8C9E]"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold text-[#003366] mb-1">Social Media</h4>
+                      <div class="flex gap-4 mt-2">
+                        <a href="#" class="text-[#0F2B4C] hover:text-[#2D8C9E] transition-colors">
+                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                          </svg>
+                        </a>
+                        <a href="#" class="text-[#0F2B4C] hover:text-[#2D8C9E] transition-colors">
+                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                          </svg>
+                        </a>
+                        <a href="#" class="text-[#0F2B4C] hover:text-[#2D8C9E] transition-colors">
+                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <!-- Contact Form -->
+              <div 
+                x-data="{ visible: false }"
+                x-intersect="visible = true"
+                :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
+                class="transition-all duration-700 ease-out bg-[#F0F8FF]/50 rounded-2xl p-6 md:p-8"
+              >
+                <h4 class="text-xl font-bold text-[#003366] mb-6">Send Us a Message</h4>
+    
+                <form 
+                  x-data="{ name: '', email: '', subject: '', message: '', consent: false }"
+                  @submit.prevent="
+                    fetch('/api/contact', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ name, email, subject, message, consent })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                      alert('Message sent successfully!');
+                      name = '';
+                      email = '';
+                      subject = '';
+                      message = '';
+                      consent = false;
+                    })
+                    .catch(error => alert('Error sending message. Please try again.'))"
+                  class="space-y-6"
+                >
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label for="name" class="block text-sm font-medium text-[#0F2B4C] mb-1">
+                        Your Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        x-model="name"
+                        class="w-full px-4 py-3 rounded-lg border border-[#2D8C9E]/20 focus:border-[#2D8C9E] focus:ring focus:ring-[#2D8C9E]/20 outline-none transition"
+                        placeholder="Enter your name"
+                        required
+                      />
+                    </div>
+    
+                    <div>
+                      <label for="email" class="block text-sm font-medium text-[#0F2B4C] mb-1">
+                        Your Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        x-model="email"
+                        class="w-full px-4 py-3 rounded-lg border border-[#2D8C9E]/20 focus:border-[#2D8C9E] focus:ring focus:ring-[#2D8C9E]/20 outline-none transition"
+                        placeholder="Enter your email"
+                        required
+                      />
+                    </div>
+                  </div>
+    
+                  <div>
+                    <label for="subject" class="block text-sm font-medium text-[#0F2B4C] mb-1">
+                      Subject
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      x-model="subject"
+                      class="w-full px-4 py-3 rounded-lg border border-[#2D8C9E]/20 focus:border-[#2D8C9E] focus:ring focus:ring-[#2D8C9E]/20 outline-none transition"
+                      placeholder="What is this regarding?"
+                      required
+                    />
+                  </div>
+    
+                  <div>
+                    <label for="message" class="block text-sm font-medium text-[#0F2B4C] mb-1">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      rows="5"
+                      x-model="message"
+                      class="w-full px-4 py-3 rounded-lg border border-[#2D8C9E]/20 focus:border-[#2D8C9E] focus:ring focus:ring-[#2D8C9E]/20 outline-none transition"
+                      placeholder="Your message here..."
+                      required
+                    ></textarea>
+                  </div>
+    
+                  <div class="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="consent"
+                      x-model="consent"
+                      class="mt-1 h-4 w-4 rounded border-[#2D8C9E]/20 text-[#2D8C9E] focus:ring-[#2D8C9E]/20"
+                      required
+                    />
+                    <label for="consent" class="block text-sm text-[#0F2B4C]">
+                      I agree to receive responses from Swahili Afro Jamboree regarding my inquiry
+                    </label>
+                  </div>
+    
+                  <button
+                    type="submit"
+                    class="w-full bg-[#003366] hover:bg-[#0A4380] text-white py-3 px-6 rounded-full transition-colors font-medium shadow-md"
+                  >
+                    Send Message
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endblock %}
+    
+    {% block scripts %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        lucide.createIcons();
+      });
+    </script>
+    {% endblock %}
