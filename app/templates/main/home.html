@@ -1,0 +1,673 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block title %}Home - Swahili Afro Jamboree{% endblock %}
+
+{% block head %}
+<style>
+  /* Additional styles specific to home page */
+  .bg-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='smallGrid' width='10' height='10' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 10 0 L 0 0 0 10' fill='none' stroke='%23003366' stroke-width='0.5'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23smallGrid)'/%3E%3C/svg%3E");
+  }
+  
+  .bg-diagonal-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'%3E%3Cpattern id='diagonalPattern' patternUnits='userSpaceOnUse' width='40' height='40' patternTransform='rotate(45)'%3E%3Cline x1='0' y1='0' x2='0' y2='40' stroke='%23003366' stroke-width='1'/%3E%3C/pattern%3E%3Crect width='100%25' height='100%25' fill='url(%23diagonalPattern)'/%3E%3C/svg%3E");
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative w-full overflow-hidden bg-gradient-to-b from-[#F0F8FF] to-white pt-32 pb-12">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 z-0 opacity-5 bg-pattern"></div>
+
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <!-- Text Content -->
+      <div 
+        x-data="{}" 
+        x-init="
+          setTimeout(() => {
+            $el.classList.add('opacity-100', 'translate-y-0');
+            $el.classList.remove('opacity-0', 'translate-y-6');
+          }, 100)
+        "
+        class="flex flex-col opacity-0 translate-y-6 transition-all duration-800 ease-out"
+      >
+        <div class="w-fit mb-4 bg-[#D4AF37] text-[#003366] font-medium px-4 py-1 rounded-full">
+          Est. 2024
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-[#003366] mb-4 leading-tight">
+          Connecting Cultures, Celebrating Swahili Heritage
+        </h1>
+        
+        <p class="text-lg text-[#0F2B4C] mb-6 max-w-xl">
+          Swahili Afro Jamboree brings together Swahili and non-Swahili speakers globally for cultural exchange, celebration, and learning.
+        </p>
+        
+        <div class="flex flex-wrap gap-4 mb-8">
+          <a href="/events" class="inline-block bg-[#003366] text-white hover:bg-[#0A4380] rounded-full px-6 py-6 shadow-md transition-colors">
+            Explore Events
+          </a>
+          <a href="/about" class="inline-block border border-[#2D8C9E] text-[#003366] hover:bg-[#2D8C9E]/10 rounded-full px-6 py-6 transition-colors">
+            Learn More
+          </a>
+        </div>
+      </div>
+
+      <!-- Image and Event Card -->
+      <div 
+        x-data="{}" 
+        x-init="
+          setTimeout(() => {
+            $el.classList.add('opacity-100', 'translate-x-0');
+            $el.classList.remove('opacity-0', 'translate-x-6');
+          }, 400)
+        "
+        class="relative opacity-0 translate-x-6 transition-all duration-800 ease-out"
+      >
+        <!-- Main Image -->
+        <div class="relative z-10 rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+          <img
+            src="{{ url_for('static', filename='img/kinu.jpg') }}"
+            alt="Swahili cultural celebration"
+            class="w-full h-[500px] object-cover"
+          />
+          <!-- Overlay gradient -->
+          <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/80 to-transparent"></div>
+          
+          <!-- Text overlay -->
+          <div class="absolute bottom-0 left-0 p-6 text-white">
+            <h3 class="text-2xl font-bold mb-2">Experience Swahili Culture</h3>
+            <p class="opacity-90">Music, art, dance, language and cuisine</p>
+          </div>
+        </div>
+        
+        <!-- Upcoming Event Card -->
+        <div class="absolute -bottom-6 -right-6 md:right-6 w-full max-w-xs shadow-lg border-none z-20 bg-white/95 backdrop-blur-sm p-6 rounded-lg">
+          <h4 class="font-bold text-lg text-[#003366] mb-2">Next Event</h4>
+          <div class="mb-3">
+            <div class="inline-block bg-[#F0F8FF] text-[#003366] border border-[#2D8C9E]/30 font-normal rounded-full px-3 py-1 text-sm mb-2">
+              July 7, 2025
+            </div>
+            <h5 class="font-bold text-[#003366]">World Kiswahili Language Day</h5>
+            <p class="text-sm text-[#0F2B4C] mt-1">Global celebration of the first African language recognized by the UN</p>
+          </div>
+          <a href="/events/world-kiswahili-day" class="block w-full bg-[#D4AF37] hover:bg-[#c29b2a] text-[#003366] font-medium text-sm rounded-full py-2 px-4 text-center shadow-sm transition-colors">
+            Register Now
+          </a>
+        </div>
+        
+        <!-- Decorative elements -->
+        <div class="absolute -top-6 -left-6 w-24 h-24 bg-[#2D8C9E]/10 rounded-full"></div>
+        <div class="absolute -bottom-10 left-1/3 w-16 h-16 bg-[#D4AF37]/20 rounded-full hidden md:block"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- About Section -->
+<section class="py-16 md:py-24 bg-white relative overflow-hidden" x-data="{ scrollPos: 0 }" 
+         x-init="window.addEventListener('scroll', () => { 
+                  const rect = $el.getBoundingClientRect();
+                  scrollPos = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+                })">
+  <!-- Decorative background elements -->
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+    <div class="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-[#2D8C9E]/5"
+         :style="`transform: translateY(${scrollPos * -100}px)`"></div>
+    <div class="absolute top-1/2 -right-32 w-96 h-96 rounded-full bg-[#F0F8FF]/80"
+         :style="`transform: translateY(${scrollPos * -150}px)`"></div>
+    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#003366]/20 to-transparent"></div>
+  </div>
+
+  <div class="container mx-auto px-4 relative">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <!-- Image collage with parallax -->
+      <div class="relative h-[500px] order-2 lg:order-1">
+        <div class="absolute z-20 top-10 right-0 w-3/4 h-64 rounded-lg overflow-hidden shadow-xl border-4 border-white"
+             :style="`transform: translateY(${scrollPos * -100}px) scale(${1 - (scrollPos * 0.2)}); opacity: ${1 - (scrollPos * 0.5)}`">
+          <img 
+            src="{{ url_for('static', filename='img/ruins2.jpg') }}" 
+            alt="Swahili cultural event" 
+            class="w-full h-full object-cover"
+          />
+        </div>
+        
+        <div class="absolute z-10 bottom-10 left-0 w-3/4 h-64 rounded-lg overflow-hidden shadow-xl border-4 border-white"
+             :style="`transform: translateY(${scrollPos * -150}px) scale(${1 - (scrollPos * 0.3)}); opacity: ${1 - (scrollPos * 0.5)}`">
+          <img 
+            src="{{ url_for('static', filename='img/lesso.jpg') }}" 
+            alt="Swahili cultural event" 
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#003366]/30 to-transparent"></div>
+        </div>
+        
+        <div x-data="{ visible: false }"
+             x-intersect="visible = true"
+             :class="visible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'"
+             class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 bg-white p-4 rounded-full shadow-lg transition-all duration-500">
+          <i data-lucide="globe" class="size-8 text-[#2D8C9E]"></i>
+        </div>
+      </div>
+      
+      <!-- Text content -->
+      <div class="order-1 lg:order-2" x-data="{ visible: false }" x-intersect="visible = true">
+        <div class="transition-all duration-700 ease-out"
+             :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'">
+          <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">About Swahili Jamboree</h2>
+          <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-6">Meaning & Purpose</h3>
+          
+          <p class="text-lg text-[#0F2B4C] mb-6 leading-relaxed">
+            Swahili Jamboree is an annual social platform event brought into existence for the purpose of bringing together 
+            Swahili and non-Swahili speakers from around the globe to share, learn, promote, celebrate, and educate each other 
+            about Swahili culture.
+          </p>
+          
+          <p class="text-lg text-[#0F2B4C] mb-8 leading-relaxed">
+            The term <span class="font-semibold">Swahili Jamboree</span> refers to a celebration or gathering 
+            heavily influenced by Swahili culture, with the word "Jamboree" itself coming from the Swahili greeting 
+            <span class="font-semibold italic"> "Jambo"</span> which means "hello" – signifying a large, joyful gathering with a 
+            Swahili theme.
+          </p>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div class="bg-[#F0F8FF] rounded-lg hover:shadow-md transition-shadow p-4 flex items-start gap-3">
+              <i data-lucide="info" class="text-[#2D8C9E] mt-1 size-5"></i>
+              <div>
+                <h4 class="font-semibold text-[#003366]">Cultural Exchange</h4>
+                <p class="text-sm text-[#0F2B4C]">Food, music, dance, and language education</p>
+              </div>
+            </div>
+            
+            <div class="bg-[#F0F8FF] rounded-lg hover:shadow-md transition-shadow p-4 flex items-start gap-3">
+              <i data-lucide="map-pin" class="text-[#2D8C9E] mt-1 size-5"></i>
+              <div>
+                <h4 class="font-semibold text-[#003366]">Global Reach</h4>
+                <p class="text-sm text-[#0F2B4C]">Events in USA and East Africa</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="/about" class="inline-block bg-[#003366] text-white hover:bg-[#0A4380] rounded-full px-6 py-6 shadow-md transition-colors">
+            Learn Our History
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Origin story preview -->
+    <div x-data="{ visible: false }" x-intersect="visible = true"
+         class="mt-20 md:mt-32 text-center max-w-3xl mx-auto transition-all duration-500 ease-out"
+         :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'">
+      <h3 class="text-2xl sm:text-3xl font-bold text-[#003366] mb-4">The Origins of Kiswahili</h3>
+      <p class="text-lg text-[#0F2B4C] mb-8">
+        Kiswahili originated from the Bantu languages spoken by the indigenous people of the East African coast. 
+        The language developed as a result of trade and cultural exchange between the local population and foreign traders, 
+        sailors, and settlers.
+      </p>
+      <a href="/culture/history" class="inline-flex items-center border border-[#2D8C9E] text-[#003366] hover:bg-[#F0F8FF] rounded-lg px-4 py-2 group transition-colors">
+        Explore Swahili History 
+        <i data-lucide="chevron-right" class="size-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+      </a>
+    </div>
+    
+    <!-- Upcoming event teaser -->
+    <div x-data="{ visible: false }" x-intersect="visible = true"
+         class="mt-20 bg-gradient-to-r from-[#003366] to-[#0F2B4C] rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center transition-all duration-500 ease-out"
+         :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'">
+      <i data-lucide="calendar" class="size-12 text-[#D4AF37]"></i>
+      <div class="flex-1">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Join us on World Kiswahili Language Day</h3>
+        <p class="text-[#F0F8FF]/80 mb-0">
+          July 7, 2025 — The first African language recognized by the United Nations. A global celebration of Swahili heritage.
+        </p>
+      </div>
+      <a href="/events/kiswahili-day" class="shrink-0 inline-block bg-[#D4AF37] text-[#003366] hover:bg-[#c29b2a] rounded-full px-6 py-3 font-medium shadow-md transition-colors">
+        Get Tickets
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Events Section -->
+<section class="py-16 bg-[#F0F8FF]/50" x-data="{
+  events: {{ events|tojson }},
+  current: 0,
+  cardsToShow: 3,
+  get maxIndex() { return Math.max(0, this.events.length - this.getCardsToShow()) },
+  
+  init() {
+    this.setCardsToShow();
+    window.addEventListener('resize', () => this.setCardsToShow());
+  },
+  
+  setCardsToShow() {
+    if (window.innerWidth < 640) this.cardsToShow = 1;
+    else if (window.innerWidth < 1024) this.cardsToShow = 2;
+    else this.cardsToShow = 3;
+  },
+  
+  getCardsToShow() {
+    return this.cardsToShow;
+  },
+  
+  nextSlide() {
+    this.current = this.current === this.maxIndex ? 0 : this.current + 1;
+  },
+  
+  prevSlide() {
+    this.current = this.current === 0 ? this.maxIndex : this.current - 1;
+  }
+}">
+  <div class="container mx-auto px-4">
+    <!-- Section header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
+      <div>
+        <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+          Join Us
+        </h2>
+        <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-2">
+          Upcoming Events
+        </h3>
+        <p class="text-[#0F2B4C] max-w-xl">
+          Experience the richness of Swahili culture through our carefully curated events spanning multiple continents.
+        </p>
+      </div>
+      
+      <!-- Navigation arrows for larger screens -->
+      <div class="hidden md:flex items-center gap-2 mt-4 md:mt-0">
+        <button
+          @click="prevSlide()"
+          :disabled="current === 0"
+          class="rounded-full border border-[#2D8C9E] text-[#003366] hover:bg-[#2D8C9E] hover:text-white p-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <i data-lucide="chevron-left" class="size-5"></i>
+        </button>
+        <button
+          @click="nextSlide()"
+          :disabled="current === maxIndex"
+          class="rounded-full border border-[#2D8C9E] text-[#003366] hover:bg-[#2D8C9E] hover:text-white p-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <i data-lucide="chevron-right" class="size-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Card slider/carousel -->
+    <div class="relative overflow-hidden">
+      <div class="flex gap-6 cursor-grab transition-transform duration-500 ease-in-out"
+           :style="`transform: translateX(-${100 * current / cardsToShow}%)`">
+        <template x-for="(event, index) in events" :key="event.id">
+          <div :class="`${
+            cardsToShow === 1 
+              ? 'w-full flex-shrink-0' 
+              : cardsToShow === 2 
+                ? 'w-1/2 flex-shrink-0' 
+                : 'w-1/3 flex-shrink-0'
+          }`">
+            <div class="h-full overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow bg-white rounded-lg">
+              <div class="relative h-48 overflow-hidden">
+                <img
+                  :src="event.image"
+                  :alt="event.title"
+                  class="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
+                />
+                <div class="absolute top-4 left-4">
+                  <span class="bg-[#D4AF37] text-[#003366] font-medium px-3 py-1 rounded-full text-sm" x-text="event.tag"></span>
+                </div>
+              </div>
+              
+              <div class="pt-6 px-6">
+                <h4 class="text-xl font-bold text-[#003366] mb-3 truncate" x-text="event.title"></h4>
+                
+                <div class="space-y-2 mb-4">
+                  <div class="flex items-center gap-2 text-sm text-[#0F2B4C]">
+                    <i data-lucide="calendar" class="size-4 text-[#2D8C9E]"></i>
+                    <span x-text="event.date"></span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm text-[#0F2B4C]">
+                    <i data-lucide="clock" class="size-4 text-[#2D8C9E]"></i>
+                    <span x-text="event.time"></span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm text-[#0F2B4C]">
+                    <i data-lucide="map-pin" class="size-4 text-[#2D8C9E]"></i>
+                    <span x-text="event.location"></span>
+                  </div>
+                </div>
+                
+                <p class="text-sm text-[#0F2B4C] line-clamp-2 mb-4" x-text="event.description"></p>
+              </div>
+              
+              <div class="px-6 pb-6">
+                <a :href="`/events/${event.id}`" class="block w-full text-center py-2 px-4 bg-transparent hover:bg-transparent text-[#2D8C9E] hover:text-[#003366] border border-[#2D8C9E] hover:border-[#003366] rounded-lg transition-colors">
+                  Learn More
+                </a>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+      
+      <!-- Pagination indicators -->
+      <div class="flex justify-center items-center gap-2 mt-8">
+        <template x-for="(_, index) in Array.from({ length: maxIndex + 1 })" :key="index">
+          <button
+            @click="current = index"
+            :class="`h-2 rounded-full transition-all ${
+              current === index
+                ? 'w-8 bg-[#2D8C9E]'
+                : 'w-2 bg-[#2D8C9E]/30'
+            }`"
+            :aria-label="`Go to slide ${index + 1}`"
+          ></button>
+        </template>
+      </div>
+      
+      <!-- Mobile navigation arrows -->
+      <div class="flex items-center justify-between mt-6 md:hidden">
+        <button
+          @click="prevSlide()"
+          :disabled="current === 0"
+          class="rounded-full border border-[#2D8C9E] text-[#003366] px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+        >
+          <i data-lucide="chevron-left" class="size-4 mr-1"></i>
+          Previous
+        </button>
+        <button
+          @click="nextSlide()"
+          :disabled="current === maxIndex"
+          class="rounded-full border border-[#2D8C9E] text-[#003366] px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+        >
+          Next
+          <i data-lucide="chevron-right" class="size-4 ml-1"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- View all events button -->
+    <div class="flex justify-center mt-12">
+      <a href="/events" class="inline-block bg-[#003366] text-white hover:bg-[#0A4380] rounded-full px-6 py-6 shadow-md transition-colors">
+        View All Events
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Cultural Aspects Section -->
+<section class="py-16 md:py-24 relative overflow-hidden" x-data="{
+  selectedTab: 'language',
+  categories: [
+    {
+      id: 'language',
+      title: 'Swahili Language',
+      icon: 'book-open',
+      color: '#003366',
+      description: 'Discover the rich heritage of Kiswahili, spoken by over 230 million people worldwide. Learn about its Bantu origins and how it evolved through trade and cultural exchange.',
+      features: [
+        'One of the most widely spoken languages in Africa',
+        'Official language in multiple East African countries',
+        'First African language recognized by UNESCO',
+        'Rich literature and poetic tradition'
+      ],
+      didYouKnow: 'Swahili is the first African language recognized by UNESCO with its own international day - July 7th.',
+      image: "{{ url_for('static', filename='img/language.jpg') }}"
+    },
+    {
+      id: 'music',
+      title: 'Swahili Music & Dance',
+      icon: 'music',
+      color: '#C62828',
+      description: 'Experience the rhythms and movements that define Swahili cultural expression. From traditional coastal taarab to modern bongo flava, Swahili music blends African, Arabic, and global influences.',
+      features: [
+        'Taarab orchestral tradition',
+        'Chakacha coastal dance rhythms',
+        'Modern Bongo Flava fusion genre',
+        'Traditional and contemporary dance styles'
+      ],
+      didYouKnow: 'Taarab music blends African rhythms with Arabic scales and Western instruments into a unique coastal sound.',
+      image: "{{ url_for('static', filename='img/music.jpg') }}"
+    },
+    {
+      id: 'food',
+      title: 'Swahili Food',
+      icon: 'utensils',
+      color: '#006400',
+      description: 'Taste the unique flavors influenced by African, Arabic, Indian, and coastal traditions. Swahili cuisine features aromatic spices, coconut, seafood, and staple grains prepared with time-honored techniques.',
+      features: [
+        'Pilau and Biryani rice dishes',
+        'Coastal seafood specialties',
+        'Samaki wa kupaka (coconut fish curry)',
+        'Sweet mandazi and spicy street foods'
+      ],
+      didYouKnow: 'Swahili cuisine features over 12 distinct spice blends reflecting centuries of trade connections.',
+      image: "{{ url_for('static', filename='img/food.jpg') }}"
+    },
+    {
+      id: 'fashion',
+      title: 'Swahili Fashion',
+      icon: 'shirt',
+      color: '#FF7043',
+      description: 'Explore the colorful textiles and designs that represent Swahili identity. From vibrant kanga and kitenge fabrics to intricate hand-embroidered kofia hats, Swahili fashion blends practicality with artistic expression.',
+      features: [
+        'Kanga cloth with proverbs and sayings',
+        'Colorful kitenge textile traditions',
+        'Hand-embroidered kofia and garments',
+        'Contemporary African fashion design'
+      ],
+      didYouKnow: 'Kanga cloths include proverbs and sayings that communicate messages within the community.',
+      image: "{{ url_for('static', filename='img/fashion.jpg') }}"
+    },
+    {
+      id: 'heritage',
+      title: 'Swahili Heritage',
+      icon: 'landmark',
+      color: '#D4AF37',
+      description: 'Discover the rich historical legacy of Swahili civilization that developed along the East African coast through centuries of trade, cultural exchange, and urban development.',
+      features: [
+        'UNESCO World Heritage coastal towns',
+        'Stone Town architectural tradition',
+        'Maritime trading history',
+        'Oral traditions and storytelling'
+      ],
+      didYouKnow: 'Stone Town in Zanzibar is a UNESCO World Heritage site featuring unique Swahili architectural style.',
+      image: "{{ url_for('static', filename='img/heritage.jpg') }}"
+    }
+  ]
+}">
+  <!-- Background patterns -->
+  <div class="absolute inset-0 z-0 opacity-5 pointer-events-none bg-diagonal-pattern"></div>
+
+  <div class="container mx-auto px-4 relative z-10">
+    <!-- Section header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
+        Explore
+      </h2>
+      <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-4">
+        Cultural Aspects
+      </h3>
+      <p class="text-lg text-[#0F2B4C]">
+        Immerse yourself in the rich diversity of Swahili culture through its language, music, cuisine, fashion, and heritage. Each element tells a story of cultural exchange and innovation.
+      </p>
+    </div>
+
+    <!-- Tabbed interface -->
+    <div class="max-w-6xl mx-auto">
+      <!-- Category tabs -->
+      <div class="relative mb-16 w-full overflow-x-auto pb-4 sm:pb-0 no-scrollbar">
+        <div class="flex justify-start sm:justify-center bg-[#F0F8FF]/80 p-1 rounded-full h-auto min-w-max mx-auto">
+          <template x-for="category in categories" :key="category.id">
+            <button 
+              @click="selectedTab = category.id"
+              class="flex items-center gap-2 py-2 px-4 sm:px-5 rounded-full text-sm transition-all duration-300"
+              :style="{ 
+                backgroundColor: selectedTab === category.id ? category.color : 'transparent',
+                color: selectedTab === category.id ? 'white' : '#003366'
+              }"
+            >
+            <i :data-lucide="category.icon" class="size-4"></i>
+            <span class="hidden sm:inline whitespace-nowrap" x-text="category.title"></span>
+            <span class="sm:hidden whitespace-nowrap" x-text="category.title.split(' ')[0]"></span>
+          </button>
+        </template>
+      </div>
+      <!-- Scroll indicators for small screens -->
+      <div class="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-gradient-to-r from-white to-transparent sm:hidden"></div>
+      <div class="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-gradient-to-l from-white to-transparent sm:hidden"></div>
+    </div>
+
+    <!-- Tab content -->
+    <template x-for="category in categories" :key="category.id">
+      <div x-show="selectedTab === category.id" 
+           x-transition:enter="transition-opacity duration-300"
+           x-transition:enter-start="opacity-0"
+           x-transition:enter-end="opacity-100">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <!-- Content side -->
+          <div x-data="{ visible: false }" x-intersect="visible = true">
+            <div class="transition-all duration-700 ease-out"
+                 :class="visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'">
+              <div class="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-[#F0F8FF]">
+                <i :data-lucide="category.icon" class="size-5" :style="{ color: category.color }"></i>
+                <span class="font-medium text-[#003366]" x-text="category.title"></span>
+              </div>
+              
+              <h4 class="text-2xl sm:text-3xl font-bold text-[#003366] mb-4" 
+                  x-text="`Discover Swahili ${category.title.split(' ')[1] || category.title.split(' ')[0]}`"></h4>
+              
+              <p class="text-lg text-[#0F2B4C] mb-6" x-text="category.description"></p>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <template x-for="(feature, i) in category.features" :key="i">
+                  <div class="flex items-start gap-2">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center mt-1"
+                         :style="{ backgroundColor: category.color }">
+                      <div class="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                    <span class="text-sm text-[#0F2B4C]" x-text="feature"></span>
+                  </div>
+                </template>
+              </div>
+              
+              <div class="flex flex-wrap gap-3">
+                <a :href="`/culture/${category.id}`" 
+                   class="inline-flex items-center rounded-full px-6 py-3 shadow-md text-white"
+                   :style="{ backgroundColor: category.color }">
+                  Learn More <i data-lucide="arrow-right" class="size-4 ml-2"></i>
+                </a>
+                
+                <button class="inline-flex items-center rounded-full shadow-sm px-6 py-3 border hover:bg-[#F0F8FF]"
+                        :style="{ borderColor: category.color, color: '#003366' }">
+                  <i data-lucide="play-circle" class="size-4 mr-2"></i> Watch Video
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Image side -->
+          <div x-data="{ visible: false }" x-intersect="visible = true"
+               class="relative transition-all duration-600"
+               :class="visible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'">
+            <!-- Main image with border in category color -->
+            <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-4"
+                 :style="{ borderColor: category.color }">
+              <img :src="category.image"
+                   :alt="category.title"
+                   class="w-full h-80 lg:h-96 object-cover"
+              />
+            </div>
+            
+            <!-- Background decoration elements -->
+            <div class="absolute top-8 -right-8 w-40 h-40 rounded-full z-0"
+                 :style="{ backgroundColor: `${category.color}15` }"></div>
+            <div class="absolute -bottom-8 -left-8 w-60 h-60 rounded-full z-0"
+                 :style="{ backgroundColor: `${category.color}10` }"></div>
+            
+            <!-- Floating card with fact -->
+            <div class="absolute -bottom-6 -right-6 w-64 shadow-lg z-20 p-0 border-none bg-white/90 backdrop-blur-sm rounded-lg">
+              <div class="p-4">
+                <div class="flex items-start gap-3">
+                  <i :data-lucide="category.icon" class="size-5 mt-0.5" :style="{ color: category.color }"></i>
+                  <div>
+                    <h5 class="font-bold text-[#003366] text-sm">
+                      Did you know?
+                    </h5>
+                    <p class="text-xs text-[#0F2B4C] mt-1" x-text="category.didYouKnow"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    
+    <!-- CTA Section -->
+    <div class="mt-24 text-center">
+      <h4 class="text-2xl sm:text-3xl font-bold text-[#003366] mb-4">
+        Experience Swahili Culture Firsthand
+      </h4>
+      <p class="text-lg text-[#0F2B4C] max-w-2xl mx-auto mb-8">
+        Join us at our upcoming events to immerse yourself in the sights, sounds, tastes, and traditions of Swahili culture.
+      </p>
+      
+      <a href="/culture" class="inline-block bg-[#003366] text-white hover:bg-[#0A4380] rounded-full px-6 py-6 shadow-md transition-colors">
+        View All Cultural Programs
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+  <div class="bg-[#0F2B4C] text-white rounded-lg p-8 shadow-xl" x-data="{ email: '' }">
+    <div class="max-w-xl mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-3">Stay Connected</h2>
+      <p class="text-white/80 mb-6">Join our mailing list to receive updates on events, cultural activities, and community news.</p>
+      
+      <form @submit.prevent="fetch('/api/subscribe', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+              alert('Subscribed successfully!');
+              email = '';
+            })
+            .catch(error => alert('Error subscribing: ' + error))" 
+            class="flex flex-col sm:flex-row gap-3">
+        <input 
+          type="email" 
+          placeholder="Your email address" 
+          x-model="email"
+          class="flex-grow px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-[#D4AF37]"
+          required
+        >
+        <button 
+          type="submit"
+          class="bg-[#D4AF37] hover:bg-[#c29b2a] text-[#003366] font-semibold py-3 px-6 rounded-md transition-colors"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<!-- Initialize Lucide Icons -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  lucide.createIcons();
+});
+</script>
+{% endblock %}
