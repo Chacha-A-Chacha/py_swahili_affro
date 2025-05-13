@@ -12,6 +12,7 @@ from flask_mail import Mail
 # from flask_cors import CORS
 from flask_wtf import CSRFProtect
 
+from app.config import config
 
 # Initialize extensions
 db = SQLAlchemy()
