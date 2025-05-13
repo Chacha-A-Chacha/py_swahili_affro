@@ -1,0 +1,185 @@
+<!-- components/header.html -->
+<header
+    x-data="{
+        isScrolled: false,
+        isMobileMenuOpen: false,
+        isProductMenuOpen: false,
+        isCompanyMenuOpen: false,
+        isCulturalMenuOpen: false,
+        scrollProgress: 0,
+        init() {
+            window.addEventListener('scroll', () => {
+                this.isScrolled = window.scrollY > 10;
+                this.scrollProgress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            });
+        }
+    }"
+    x-init="init()"
+    :class="isScrolled ? 'bg-[#003366] py-2' : 'bg-[#0F2B4C] py-4'"
+    class="fixed top-0 left-0 w-full z-50 transition-all duration-300 shadow-md"
+>
+    <div class="container mx-auto px-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2">
+            <div class="flex items-center justify-center h-10 w-10 rounded-full bg-[#D4AF37]">
+                <i data-lucide="globe" class="size-5 text-[#003366]"></i>
+            </div>
+            <span class="text-xl font-bold text-[#F0F8FF] hidden sm:inline-block">
+                Swahili Afro <br> Jamboree
+            </span>
+            <span class="text-xl font-bold text-[#F0F8FF] sm:hidden">
+                SAJ
+            </span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-end gap-4 lg:gap-6 text-[#F0F8FF] font-normal text-sm">
+            <a href="/" class="hover:text-[#D4AF37] transition relative group py-2">
+                Home
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="/about" class="hover:text-[#D4AF37] transition relative group py-2">
+                About
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="/events" class="hover:text-[#D4AF37] transition relative group py-2">
+                Events
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="/news" class="hover:text-[#D4AF37] transition relative group py-2">
+                News & Media
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            
+            <!-- Cultural Aspects Dropdown -->
+            <div x-data="{ open: false }" class="relative">
+                <button 
+                    @click="open = !open" 
+                    @click.away="open = false"
+                    class="hover:text-[#D4AF37] transition flex items-center gap-1 py-2 outline-none focus:outline-none"
+                >
+                    Cultural Aspects 
+                    <i data-lucide="chevron-down" class="size-4"></i>
+                </button>
+                
+                <div 
+                    x-show="open" 
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 translate-y-1"
+                    class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-[#003366] border-[#2D8C9E] text-[#F0F8FF] shadow-lg"
+                    x-cloak
+                >
+                    <div class="p-2">
+                        <a href="/culture/language" class="block px-4 py-2 hover:bg-[#0F2B4C] hover:text-[#D4AF37] rounded-md">
+                            Swahili Language
+                        </a>
+                        <a href="/culture/music" class="block px-4 py-2 hover:bg-[#0F2B4C] hover:text-[#D4AF37] rounded-md">
+                            Music & Dance
+                        </a>
+                        <a href="/culture/food" class="block px-4 py-2 hover:bg-[#0F2B4C] hover:text-[#D4AF37] rounded-md">
+                            Swahili Food
+                        </a>
+                        <a href="/culture/fashion" class="block px-4 py-2 hover:bg-[#0F2B4C] hover:text-[#D4AF37] rounded-md">
+                            Fashion
+                        </a>
+                        <a href="/culture/heritage" class="block px-4 py-2 hover:bg-[#0F2B4C] hover:text-[#D4AF37] rounded-md">
+                            Heritage
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="/contact" class="hover:text-[#D4AF37] transition relative group py-2">
+                Contact
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
+            </a>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button 
+            @click="isMobileMenuOpen = !isMobileMenuOpen" 
+            class="md:hidden p-2 text-[#F0F8FF] hover:bg-[#2D8C9E]/20"
+            aria-label="Toggle mobile menu"
+        >
+            <i data-lucide="menu" class="size-6"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div 
+        x-show="isMobileMenuOpen" 
+        @click.away="isMobileMenuOpen = false"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-x-full"
+        x-transition:enter-end="opacity-100 translate-x-0"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 translate-x-0"
+        x-transition:leave-end="opacity-0 translate-x-full"
+        class="fixed inset-y-0 right-0 z-50 w-full flex-col justify-between overflow-y-auto bg-[#003366] sm:max-w-sm sm:border-l sm:border-[#2D8C9E]/30"
+        x-cloak
+    >
+        <div class="p-6">
+            <div class="flex items-center justify-between">
+                <a href="/" class="-m-1.5 p-1.5">
+                    <span class="sr-only">Swahili Afro Jamboree</span>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-[#D4AF37] flex items-center justify-center">
+                            <i data-lucide="globe" class="size-4 text-[#003366]"></i>
+                        </div>
+                        <span class="text-lg font-bold text-[#F0F8FF]">SAJ</span>
+                    </div>
+                </a>
+                <button @click="isMobileMenuOpen = false" class="-m-2.5 rounded-md p-2.5 text-[#F0F8FF]">
+                    <span class="sr-only">Close menu</span>
+                    <i data-lucide="x" class="size-6"></i>
+                </button>
+            </div>
+            <div class="mt-6 flow-root">
+                <div class="-my-6 divide-y divide-[#2D8C9E]/30">
+                    <div class="space-y-2 py-6">
+                        <a href="/" class="block -mx-3 px-3 py-2 text-base font-semibold text-[#F0F8FF] hover:text-[#D4AF37] transition">
+                            Home
+                        </a>
+                        <a href="/about" class="block -mx-3 px-3 py-2 text-base font-semibold text-[#F0F8FF] hover:text-[#D4AF37] transition">
+                            About
+                        </a>
+                        <a href="/events" class="block -mx-3 px-3 py-2 text-base font-semibold text-[#F0F8FF] hover:text-[#D4AF37] transition">
+                            Events
+                        </a>
+                        <a href="/news" class="block -mx-3 px-3 py-2 text-base font-semibold text-[#F0F8FF] hover:text-[#D4AF37] transition">
+                            News & Media
+                        </a>
+                        <a href="/culture" class="block -mx-3 px-3 py-2 text-base font-semibold text-[#F0F8FF] hover:text-[#D4AF37] transition">
+                            Cultural Aspects
+                        </a>
+                        
+                        <!-- Cultural Aspects Submenu in Mobile -->
+                        <div class="pl-4 flex flex-col gap-3 text-base text-[#F0F8FF]/80">
+                            <a href="/culture/language" class="hover:text-[#D4AF37]">Swahili Language</a>
+                            <a href="/culture/music" class="hover:text-[#D4AF37]">Music & Dance</a>
+                            <a href="/culture/food" class="hover:text-[#D4AF37]">Swahili Food</a>
+                            <a href="/culture/fashion" class="hover:text-[#D4AF37]">Fashion</a>
+                            <a href="/culture/heritage" class="hover:text-[#D4AF37]">Heritage</a>
+                        </div>
+                        
+                        <a href="/contact" class="block -mx-3 px-3 py-2 text-base font-semibold text-[#F0F8FF] hover:text-[#D4AF37] transition">
+                            Contact
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div 
+        class="h-1 bg-[#D4AF37] fixed top-0 left-0 z-50"
+        :style="'width: ' + scrollProgress + '%'"
+    ></div>
+</header>
+<!-- Spacer for fixed header -->
+<div class="h-20"></div>

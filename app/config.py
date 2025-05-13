@@ -34,3 +34,14 @@ class Config:
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', '')
                                     
+    # Cache Configuration
+    CACHE_TYPE = os.getenv('CACHE_TYPE', 'simple')
+    CACHE_TIMEOUT = int(os.getenv('CACHE_TIMEOUT', 21600))  # 6 hours
+    CACHE_KEY_PREFIX = 'swahili_culture_'
+    REDIS_URL = os.getenv('REDIS_URL', None)
+    
+    # CMS Configuration
+    CMS_API_KEY = os.getenv('CMS_API_KEY')
+    CMS_BASE_URL = os.getenv('CMS_BASE_URL')
+
+

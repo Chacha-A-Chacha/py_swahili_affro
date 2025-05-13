@@ -12,7 +12,8 @@ from flask_mail import Mail
 # from flask_cors import CORS
 from flask_wtf import CSRFProtect
 
-from app.config import config
+from .config import Config
+from app.utils.cache import configure_cache
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -24,7 +25,7 @@ csrf = CSRFProtect()
 # cors = CORS()
 
 
-def create_app(config_class=config.Config):
+def create_app(config_class=Config):
     """
     Create a Flask application instance.
     :param config_class: Configuration class to use for the app.
@@ -32,6 +33,9 @@ def create_app(config_class=config.Config):
     """
     app = Flask(__name__)
     app.config.from_object(config_class)
+
+    # Initialize cache
+    configure_cache(app)
 
     # Initialize extensions
     db.init_app(app)
