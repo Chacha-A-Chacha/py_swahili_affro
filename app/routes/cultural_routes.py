@@ -236,14 +236,183 @@ def fashion():
     """Traditional clothing and fashion page"""
     try:
         content = cms.get_content('fashion')
-        return render_template('cultural/fashion.html',
-                           traditional_wear=content.get('traditional'),
-                           modern_adaptations=content.get('modern'),
-                           designers=content.get('designers'))
+        
+        # Structure data for the template
+        page_data = {
+            "page_title": "Swahili Fashion",
+            "hero": {
+                "title": "Swahili Fashion",
+                "subtitle": "Traditional and Contemporary Textiles",
+                "description": "Explore the colorful textiles and designs that represent Swahili identity. From vibrant kanga and kitenge fabrics to intricate hand-embroidered kofia hats, Swahili fashion blends practicality with artistic expression.",
+                "background_image": content.get('hero', {}).get('background_image', url_for('static', filename='img/cultural/fashion-hero.jpg')),
+                "primary_button": {
+                    "text": "Explore Traditional Styles",
+                    "link": "#traditional"
+                },
+                "secondary_button": {
+                    "text": "Contemporary Designers",
+                    "link": "#designers"
+                },
+                "breadcrumbs": [
+                    {"label": "Cultural Aspects", "link": "/culture"},
+                    {"label": "Fashion", "link": None}
+                ]
+            },
+            "introduction": {
+                "title": "Textile Traditions of East Africa",
+                "description": "A vibrant aspect of cultural expression along the Swahili coast",
+                "content_paragraphs": [
+                    "Swahili fashion represents a vibrant aspect of cultural expression along the East African coast, characterized by colorful textiles, meaningful designs, and a blend of practical function with artistic beauty.",
+                    "The distinctive clothing traditions of Swahili culture reflect the region's historical position as a crossroads of African, Arabic, Indian, and European influences, creating unique styles that continue to evolve today.",
+                    "From traditional garments with centuries of history to contemporary adaptations by modern designers, Swahili textiles and fashion elements provide insights into cultural values, social communication, and artistic expression."
+                ]
+            },
+            "traditional_wear": content.get('traditional', []),
+            "modern_adaptations": content.get('modern', [
+                {
+                    "title": "Kanga-Inspired Contemporary Fashion",
+                    "category": "Textile Innovation",
+                    "description": "<p>Modern designers increasingly incorporate traditional kanga patterns and proverbs into contemporary clothing styles that appeal to global markets while honoring cultural heritage. These adaptations transform the rectangular cloth into structured garments with tailored silhouettes.</p><p>Some designers maintain the traditional messaging aspect of kanga by incorporating authentic proverbs or creating new sayings that resonate with contemporary issues and concerns, allowing the garments to maintain their cultural significance while adopting new forms.</p>",
+                    "image": url_for('static', filename='img/fashion/modern-kanga.jpg'),
+                    "tags": ["Contemporary", "Kanga-inspired", "Global Market"],
+                    "link": "/fashion/modern-kanga",
+                    "link_text": "View Collections"
+                },
+                {
+                    "title": "Urban Streetwear with Swahili Elements",
+                    "category": "Youth Fashion",
+                    "description": "<p>Urban youth in East African cities have developed distinctive streetwear styles that incorporate elements of Swahili textile traditions into contemporary casual fashion. T-shirts featuring kanga proverbs, kitenge-patterned sneakers, and accessories with traditional embroidery patterns represent this cultural fusion.</p><p>These adaptations help younger generations connect with cultural heritage in ways that feel relevant to their daily lives and aesthetic preferences, creating a dynamic conversation between tradition and innovation.</p>",
+                    "image": url_for('static', filename='img/fashion/urban-fashion.jpg'),
+                    "tags": ["Urban", "Youth", "Streetwear"],
+                    "link": "/fashion/urban-swahili",
+                    "link_text": "Explore Urban Style"
+                },
+                {
+                    "title": "Formal Wear with Traditional Touches",
+                    "category": "Occasion Wear",
+                    "description": "<p>Contemporary designers create formal wear that incorporates Swahili design elements for special occasions, including weddings, diplomatic events, and cultural celebrations. These garments often feature hand-embroidery techniques traditionally used on kofia hats applied to modern suit jackets or formal dresses.</p><p>This fusion approach allows individuals to honor cultural traditions while participating in contexts that might call for more internationally recognized formal attire, creating a distinctive sartorial statement that communicates cultural pride.</p>",
+                    "image": url_for('static', filename='img/fashion/formal-fusion.jpg'),
+                    "tags": ["Formal", "Occasion", "Embroidery"],
+                    "link": "/fashion/formal-traditional",
+                    "link_text": "View Formal Collections"
+                }
+            ]),
+            "designers": content.get('designers', [
+                {
+                    "name": "Farida Mohamed",
+                    "location": "Mombasa, Kenya",
+                    "image": url_for('static', filename='img/designers/farida-mohamed.jpg'),
+                    "bio": "Pioneer in contemporary kanga design who combines traditional sayings with modern silhouettes, creating pieces that bridge generations.",
+                    "styles": ["Kanga Innovation", "Women's Wear", "Sustainable"],
+                    "link": "/designers/farida-mohamed",
+                    "instagram": "https://instagram.com/faridadesigns",
+                    "website": "https://faridadesigns.com"
+                },
+                {
+                    "name": "Ibrahim Khalil",
+                    "location": "Zanzibar, Tanzania",
+                    "image": url_for('static', filename='img/designers/ibrahim-khalil.jpg'),
+                    "bio": "Specializes in modernizing traditional menswear, especially elaborately embroidered pieces inspired by historical kofia patterns.",
+                    "styles": ["Menswear", "Embroidery", "Formal"],
+                    "link": "/designers/ibrahim-khalil",
+                    "instagram": "https://instagram.com/ibrahimkhalildesigns",
+                    "website": "https://khalildesigns.com"
+                },
+                {
+                    "name": "Amina Hassan",
+                    "location": "Dar es Salaam, Tanzania",
+                    "image": url_for('static', filename='img/designers/amina-hassan.jpg'),
+                    "bio": "Award-winning kitenge designer whose bold patterns and innovative cuts have been featured in international fashion magazines.",
+                    "styles": ["Kitenge", "Contemporary", "Global"],
+                    "link": "/designers/amina-hassan",
+                    "instagram": "https://instagram.com/aminahassan",
+                    "website": "https://aminahassan.com"
+                },
+                {
+                    "name": "Omar Farid",
+                    "location": "Lamu, Kenya",
+                    "image": url_for('static', filename='img/designers/omar-farid.jpg'),
+                    "bio": "Sustainable fashion advocate who works with traditional artisans to create contemporary pieces using ancient textile techniques.",
+                    "styles": ["Sustainable", "Artisanal", "Fusion"],
+                    "link": "/designers/omar-farid",
+                    "instagram": "https://instagram.com/omarfaridstudio",
+                    "website": "https://omarfarid.co.ke"
+                },
+                {
+                    "name": "Zeina Mohammed",
+                    "location": "Mombasa, Kenya",
+                    "image": url_for('static', filename='img/designers/zeina-mohammed.jpg'),
+                    "bio": "Specializes in contemporary modest fashion that incorporates traditional Swahili textile elements with global modest wear trends.",
+                    "styles": ["Modest Fashion", "Contemporary", "Global"],
+                    "link": "/designers/zeina-mohammed",
+                    "instagram": "https://instagram.com/zeinadesigns",
+                    "website": "https://zeinadesigns.com"
+                },
+                {
+                    "name": "Abdul Rahman",
+                    "location": "Stone Town, Zanzibar",
+                    "image": url_for('static', filename='img/designers/abdul-rahman.jpg'),
+                    "bio": "Textile innovator who develops new printing techniques for traditional patterns, creating unique contemporary expressions of Swahili aesthetics.",
+                    "styles": ["Textile Innovation", "Color Exploration", "Artisanal"],
+                    "link": "/designers/abdul-rahman",
+                    "instagram": "https://instagram.com/abdulrahmanstudio",
+                    "website": "https://abdulrahman.studio"
+                }
+            ]),
+            "events": content.get('events', [
+                {
+                    "title": "Kanga & Kitenge Exhibition",
+                    "category": "Fashion",
+                    "color": "#FF7043",
+                    "date": "October 10-15, 2025",
+                    "location": "Dar es Salaam, Tanzania",
+                    "description": "Showcasing traditional textiles and contemporary designs that blend Swahili fashion elements with modern styles.",
+                    "link": "/events/kanga-kitenge-exhibition",
+                    "calendar_link": "#add-to-calendar-1"
+                },
+                {
+                    "title": "East African Fashion Week",
+                    "category": "Fashion",
+                    "color": "#FF7043",
+                    "date": "November 5-10, 2025",
+                    "location": "Nairobi, Kenya",
+                    "description": "Runway shows featuring leading Swahili fashion designers alongside other East African creatives, showcasing the region's diverse textile traditions.",
+                    "link": "/events/east-african-fashion-week",
+                    "calendar_link": "#add-to-calendar-2"
+                }
+            ]),
+            "resources": content.get('resources', [
+                {
+                    "title": "Kanga Messages & Meanings",
+                    "type": "Digital Guide",
+                    "description": "A comprehensive collection of traditional kanga sayings with their cultural contexts and interpretations.",
+                    "icon": "message-circle",
+                    "color": "#FF7043",
+                    "link": "/resources/kanga-messages"
+                },
+                {
+                    "title": "Traditional Embroidery Techniques",
+                    "type": "Video Series",
+                    "description": "Step-by-step demonstrations of the intricate stitching patterns used in kofia hats and other traditional garments.",
+                    "icon": "scissors",
+                    "color": "#FF7043",
+                    "link": "/resources/embroidery-techniques"
+                },
+                {
+                    "title": "Evolution of Swahili Fashion",
+                    "type": "eBook",
+                    "description": "Historical analysis of how Swahili textiles and garments have changed over time while maintaining cultural connections.",
+                    "icon": "book",
+                    "color": "#FF7043",
+                    "link": "/resources/swahili-fashion-evolution"
+                }
+            ])
+        }
+        
+        return render_template('cultural/fashion.html', **page_data)
     except Exception as e:
         current_app.logger.error(f"Fashion page error: {str(e)}")
-        return render_template('cultural/fashion.html',
-                           error=True)
+        return render_template('cultural/fashion.html', error=True)
 
 @cultural_bp.route('/heritage')
 @cache.cached(timeout=86400)  # 24-hour cache for less changing content
