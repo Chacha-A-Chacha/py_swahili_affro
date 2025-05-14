@@ -199,19 +199,185 @@ def swahili_language():
 def music_dance():
     """Traditional music and dance page"""
     try:
+        # Get region filter parameter from URL
+        region_filter = request.args.get('region', 'all')
+        
+        # Request data from CMS with region filter
         content_type = 'music-dance'
-        if request.args.get('region'):
-            content_type += f"?region={request.args['region']}"
+        if region_filter != 'all':
+            content_type += f"?region={region_filter}"
         
         content = cms.get_content(content_type)
-        return render_template('cultural/music_dance.html',
-                           performances=content.get('performances'),
-                           instruments=content.get('instruments'),
-                           regions=content.get('regions'))
+        
+        # Structure the data for the template
+        page_data = {
+            "page_title": "Swahili Music & Dance",
+            "current_region": region_filter,
+            "hero": {
+                "title": "Swahili Music & Dance",
+                "subtitle": "Rhythms and Movements of East Africa",
+                "description": "Experience the vibrant musical traditions and dance forms that express the cultural richness of Swahili communities through centuries of cultural exchange.",
+                "background_image": content.get('hero', {}).get('background_image', url_for('static', filename='img/cultural/music-dance-hero.jpg')),
+                "primary_button": {
+                    "text": "Explore Music Styles",
+                    "link": "#genres"
+                },
+                "secondary_button": {
+                    "text": "Watch Performances",
+                    "link": "#performances"
+                },
+                "breadcrumbs": [
+                    {"label": "Cultural Aspects", "link": "/culture"},
+                    {"label": "Music & Dance", "link": None}
+                ]
+            },
+            "introduction": {
+                "title": "The Sound of Swahili Identity",
+                "description": "Musical traditions that blend African rhythms with influences from across the Indian Ocean",
+                "content_paragraphs": [
+                    "Swahili music represents a vibrant fusion of African rhythms, Arabic melodies, and various global influences that have shaped the East African coastal culture over centuries. This musical tradition serves as a powerful medium for cultural expression, storytelling, and celebration within Swahili communities.",
+                    "From traditional taarab orchestras to contemporary bongo flava artists, Swahili music continues to evolve while maintaining connections to its rich heritage. Each style reflects historical connections and cultural exchanges that have defined Swahili civilization.",
+                    "Dance traditions are equally integral to Swahili cultural expression, with various forms serving specific social functions from coming-of-age ceremonies to wedding celebrations, each with its own characteristic movements and accompanying musical styles."
+                ]
+            },
+            "regions": content.get('regions', [
+                {"id": "all", "name": "All Regions"},
+                {"id": "zanzibar", "name": "Zanzibar"},
+                {"id": "mombasa", "name": "Mombasa"},
+                {"id": "lamu", "name": "Lamu"},
+                {"id": "dar", "name": "Dar es Salaam"},
+                {"id": "tanga", "name": "Tanga"}
+            ]),
+            "performances": content.get('performances', [
+                {
+                    "title": "Chama Dance",
+                    "region": "Zanzibar",
+                    "description": "A celebratory dance traditionally performed during wedding ceremonies in Zanzibar, featuring rhythmic movements and call-and-response singing between performers and audience.",
+                    "image": url_for('static', filename='img/cultural/chama-dance.jpg'),
+                    "video_url": "#chama-video",
+                    "tags": ["Wedding", "Celebratory", "Group Performance"],
+                    "link": "/culture/music/chama"
+                },
+                {
+                    "title": "Goma Dance",
+                    "region": "Mombasa",
+                    "description": "A traditional dance form from the Kenyan coast featuring powerful drumming and synchronized movements, often performed during cultural festivals and community gatherings.",
+                    "image": url_for('static', filename='img/cultural/goma-dance.jpg'),
+                    "video_url": "#goma-video",
+                    "tags": ["Drumming", "Festival", "Traditional"],
+                    "link": "/culture/music/goma"
+                },
+                {
+                    "title": "Lelemama",
+                    "region": "Lamu",
+                    "description": "A graceful women's dance from Lamu Island that features gentle swaying movements and intricate hand gestures, typically performed during special celebrations and cultural events.",
+                    "image": url_for('static', filename='img/cultural/lelemama-dance.jpg'),
+                    "video_url": "#lelemama-video",
+                    "tags": ["Women's Dance", "Ceremonial", "Elegant"],
+                    "link": "/culture/music/lelemama"
+                },
+                {
+                    "title": "Msondo",
+                    "region": "Dar es Salaam",
+                    "description": "An energetic dance characterized by rapid hip movements and complex footwork, traditionally accompanied by percussion instruments including the msondo drum that gives it its name.",
+                    "image": url_for('static', filename='img/cultural/msondo-dance.jpg'),
+                    "video_url": "#msondo-video",
+                    "tags": ["Percussion", "Energetic", "Urban"],
+                    "link": "/culture/music/msondo"
+                }
+            ]),
+            "instruments": content.get('instruments', [
+                {
+                    "name": "Oud",
+                    "origin": "Arab-influenced",
+                    "image": url_for('static', filename='img/instruments/oud.jpg'),
+                    "description": "A pear-shaped stringed instrument central to taarab music, introduced through Arab cultural influences and adapted for Swahili musical contexts."
+                },
+                {
+                    "name": "Ngoma",
+                    "origin": "East African",
+                    "image": url_for('static', filename='img/instruments/ngoma.jpg'),
+                    "description": "Various types of traditional drums that form the rhythmic foundation of many Swahili musical styles, played with hands or sticks depending on the specific tradition."
+                },
+                {
+                    "name": "Qanun",
+                    "origin": "Middle Eastern",
+                    "image": url_for('static', filename='img/instruments/qanun.jpg'),
+                    "description": "A flat, trapezoidal string instrument played in traditional taarab orchestras, featuring 72 strings arranged in groups of three."
+                },
+                {
+                    "name": "Taishokoto",
+                    "origin": "Japanese-influenced",
+                    "image": url_for('static', filename='img/instruments/taishokoto.jpg'),
+                    "description": "A unique string instrument that became popular in taarab music, demonstrating the global influences on Swahili musical traditions through trade networks."
+                },
+                {
+                    "name": "Nai",
+                    "origin": "Persian-influenced",
+                    "image": url_for('static', filename='img/instruments/nai.jpg'),
+                    "description": "An end-blown reed flute used in taarab ensembles, capable of producing the quarter tones essential to Arabic-influenced melodic patterns."
+                },
+                {
+                    "name": "Kayamba",
+                    "origin": "Coastal Kenya",
+                    "image": url_for('static', filename='img/instruments/kayamba.jpg'),
+                    "description": "A rectangular flat rattle filled with seeds or small stones, played by shaking to produce rhythmic accompaniment in various traditional styles."
+                }
+            ]),
+            "events": content.get('events', [
+                {
+                    "title": "Swahili Music Festival",
+                    "category": "Music",
+                    "color": "#C62828",
+                    "date": "August 15-17, 2025",
+                    "location": "Stone Town, Zanzibar",
+                    "description": "A three-day celebration of Swahili musical traditions featuring performances by leading taarab orchestras, contemporary artists, and traditional dance troupes.",
+                    "link": "/events/swahili-music-festival-2025",
+                    "calendar_link": "#add-to-calendar-1"
+                },
+                {
+                    "title": "Bongo Flava Showcase",
+                    "category": "Music",
+                    "color": "#C62828",
+                    "date": "September 5, 2025",
+                    "location": "Dar es Salaam, Tanzania",
+                    "description": "A concert highlighting the evolution of Tanzania's distinctive hip-hop genre with performances from established stars and emerging artists.",
+                    "link": "/events/bongo-flava-showcase-2025",
+                    "calendar_link": "#add-to-calendar-2"
+                }
+            ]),
+            "resources": content.get('resources', [
+                {
+                    "title": "Swahili Musical Instruments Guide",
+                    "type": "Reference",
+                    "description": "A comprehensive guide to traditional instruments used in Swahili music, including their history, construction, and playing techniques.",
+                    "icon": "music",
+                    "color": "#C62828",
+                    "link": "/resources/swahili-instruments-guide"
+                },
+                {
+                    "title": "History of Taarab Music",
+                    "type": "eBook",
+                    "description": "An illustrated exploration of taarab's development from the 19th century to today, with profiles of influential musicians and orchestras.",
+                    "icon": "book",
+                    "color": "#C62828",
+                    "link": "/resources/taarab-history-ebook"
+                },
+                {
+                    "title": "Learn Swahili Dance Moves",
+                    "type": "Video Series",
+                    "description": "Step-by-step instructional videos teaching basic movements from various traditional Swahili dance forms with cultural context.",
+                    "icon": "video",
+                    "color": "#C62828",
+                    "link": "/resources/swahili-dance-tutorials"
+                }
+            ])
+        }
+        
+        return render_template('cultural/music_dance.html', **page_data)
     except Exception as e:
         current_app.logger.error(f"Music & Dance page error: {str(e)}")
-        return render_template('cultural/music_dance.html',
-                           error=True)
+        return render_template('cultural/music_dance.html', error=True)
 
 @cultural_bp.route('/swahili-food')
 @cache.cached(timeout=1800)  # 30 minute cache for frequently updated content
