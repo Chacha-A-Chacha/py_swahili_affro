@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import inner_page_hero, feature_list, content_section, resource_card, event_card %}
+
+{% block title %}{{ page_title }} | Swahili Afro Jamboree{% endblock %}
+
+{% block content %}
+    {# Hero Section #}
+    {{ inner_page_hero(
+        title=hero.title,
+        subtitle=hero.subtitle,
+        description=hero.description,
+        background_image=hero.background_image,
+        primary_button_text=hero.primary_button.text if hero.primary_button else None,
+        primary_button_link=hero.primary_button.link if hero.primary_button else None,
+        secondary_button_text=hero.secondary_button.text if hero.secondary_button else None,
+        secondary_button_link=hero.secondary_button.link if hero.secondary_button else None,
+        breadcrumbs=hero.breadcrumbs
+    ) }}
+    
+    {# Introduction Section #}
+    <section class="py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-4">
+                    {{ introduction.title }}
+                </h2>
+                <p class="text-lg text-[#0F2B4C] mb-10">
+                    {{ introduction.description }}
+                </p>
+                
+                <div class="text-left space-y-4">
+                    {% for paragraph in introduction.content_paragraphs %}
+                        <p class="text-[#0F2B4C]">{{ paragraph }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    {# Main Content Block - Will be overridden by individual templates #}
+    {% block cultural_content %}{% endblock %}
+    
+    {# Related Events Section - If provided #}
+    {% if events %}
+    <section id="events" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-[#003366] mb-4">Related Events</h2>
+                    <p class="text-[#0F2B4C] max-w-3xl mx-auto">
+                        Experience {{ hero.title }} firsthand through our upcoming events and celebrations
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for event in events %}
+                        {{ event_card(event) }}
+                    {% endfor %}
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <a href="/events" class="inline-block bg-[#003366] text-white hover:bg-[#0A4380] rounded-full px-8 py-3 shadow-md">
+                        View All Events <i data-lucide="arrow-right" class="inline-block size-4 ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+    {# Resources Section - If provided #}
+    {% if resources %}
+    <section class="py-16 md:py-24 bg-[#F0F8FF]/30">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-[#003366] mb-4">Learning Resources</h2>
+                    <p class="text-[#0F2B4C] max-w-3xl mx-auto">
+                        Deepen your understanding of {{ hero.title }} through our curated educational materials
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for resource in resources %}
+                        {{ resource_card(resource) }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+    {# Call to Action Section #}
+    <section class="py-16 bg-[#003366] text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6">Join Our Cultural Community</h2>
+                <p class="text-lg text-white/80 mb-8">
+                    Become part of our global community dedicated to celebrating, preserving, and sharing Swahili cultural heritage.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="/membership" class="inline-block bg-[#D4AF37] text-[#003366] hover:bg-[#c29b2a] rounded-full px-6 py-3 font-medium shadow-md">
+                        Become a Member
+                    </a>
+                    <a href="/contact" class="inline-block border border-white text-white hover:bg-white/10 rounded-full px-6 py-3">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
