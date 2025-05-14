@@ -1,0 +1,489 @@
+{% extends "cultural/cultural_base.html" %}
+{% from "components/macros.html" import inner_page_hero, feature_list, content_section, resource_card, event_card %}
+
+{% block cultural_content %}
+<section class="py-16 md:py-24 bg-[#F0F8FF]/30">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#003366] mb-4">Swahili Cuisine</h2>
+                <p class="text-[#0F2B4C] max-w-3xl mx-auto">
+                    Discover the unique flavors of East African coastal cuisine, blending African, Arabic, Indian, and European influences
+                </p>
+            </div>
+            
+            <!-- Recipe Type selector -->
+            <div class="mb-12 bg-white rounded-xl p-6 shadow-sm">
+                <h3 class="text-xl font-bold text-[#003366] mb-4">Browse by Category</h3>
+                
+                <div 
+                    x-data="{ selectedType: '{{ recipe_type }}' }"
+                    class="flex flex-wrap gap-3"
+                >
+                    <a 
+                        href="?type=all"
+                        @click.prevent="selectedType = 'all'; window.location.href = '?type=all'"
+                        :class="[
+                            selectedType === 'all' 
+                                ? 'bg-[#006400] text-white' 
+                                : 'bg-white text-[#0F2B4C] hover:bg-[#006400]/10 hover:text-[#006400]',
+                            'px-4 py-2 rounded-full text-sm font-medium transition-colors'
+                        ]"
+                    >
+                        All Dishes
+                    </a>
+                    
+                    {% for category in categories %}
+                    <a 
+                        href="?type={{ category.id }}"
+                        @click.prevent="selectedType = '{{ category.id }}'; window.location.href = '?type={{ category.id }}'"
+                        :class="[
+                            selectedType === '{{ category.id }}' 
+                                ? 'bg-[#006400] text-white' 
+                                : 'bg-white text-[#0F2B4C] hover:bg-[#006400]/10 hover:text-[#006400]',
+                            'px-4 py-2 rounded-full text-sm font-medium transition-colors'
+                        ]"
+                    >
+                        {{ category.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Featured Recipes -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Featured Dishes</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {% for recipe in featured_recipes %}
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                        <div class="relative aspect-square">
+                            <img 
+                                src="{{ recipe.image }}" 
+                                alt="{{ recipe.title }}"
+                                class="w-full h-full object-cover"
+                            />
+                            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            
+                            <div class="absolute bottom-0 left-0 p-4 w-full">
+                                <div class="flex flex-wrap gap-2 mb-2">
+                                    <span class="inline-block px-2 py-1 bg-[#006400] text-white text-xs font-medium rounded-full">
+                                        {{ recipe.category }}
+                                    </span>
+                                    {% if recipe.is_vegetarian %}
+                                    <span class="inline-block px-2 py-1 bg-[#006400]/20 text-[#006400] text-xs font-medium rounded-full">
+                                        Vegetarian
+                                    </span>
+                                    {% endif %}
+                                    {% if recipe.difficulty %}
+                                    <span class="inline-block px-2 py-1 bg-white/20 text-white text-xs font-medium rounded-full backdrop-blur-sm">
+                                        {{ recipe.difficulty }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                
+                                <h4 class="text-xl font-bold text-white mb-1">{{ recipe.title }}</h4>
+                                <p class="text-white/80 text-sm line-clamp-2">
+                                    {{ recipe.short_description }}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <div class="flex justify-between items-center text-sm text-[#0F2B4C]/70 mb-4">
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="clock" class="size-4 text-[#006400]"></i>
+                                    <span>{{ recipe.prep_time }}</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="utensils" class="size-4 text-[#006400]"></i>
+                                    <span>{{ recipe.servings }} servings</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center">
+                                <a 
+                                    href="{{ recipe.link }}" 
+                                    class="inline-flex items-center text-[#006400] hover:text-[#003366] transition-colors"
+                                >
+                                    View Recipe
+                                    <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                                </a>
+                                
+                                <button class="text-[#0F2B4C]/50 hover:text-[#006400] transition-colors">
+                                    <i data-lucide="bookmark" class="size-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <a 
+                        href="/recipes" 
+                        class="inline-flex items-center gap-2 px-6 py-3 bg-[#006400] text-white rounded-full hover:bg-[#004d00] transition-colors"
+                    >
+                        View All Recipes
+                        <i data-lucide="chevron-right" class="size-4"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Key Ingredients Section -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Essential Swahili Ingredients</h3>
+                
+                <div class="bg-white rounded-xl p-6 shadow-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Spices -->
+                        <div class="bg-[#006400]/5 rounded-lg p-4">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-[#006400]/20 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="flame" class="size-6 text-[#006400]"></i>
+                                </div>
+                                <h4 class="text-lg font-bold text-[#003366]">Spices</h4>
+                            </div>
+                            
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/ingredients/cardamom.jpg') }}" 
+                                        alt="Cardamom"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h5 class="font-bold text-[#006400]">Cardamom (Iliki)</h5>
+                                        <p class="text-sm text-[#0F2B4C]">
+                                            Essential in pilau and sweet dishes, known for its aromatic qualities.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/ingredients/cloves.jpg') }}" 
+                                        alt="Cloves"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h5 class="font-bold text-[#006400]">Cloves (Karafuu)</h5>
+                                        <p class="text-sm text-[#0F2B4C]">
+                                            Grown extensively in Zanzibar, used in both savory and sweet dishes.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/ingredients/cinnamon.jpg') }}" 
+                                        alt="Cinnamon"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h5 class="font-bold text-[#006400]">Cinnamon (Mdalasini)</h5>
+                                        <p class="text-sm text-[#0F2B4C]">
+                                            Adds warmth to rice dishes and desserts.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Staples -->
+                        <div class="bg-[#006400]/5 rounded-lg p-4">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-[#006400]/20 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="wheat" class="size-6 text-[#006400]"></i>
+                                </div>
+                                <h4 class="text-lg font-bold text-[#003366]">Staples</h4>
+                            </div>
+                            
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/ingredients/coconut.jpg') }}" 
+                                        alt="Coconut"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h5 class="font-bold text-[#006400]">Coconut (Nazi)</h5>
+                                        <p class="text-sm text-[#0F2B4C]">
+                                            Used in multiple forms - milk, flesh, and oil - in countless dishes.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/ingredients/rice.jpg') }}" 
+                                        alt="Rice"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h5 class="font-bold text-[#006400]">Rice (Wali/Mchele)</h5>
+                                        <p class="text-sm text-[#0F2B4C]">
+                                            The foundation of many meals, prepared in various styles.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/ingredients/cassava.jpg') }}" 
+                                        alt="Cassava"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h5 class="font-bold text-[#006400]">Cassava (Muhogo)</h5>
+                                        <p class="text-sm text-[#0F2B4C]">
+                                            Versatile root vegetable served boiled, fried, or in stews.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Proteins -->
+                        <div class="bg-[#006400]/5 rounded-lg p-4">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-[#006400]/20 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="fish" class="size-6 text-[#006400]"></i>
+                                </div>
+                                <h4 class="text-lg font-bold text-[#003366]">Proteins</h4>
+                            </div>
+                            
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/ingredients/fish.jpg') }}" 
+                                        alt="Seafood"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h5 class="font-bold text-[#006400]">Seafood (Samaki)</h5>
+                                        <p class="text-sm text-[#0F2B4C]">
+                                            Fresh catches from the Indian Ocean, central to coastal cuisine.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/ingredients/beans.jpg') }}" 
+                                        alt="Beans"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h5 class="font-bold text-[#006400]">Beans (Maharagwe)</h5>
+                                        <p class="text-sm text-[#0F2B4C]">
+                                            Important plant protein often cooked with coconut milk.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/ingredients/chicken.jpg') }}" 
+                                        alt="Chicken"
+                                        class="w-12 h-12 rounded-full object-cover border-2 border-white flex-shrink-0"
+                                    />
+                                    <div>
+                                        <h5 class="font-bold text-[#006400]">Chicken (Kuku)</h5>
+                                        <p class="text-sm text-[#0F2B4C]">
+                                            Commonly prepared with spices in dishes like kuku wa kupaka.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 text-center">
+                        <a href="/ingredients" class="inline-flex items-center text-[#006400] hover:text-[#003366] transition-colors">
+                            View Complete Ingredient Guide
+                            <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cooking Techniques -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Traditional Cooking Techniques</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="relative rounded-xl overflow-hidden shadow-md group">
+                        <img 
+                            src="{{ url_for('static', filename='img/cultural/clay-pot-cooking.jpg') }}" 
+                            alt="Clay pot cooking"
+                            class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Clay Pot Cooking (Chungu)</h4>
+                            <p class="text-white/80 mb-4">Traditional clay pots impart distinct earthy flavors to stews and curries while retaining heat evenly.</p>
+                            <a href="/techniques/clay-pot" class="inline-flex items-center text-[#D4AF37] hover:text-white transition-colors">
+                                Learn More
+                                <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative rounded-xl overflow-hidden shadow-md group">
+                        <img 
+                            src="{{ url_for('static', filename='img/cultural/charcoal-grilling.jpg') }}" 
+                            alt="Charcoal grilling"
+                            class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Charcoal Grilling (Kuchoma)</h4>
+                            <p class="text-white/80 mb-4">Seafood and meats grilled over charcoal develop smoky flavors central to coastal street food traditions.</p>
+                            <a href="/techniques/grilling" class="inline-flex items-center text-[#D4AF37] hover:text-white transition-colors">
+                                Learn More
+                                <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cooking Classes Promotion -->
+            <div class="bg-white rounded-xl p-8 shadow-sm mb-16">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-[#006400]/10 text-[#006400] text-sm font-medium rounded-full mb-4">
+                            Culinary Experiences
+                        </span>
+                        <h3 class="text-2xl font-bold text-[#003366] mb-4">Learn to Cook Swahili Cuisine</h3>
+                        <p class="text-[#0F2B4C] mb-6">
+                            Join our virtual and in-person cooking classes led by experienced chefs from East Africa. Master authentic recipes and traditional techniques in interactive sessions suitable for all skill levels.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-4">
+                            <a href="/cooking-classes" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#006400] text-white rounded-full hover:bg-[#004d00] transition-colors">
+                                <i data-lucide="utensils" class="size-5"></i>
+                                View Upcoming Classes
+                            </a>
+                            <a href="/recipes/video" class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#006400] text-[#006400] rounded-full hover:bg-[#006400]/10 transition-colors">
+                                <i data-lucide="video" class="size-5"></i>
+                                Watch Recipe Videos
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="aspect-square rounded-lg overflow-hidden shadow-sm">
+                            <img 
+                                src="{{ url_for('static', filename='img/cooking-classes/class-1.jpg') }}" 
+                                alt="Cooking class making pilau"
+                                class="w-full h-full object-cover"
+                            />
+                        </div>
+                        <div class="aspect-square rounded-lg overflow-hidden shadow-sm">
+                            <img 
+                                src="{{ url_for('static', filename='img/cooking-classes/class-2.jpg') }}" 
+                                alt="Learning to make samosas"
+                                class="w-full h-full object-cover"
+                            />
+                        </div>
+                        <div class="aspect-square rounded-lg overflow-hidden shadow-sm">
+                            <img 
+                                src="{{ url_for('static', filename='img/cooking-classes/class-3.jpg') }}" 
+                                alt="Preparing seafood dish"
+                                class="w-full h-full object-cover"
+                            />
+                        </div>
+                        <div class="aspect-square rounded-lg overflow-hidden shadow-sm">
+                            <img 
+                                src="{{ url_for('static', filename='img/cooking-classes/class-4.jpg') }}" 
+                                alt="Making traditional desserts"
+                                class="w-full h-full object-cover"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cultural Significance -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Cultural Significance of Swahili Food</h3>
+                
+                <div class="bg-[#F0F8FF]/80 rounded-xl p-6 shadow-sm">
+                    <div class="prose prose-lg max-w-none">
+                        <p>
+                            Food in Swahili culture extends far beyond sustenance, serving as a vehicle for cultural identity, community connection, and historical remembrance. Cooking methods and recipes passed down through generations maintain connections to traditions while evolving with contemporary influences.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Communal Dining Traditions</h4>
+                                <p class="text-[#0F2B4C]">
+                                    Swahili meals are traditionally shared experiences, with family members and guests gathered around large communal platters. This practice reinforces social bonds and hospitality values central to the culture.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Celebratory Feasts</h4>
+                                <p class="text-[#0F2B4C]">
+                                    Religious and cultural celebrations feature elaborate feasts with specific dishes marking different occasions, from Eid festivities to weddings and community gatherings.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <p>
+                            The exchange of culinary techniques and ingredients through trade routes has historically defined Swahili cuisine, creating a living archive of cultural connections spanning the Indian Ocean world. Today's Swahili food practices continue to adapt while maintaining distinctive flavors and preparation methods that identify the coastal culture.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recipe Collections -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+                <div class="p-6 border-b border-gray-100">
+                    <h3 class="text-xl font-bold text-[#003366]">Recipe Collections</h3>
+                    <p class="text-[#0F2B4C]">Explore curated collections highlighting different aspects of Swahili cuisine</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                    <a href="/recipes/collections/coastal" class="p-6 hover:bg-[#F0F8FF]/30 transition-colors">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-full bg-[#006400]/10 flex items-center justify-center">
+                                <i data-lucide="fish" class="size-5 text-[#006400]"></i>
+                            </div>
+                            <h4 class="font-bold text-[#003366]">Coastal Seafood</h4>
+                        </div>
+                        <p class="text-sm text-[#0F2B4C] mb-3">
+                            Fresh catches from the Indian Ocean prepared with traditional spices and techniques
+                        </p>
+                        <span class="text-[#006400] text-sm font-medium">12 recipes <i data-lucide="arrow-right" class="size-4 inline-block ml-1"></i></span>
+                    </a>
+                    
+                    <a href="/recipes/collections/vegetarian" class="p-6 hover:bg-[#F0F8FF]/30 transition-colors">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-full bg-[#006400]/10 flex items-center justify-center">
+                                <i data-lucide="sprout" class="size-5 text-[#006400]"></i>
+                            </div>
+                            <h4 class="font-bold text-[#003366]">Vegetarian Dishes</h4>
+                        </div>
+                        <p class="text-sm text-[#0F2B4C] mb-3">
+                            Plant-based recipes featuring beans, vegetables, and aromatic spices
+                        </p>
+                        <span class="text-[#006400] text-sm font-medium">8 recipes <i data-lucide="arrow-right" class="size-4 inline-block ml-1"></i></span>
+                    </a>
+                    
+                    <a href="/recipes/collections/street-food" class="p-6 hover:bg-[#F0F8FF]/30 transition-colors">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-full bg-[#006400]/10 flex items-center justify-center">
+                                <i data-lucide="utensils" class="size-5 text-[#006400]"></i>
+                            </div>
+                            <h4 class="font-bold text-[#003366]">Street Food Favorites</h4>
+                        </div>
+                        <p class="text-sm text-[#0F2B4C] mb-3">
+                            Popular snacks and quick meals found in markets and street corners along the coast
+                        </p>
+                        <span class="text-[#006400] text-sm font-medium">10 recipes <i data-lucide="arrow-right" class="size-4 inline-block ml-1"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

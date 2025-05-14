@@ -221,14 +221,135 @@ def swahili_food():
         recipe_type = request.args.get('type', 'all')
         content = cms.get_content(f'swahili-food?type={recipe_type}')
         
-        return render_template('cultural/swahili_food.html',
-                           featured_recipes=content.get('featured'),
-                           categories=content.get('categories'),
-                           recipe_type=recipe_type)
+        # Structure data for the template
+        page_data = {
+            "page_title": "Swahili Food",
+            "recipe_type": recipe_type,
+            "hero": {
+                "title": "Swahili Cuisine",
+                "subtitle": "The Flavors of East Africa",
+                "description": "Discover the unique flavors influenced by African, Arabic, Indian, and coastal traditions. Swahili cuisine features aromatic spices, coconut, seafood, and staple grains prepared with time-honored techniques.",
+                "background_image": content.get('hero', {}).get('background_image', url_for('static', filename='img/cultural/food-hero.jpg')),
+                "primary_button": {
+                    "text": "Explore Recipes",
+                    "link": "#recipes"
+                },
+                "secondary_button": {
+                    "text": "Cooking Techniques",
+                    "link": "#techniques"
+                },
+                "breadcrumbs": [
+                    {"label": "Cultural Aspects", "link": "/culture"},
+                    {"label": "Swahili Food", "link": None}
+                ]
+            },
+            "introduction": {
+                "title": "A Culinary Fusion of Cultures",
+                "description": "Traditional dishes shaped by centuries of trade and cultural exchange",
+                "content_paragraphs": [
+                    "Swahili cuisine represents a fascinating culinary fusion that has evolved through centuries of cultural exchange along the East African coast. Drawing influences from indigenous African cooking techniques, Arabic spice traditions, Indian flavor profiles, and Portuguese ingredients, Swahili food stands as a testament to the region's rich trading history.",
+                    "Central to Swahili cooking is the skilled use of spices. Complex blends featuring cardamom, cinnamon, cloves, cumin, and black pepper—many of which were historically traded through Swahili ports—create distinctive flavor profiles unique to this cuisine.",
+                    "Seafood naturally plays a central role in coastal Swahili cuisine, with preparations highlighting fresh catches prepared with traditional techniques including grilling, frying, or slow-cooking in flavorful sauces, often featuring coconut milk as a key ingredient."
+                ]
+            },
+            "categories": content.get('categories', [
+                {"id": "main", "name": "Main Dishes"},
+                {"id": "seafood", "name": "Seafood"},
+                {"id": "rice", "name": "Rice Dishes"},
+                {"id": "stews", "name": "Stews & Curries"},
+                {"id": "street", "name": "Street Food"},
+                {"id": "bread", "name": "Breads"},
+                {"id": "dessert", "name": "Desserts"}
+            ]),
+            "featured_recipes": content.get('featured', [
+                {
+                    "title": "Pilau ya Nyama",
+                    "short_description": "Aromatic spiced rice with tender meat and a blend of traditional spices - the cornerstone of Swahili celebrations.",
+                    "category": "Rice Dishes",
+                    "is_vegetarian": False,
+                    "difficulty": "Intermediate",
+                    "prep_time": "1 hour 30 min",
+                    "servings": 6,
+                    "image": url_for('static', filename='img/recipes/pilau.jpg'),
+                    "link": "/recipes/pilau-ya-nyama"
+                },
+                {
+                    "title": "Samaki wa Kupaka",
+                    "short_description": "Grilled fish coated in a rich coconut sauce spiced with garlic, ginger, and tamarind - a coastal specialty.",
+                    "category": "Seafood",
+                    "is_vegetarian": False,
+                    "difficulty": "Intermediate",
+                    "prep_time": "45 min",
+                    "servings": 4,
+                    "image": url_for('static', filename='img/recipes/samaki-kupaka.jpg'),
+                    "link": "/recipes/samaki-wa-kupaka"
+                },
+                {
+                    "title": "Mandazi",
+                    "short_description": "Lightly sweetened fried bread with a hint of cardamom, perfect as a breakfast treat or afternoon snack.",
+                    "category": "Breads",
+                    "is_vegetarian": True,
+                    "difficulty": "Easy",
+                    "prep_time": "40 min",
+                    "servings": 12,
+                    "image": url_for('static', filename='img/recipes/mandazi.jpg'),
+                    "link": "/recipes/mandazi"
+                }
+            ]),
+            "events": content.get('events', [
+                {
+                    "title": "Swahili Cuisine Showcase",
+                    "category": "Food",
+                    "color": "#006400",
+                    "date": "September 15-16, 2025",
+                    "location": "Mombasa, Kenya",
+                    "description": "A culinary journey featuring cooking demonstrations, tasting events, and discussions on the cultural significance of Swahili food traditions.",
+                    "link": "/events/swahili-cuisine-showcase",
+                    "calendar_link": "#add-to-calendar-1"
+                },
+                {
+                    "title": "Coastal Seafood Festival",
+                    "category": "Food",
+                    "color": "#006400",
+                    "date": "October 5, 2025",
+                    "location": "Zanzibar, Tanzania",
+                    "description": "Celebrating the rich seafood traditions of Zanzibar with chef demonstrations and tastings of classic dishes.",
+                    "link": "/events/coastal-seafood-festival",
+                    "calendar_link": "#add-to-calendar-2"
+                }
+            ]),
+            "resources": content.get('resources', [
+                {
+                    "title": "Swahili Cuisine Cookbook",
+                    "type": "Print/Digital",
+                    "description": "A comprehensive guide to traditional and contemporary Swahili recipes with cultural context and cooking techniques.",
+                    "icon": "book",
+                    "color": "#006400",
+                    "link": "/resources/swahili-cookbook"
+                },
+                {
+                    "title": "Spices of the Swahili Coast",
+                    "type": "Guide",
+                    "description": "Detailed exploration of essential spices in Swahili cooking, their history, and how to use them effectively.",
+                    "icon": "flame",
+                    "color": "#006400",
+                    "link": "/resources/swahili-spices"
+                },
+                {
+                    "title": "Traditional Cooking Methods",
+                    "type": "Video Series",
+                    "description": "Step-by-step demonstrations of authentic cooking techniques from clay pot cooking to charcoal grilling.",
+                    "icon": "video",
+                    "color": "#006400",
+                    "link": "/resources/cooking-methods"
+                }
+            ])
+        }
+        
+        return render_template('cultural/swahili_food.html', **page_data)
     except Exception as e:
         current_app.logger.error(f"Swahili Food page error: {str(e)}")
-        return render_template('cultural/swahili_food.html',
-                           error=True)
+        return render_template('cultural/swahili_food.html', error=True)
 
 @cultural_bp.route('/fashion')
 @cache.cached(timeout=CULTURAL_CACHE_TIMEOUT)
