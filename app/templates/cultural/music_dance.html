@@ -1,0 +1,467 @@
+{% extends "cultural/cultural_base.html" %}
+{% from "components/macros.html" import inner_page_hero, feature_list, content_section, resource_card, event_card %}
+
+{% block cultural_content %}
+<section class="py-16 md:py-24 bg-[#F0F8FF]/30">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#003366] mb-4">Swahili Music & Dance</h2>
+                <p class="text-[#0F2B4C] max-w-3xl mx-auto">
+                    Experience the rhythms and movements that define Swahili cultural expression
+                </p>
+            </div>
+            
+            <!-- Region selector -->
+            <div class="mb-12 bg-white rounded-xl p-6 shadow-sm">
+                <h3 class="text-xl font-bold text-[#003366] mb-4">Explore by Region</h3>
+                
+                <div 
+                    x-data="{ selectedRegion: '{{ current_region }}' }"
+                    class="flex flex-wrap gap-3"
+                >
+                    {% for region in regions %}
+                    <a 
+                        href="?region={{ region.id }}"
+                        @click.prevent="selectedRegion = '{{ region.id }}'; window.location.href = '?region={{ region.id }}'"
+                        :class="[
+                            selectedRegion === '{{ region.id }}' 
+                                ? 'bg-[#C62828] text-white' 
+                                : 'bg-white text-[#0F2B4C] hover:bg-[#C62828]/10 hover:text-[#C62828]',
+                            'px-4 py-2 rounded-full text-sm font-medium transition-colors'
+                        ]"
+                    >
+                        {{ region.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Musical Genres -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Musical Genres</h3>
+                
+                <div 
+                    x-data="{ 
+                        activeTab: 'traditional',
+                        tabs: [
+                            { id: 'traditional', name: 'Traditional', icon: 'music' },
+                            { id: 'contemporary', name: 'Contemporary', icon: 'headphones' },
+                            { id: 'fusion', name: 'Fusion', icon: 'radio' }
+                        ]
+                    }"
+                    class="bg-white rounded-xl shadow-sm overflow-hidden mb-12"
+                >
+                    <!-- Tabs navigation -->
+                    <div class="border-b border-gray-200">
+                        <nav class="flex overflow-x-auto" aria-label="Tabs">
+                            <template x-for="tab in tabs" :key="tab.id">
+                                <button
+                                    @click="activeTab = tab.id"
+                                    :class="[
+                                        activeTab === tab.id 
+                                            ? 'border-[#C62828] text-[#C62828]' 
+                                            : 'border-transparent text-gray-500 hover:text-[#C62828] hover:border-[#C62828]',
+                                        'flex items-center gap-2 whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm'
+                                    ]"
+                                    :aria-current="activeTab === tab.id ? 'page' : undefined"
+                                >
+                                    <i :data-lucide="tab.icon" class="size-4"></i>
+                                    <span x-text="tab.name"></span>
+                                </button>
+                            </template>
+                        </nav>
+                    </div>
+
+                    <!-- Tab content -->
+                    <div class="p-6">
+                        <!-- Traditional Music tab -->
+                        <div x-show="activeTab === 'traditional'"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100"
+                        >
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-8">
+                                <div>
+                                    <h4 class="text-xl font-bold text-[#003366] mb-3">Taarab Music</h4>
+                                    <p class="text-[#0F2B4C] mb-4">
+                                        Taarab represents one of the most distinctive Swahili musical forms, characterized by orchestral arrangements combining string instruments, percussion, and vocals. Originating from Zanzibar in the late 19th century, taarab draws heavily from Egyptian and Ottoman musical traditions while incorporating local Swahili poetic forms.
+                                    </p>
+                                    <p class="text-[#0F2B4C] mb-6">
+                                        The lyrics often address themes of love, social commentary, and cultural values in elaborate Swahili poetry, performed by ensembles of 20 or more musicians using instruments like the oud, violin, qanun, accordion, and various percussion.
+                                    </p>
+                                    
+                                    <div class="flex gap-4">
+                                        <a href="#listen-taarab" class="inline-flex items-center gap-2 px-4 py-2 bg-[#C62828] text-white rounded-full hover:bg-[#B71C1C] transition-colors">
+                                            <i data-lucide="play" class="size-4"></i>
+                                            Listen to Taarab
+                                        </a>
+                                        <a href="#taarab-history" class="inline-flex items-center gap-2 px-4 py-2 border border-[#C62828] text-[#C62828] rounded-full hover:bg-[#C62828]/10 transition-colors">
+                                            Learn More
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="rounded-xl overflow-hidden shadow-md">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/cultural/taarab-orchestra.jpg') }}" 
+                                        alt="Taarab orchestra performing"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                                <div class="order-2 lg:order-1 rounded-xl overflow-hidden shadow-md">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/cultural/chakacha-dance.jpg') }}" 
+                                        alt="Chakacha dancers in traditional attire"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <div class="order-1 lg:order-2">
+                                    <h4 class="text-xl font-bold text-[#003366] mb-3">Chakacha</h4>
+                                    <p class="text-[#0F2B4C] mb-4">
+                                        Chakacha is a traditional dance music from the coastal regions of Kenya and Tanzania, known for its energetic rhythms and distinctive hip movements. Originally performed during wedding ceremonies and other celebrations, this style features intense drum patterns and call-and-response vocals.
+                                    </p>
+                                    <p class="text-[#0F2B4C] mb-6">
+                                        The dance is characterized by rhythmic hip rotations that follow the beat of the music, performed in groups with colorful attire. Despite some controversy over its sensual nature, Chakacha remains an important cultural expression of coastal Swahili communities.
+                                    </p>
+                                    
+                                    <div class="flex gap-4">
+                                        <a href="#watch-chakacha" class="inline-flex items-center gap-2 px-4 py-2 bg-[#C62828] text-white rounded-full hover:bg-[#B71C1C] transition-colors">
+                                            <i data-lucide="video" class="size-4"></i>
+                                            Watch Performance
+                                        </a>
+                                        <a href="#chakacha-history" class="inline-flex items-center gap-2 px-4 py-2 border border-[#C62828] text-[#C62828] rounded-full hover:bg-[#C62828]/10 transition-colors">
+                                            Learn More
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contemporary Music tab -->
+                        <div x-show="activeTab === 'contemporary'"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100"
+                        >
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-8">
+                                <div>
+                                    <h4 class="text-xl font-bold text-[#003366] mb-3">Bongo Flava</h4>
+                                    <p class="text-[#0F2B4C] mb-4">
+                                        Bongo Flava emerged in the 1990s as Tanzania's distinctive take on hip-hop, evolving into a genre that blends Western hip-hop, R&B, and reggae with traditional East African musical elements. Originating in Dar es Salaam, the name comes from "Bongo," a nickname for Tanzania, and "Flava," referring to style.
+                                    </p>
+                                    <p class="text-[#0F2B4C] mb-6">
+                                        Artists typically perform in a mixture of Swahili and English, addressing social issues, daily life experiences, love, and aspiration. As the genre has matured, it has gained international recognition and influenced music throughout East Africa.
+                                    </p>
+                                    
+                                    <div class="flex gap-4">
+                                        <a href="#listen-bongo" class="inline-flex items-center gap-2 px-4 py-2 bg-[#C62828] text-white rounded-full hover:bg-[#B71C1C] transition-colors">
+                                            <i data-lucide="play" class="size-4"></i>
+                                            Listen to Bongo Flava
+                                        </a>
+                                        <a href="#bongo-artists" class="inline-flex items-center gap-2 px-4 py-2 border border-[#C62828] text-[#C62828] rounded-full hover:bg-[#C62828]/10 transition-colors">
+                                            Top Artists
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="rounded-xl overflow-hidden shadow-md">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/cultural/bongo-flava.jpg') }}" 
+                                        alt="Bongo Flava artist performing"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                                <div class="order-2 lg:order-1 rounded-xl overflow-hidden shadow-md">
+                                    <img 
+                                        src="{{ url_for('static', filename='img/cultural/taarab-modern.jpg') }}" 
+                                        alt="Modern Taarab performance"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <div class="order-1 lg:order-2">
+                                    <h4 class="text-xl font-bold text-[#003366] mb-3">Modern Taarab</h4>
+                                    <p class="text-[#0F2B4C] mb-4">
+                                        Modern Taarab represents the evolution of traditional Taarab music to accommodate contemporary tastes and performance contexts. While maintaining connections to its historical roots, Modern Taarab typically features smaller ensembles, electronic instruments, and more accessible lyrics.
+                                    </p>
+                                    <p class="text-[#0F2B4C] mb-6">
+                                        Popular throughout urban centers in Kenya and Tanzania, Modern Taarab often incorporates elements from global pop music while retaining distinctive Swahili poetic forms and melodic patterns that connect it to its cultural heritage.
+                                    </p>
+                                    
+                                    <div class="flex gap-4">
+                                        <a href="#listen-modern-taarab" class="inline-flex items-center gap-2 px-4 py-2 bg-[#C62828] text-white rounded-full hover:bg-[#B71C1C] transition-colors">
+                                            <i data-lucide="play" class="size-4"></i>
+                                            Listen to Modern Taarab
+                                        </a>
+                                        <a href="#taarab-evolution" class="inline-flex items-center gap-2 px-4 py-2 border border-[#C62828] text-[#C62828] rounded-full hover:bg-[#C62828]/10 transition-colors">
+                                            Learn More
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Fusion Music tab -->
+                        <div x-show="activeTab === 'fusion'"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100"
+                        >
+                            <div class="bg-[#F0F8FF]/50 rounded-xl p-6 mb-8">
+                                <h4 class="text-xl font-bold text-[#003366] mb-3">Swahili Jazz</h4>
+                                <p class="text-[#0F2B4C] mb-4">
+                                    Swahili Jazz represents an innovative fusion of traditional East African rhythms and melodies with jazz harmonies and improvisational techniques. Pioneered by artists seeking to blend cultural heritage with global musical forms, this genre creates distinctive soundscapes that honor both traditions.
+                                </p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                                        <h5 class="font-bold text-[#003366] mb-2">Key Characteristics</h5>
+                                        <ul class="text-sm text-[#0F2B4C] space-y-2">
+                                            <li class="flex items-start gap-2">
+                                                <i data-lucide="check-circle" class="size-4 text-[#C62828] flex-shrink-0 mt-0.5"></i>
+                                                <span>Swahili lyrics or chants with jazz instrumentation</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <i data-lucide="check-circle" class="size-4 text-[#C62828] flex-shrink-0 mt-0.5"></i>
+                                                <span>Traditional rhythmic patterns reimagined in jazz contexts</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <i data-lucide="check-circle" class="size-4 text-[#C62828] flex-shrink-0 mt-0.5"></i>
+                                                <span>Extensive improvisation around cultural themes</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                                        <h5 class="font-bold text-[#003366] mb-2">Notable Artists</h5>
+                                        <ul class="text-sm text-[#0F2B4C] space-y-2">
+                                            <li class="flex items-start gap-2">
+                                                <i data-lucide="user" class="size-4 text-[#C62828] flex-shrink-0 mt-0.5"></i>
+                                                <span>Juma Tutu & The Swahili Jazz Band</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <i data-lucide="user" class="size-4 text-[#C62828] flex-shrink-0 mt-0.5"></i>
+                                                <span>Maia von Lekow</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <i data-lucide="user" class="size-4 text-[#C62828] flex-shrink-0 mt-0.5"></i>
+                                                <span>Fadhilee Itulya</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                                        <h5 class="font-bold text-[#003366] mb-2">Instrumentation</h5>
+                                        <ul class="text-sm text-[#0F2B4C] space-y-2">
+                                            <li class="flex items-start gap-2">
+                                                <i data-lucide="music" class="size-4 text-[#C62828] flex-shrink-0 mt-0.5"></i>
+                                                <span>Traditional instruments (nyatiti, kalimba) with jazz ensemble</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <i data-lucide="music" class="size-4 text-[#C62828] flex-shrink-0 mt-0.5"></i>
+                                                <span>Horn sections inspired by coastal wedding bands</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <i data-lucide="music" class="size-4 text-[#C62828] flex-shrink-0 mt-0.5"></i>
+                                                <span>Percussion combining African and jazz traditions</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-4 justify-center">
+                                    <a href="#listen-swahili-jazz" class="inline-flex items-center gap-2 px-4 py-2 bg-[#C62828] text-white rounded-full hover:bg-[#B71C1C] transition-colors">
+                                        <i data-lucide="play" class="size-4"></i>
+                                        Listen to Swahili Jazz
+                                    </a>
+                                    <a href="#jazz-festivals" class="inline-flex items-center gap-2 px-4 py-2 border border-[#C62828] text-[#C62828] rounded-full hover:bg-[#C62828]/10 transition-colors">
+                                        Upcoming Festivals
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                                    <div class="relative aspect-video">
+                                        <img 
+                                            src="{{ url_for('static', filename='img/cultural/afro-house.jpg') }}" 
+                                            alt="Afro House performance"
+                                            class="w-full h-full object-cover"
+                                        />
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                                        
+                                        <div class="absolute bottom-0 left-0 p-4">
+                                            <h4 class="text-xl font-bold text-white mb-1">Swahili Afro-House</h4>
+                                            <p class="text-white/80 text-sm">
+                                                Electronic dance music with Swahili vocals and coastal rhythms
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="p-4">
+                                        <a href="#afro-house" class="inline-flex items-center text-[#C62828] hover:text-[#003366] transition-colors">
+                                            Explore Afro-House
+                                            <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                                    <div class="relative aspect-video">
+                                        <img 
+                                            src="{{ url_for('static', filename='img/cultural/benga-fusion.jpg') }}" 
+                                            alt="Benga Fusion performance"
+                                            class="w-full h-full object-cover"
+                                        />
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                                        
+                                        <div class="absolute bottom-0 left-0 p-4">
+                                            <h4 class="text-xl font-bold text-white mb-1">Swahili Benga Fusion</h4>
+                                            <p class="text-white/80 text-sm">
+                                                Blend of Luo Benga guitar styles with Swahili coastal elements
+                                            </p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="p-4">
+                                        <a href="#benga-fusion" class="inline-flex items-center text-[#C62828] hover:text-[#003366] transition-colors">
+                                            Explore Benga Fusion
+                                            <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Performance Styles -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Traditional Dance Forms</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    {% for performance in performances %}
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+                        <div class="aspect-video relative">
+                            <img 
+                                src="{{ performance.image }}" 
+                                alt="{{ performance.title }}"
+                                class="w-full h-full object-cover"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            
+                            {% if performance.video_url %}
+                            <a 
+                                href="{{ performance.video_url }}" 
+                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
+                            >
+                                <i data-lucide="play" class="size-8 text-white"></i>
+                            </a>
+                            {% endif %}
+                            
+                            <div class="absolute bottom-0 left-0 p-4">
+                                <span class="inline-block px-3 py-1 bg-[#C62828] text-white text-sm font-medium rounded-full mb-2">
+                                    {{ performance.region }}
+                                </span>
+                                <h4 class="text-xl font-bold text-white">{{ performance.title }}</h4>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <p class="text-[#0F2B4C] mb-4">{{ performance.description }}</p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                {% for tag in performance.tags %}
+                                <span class="inline-block px-2 py-1 bg-[#C62828]/10 text-[#C62828] text-xs font-medium rounded-full">
+                                    {{ tag }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            
+                            <a 
+                                href="{{ performance.link }}"
+                                class="inline-flex items-center text-[#C62828] hover:text-[#003366] transition-colors"
+                            >
+                                Learn More
+                                <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Musical Instruments -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Traditional Instruments</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for instrument in instruments %}
+                    <div 
+                        class="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all"
+                        x-data="{ showDetails: false }"
+                    >
+                        <div class="relative aspect-square mb-4 overflow-hidden rounded-lg">
+                            <img 
+                                src="{{ instrument.image }}" 
+                                alt="{{ instrument.name }}"
+                                class="w-full h-full object-cover transition-transform duration-500"
+                                :class="showDetails ? 'scale-110' : ''"
+                            />
+                            <div 
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 transition-opacity duration-500"
+                                :class="showDetails ? 'opacity-100' : ''"
+                            ></div>
+                            
+                            <div 
+                                class="absolute inset-0 p-4 flex flex-col justify-end transform translate-y-full transition-transform duration-500"
+                                :class="showDetails ? 'translate-y-0' : ''"
+                            >
+                                <p class="text-white text-sm">{{ instrument.description }}</p>
+                            </div>
+                            
+                            <button
+                                @click="showDetails = !showDetails"
+                                class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/80 flex items-center justify-center hover:bg-white transition-colors"
+                            >
+                                <i 
+                                    data-lucide="chevron-down" 
+                                    class="size-5 text-[#003366] transition-transform duration-300"
+                                    :class="showDetails ? 'rotate-180' : ''"
+                                ></i>
+                            </button>
+                        </div>
+                        
+                        <h4 class="font-bold text-[#003366] text-lg">{{ instrument.name }}</h4>
+                        <p class="text-sm text-[#0F2B4C]/70">{{ instrument.origin }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Call to action for workshops or classes -->
+            <div class="bg-[#C62828]/10 rounded-xl p-8 text-center">
+                <h3 class="text-2xl font-bold text-[#003366] mb-4">Experience Swahili Music & Dance</h3>
+                <p class="text-[#0F2B4C] max-w-2xl mx-auto mb-6">
+                    Join our upcoming workshops and classes to learn traditional Swahili musical instruments and dance forms directly from experienced practitioners.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="/workshops" class="inline-flex items-center gap-2 px-6 py-3 bg-[#C62828] text-white rounded-full hover:bg-[#B71C1C] transition-colors">
+                        <i data-lucide="calendar" class="size-5"></i>
+                        View Workshop Schedule
+                    </a>
+                    <a href="/videos" class="inline-flex items-center gap-2 px-6 py-3 border border-[#C62828] text-[#C62828] rounded-full hover:bg-[#C62828]/10 transition-colors">
+                        <i data-lucide="video" class="size-5"></i>
+                        Watch Instructional Videos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
