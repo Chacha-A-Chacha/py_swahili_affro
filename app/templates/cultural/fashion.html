@@ -1,0 +1,573 @@
+{% extends "cultural/cultural_base.html" %}
+{% from "components/macros.html" import inner_page_hero, feature_list, content_section, resource_card, event_card %}
+
+{% block cultural_content %}
+<section class="py-16 md:py-24 bg-[#F0F8FF]/30">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#003366] mb-4">Swahili Fashion</h2>
+                <p class="text-[#0F2B4C] max-w-3xl mx-auto">
+                    Explore the colorful textiles and designs that represent Swahili identity
+                </p>
+            </div>
+            
+            <!-- Traditional and Contemporary Tabs -->
+            <div class="mb-16">
+                <div 
+                    x-data="{ 
+                        activeTab: 'traditional',
+                        tabs: [
+                            { id: 'traditional', name: 'Traditional', icon: 'landmark' },
+                            { id: 'modern', name: 'Contemporary', icon: 'shirt' },
+                            { id: 'designers', name: 'Designers', icon: 'scissors' }
+                        ]
+                    }"
+                    class="bg-white rounded-xl shadow-sm overflow-hidden"
+                >
+                    <!-- Tabs navigation -->
+                    <div class="border-b border-gray-200">
+                        <nav class="flex overflow-x-auto" aria-label="Tabs">
+                            <template x-for="tab in tabs" :key="tab.id">
+                                <button
+                                    @click="activeTab = tab.id"
+                                    :class="[
+                                        activeTab === tab.id 
+                                            ? 'border-[#FF7043] text-[#FF7043]' 
+                                            : 'border-transparent text-gray-500 hover:text-[#FF7043] hover:border-[#FF7043]',
+                                        'flex items-center gap-2 whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm'
+                                    ]"
+                                    :aria-current="activeTab === tab.id ? 'page' : undefined"
+                                >
+                                    <i :data-lucide="tab.icon" class="size-4"></i>
+                                    <span x-text="tab.name"></span>
+                                </button>
+                            </template>
+                        </nav>
+                    </div>
+
+                    <!-- Tab content -->
+                    <div class="p-6">
+                        <!-- Traditional Fashion tab -->
+                        <div x-show="activeTab === 'traditional'"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100"
+                        >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                                <!-- Kanga Section -->
+                                <div>
+                                    <div class="relative rounded-xl overflow-hidden shadow-md mb-4 aspect-square">
+                                        <img 
+                                            src="{{ url_for('static', filename='img/fashion/kanga.jpg') }}" 
+                                            alt="Traditional kanga cloth with proverbs"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <h3 class="text-xl font-bold text-[#003366] mb-2">Kanga</h3>
+                                    <p class="text-[#0F2B4C] mb-3">
+                                        Colorful rectangular cloths featuring bold patterns, borders, and printed proverbs or sayings (jina). Women wear kanga as wraps, head coverings, or baby carriers.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="inline-block px-2 py-1 bg-[#FF7043]/10 text-[#FF7043] text-xs font-medium rounded-full">
+                                            Women's Wear
+                                        </span>
+                                        <span class="inline-block px-2 py-1 bg-[#FF7043]/10 text-[#FF7043] text-xs font-medium rounded-full">
+                                            Communication
+                                        </span>
+                                        <span class="inline-block px-2 py-1 bg-[#FF7043]/10 text-[#FF7043] text-xs font-medium rounded-full">
+                                            Versatile
+                                        </span>
+                                    </div>
+                                    <a href="/culture/fashion/kanga" class="inline-flex items-center text-[#FF7043] hover:text-[#003366] transition-colors">
+                                        Learn More About Kanga 
+                                        <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                                    </a>
+                                </div>
+                                
+                                <!-- Kitenge Section -->
+                                <div>
+                                    <div class="relative rounded-xl overflow-hidden shadow-md mb-4 aspect-square">
+                                        <img 
+                                            src="{{ url_for('static', filename='img/fashion/kitenge.jpg') }}" 
+                                            alt="Colorful kitenge fabric"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <h3 class="text-xl font-bold text-[#003366] mb-2">Kitenge</h3>
+                                    <p class="text-[#0F2B4C] mb-3">
+                                        Distinguished by its wax-print patterns in vibrant colors, kitenge cloth is typically tailored into fitted garments for both men and women, from everyday attire to special occasion outfits.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <span class="inline-block px-2 py-1 bg-[#FF7043]/10 text-[#FF7043] text-xs font-medium rounded-full">
+                                            Wax-print
+                                        </span>
+                                        <span class="inline-block px-2 py-1 bg-[#FF7043]/10 text-[#FF7043] text-xs font-medium rounded-full">
+                                            Tailored
+                                        </span>
+                                        <span class="inline-block px-2 py-1 bg-[#FF7043]/10 text-[#FF7043] text-xs font-medium rounded-full">
+                                            East African
+                                        </span>
+                                    </div>
+                                    <a href="/culture/fashion/kitenge" class="inline-flex items-center text-[#FF7043] hover:text-[#003366] transition-colors">
+                                        Learn More About Kitenge 
+                                        <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                                <!-- Kofia Section -->
+                                <div class="bg-white rounded-lg shadow-sm p-4">
+                                    <div class="relative rounded-xl overflow-hidden mb-4 aspect-square">
+                                        <img 
+                                            src="{{ url_for('static', filename='img/fashion/kofia.jpg') }}" 
+                                            alt="Traditional embroidered kofia hat"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <h3 class="text-lg font-bold text-[#003366] mb-2">Kofia</h3>
+                                    <p class="text-[#0F2B4C] text-sm mb-3">
+                                        Embroidered cap worn by men, traditionally made with intricate hand-stitching patterns.
+                                    </p>
+                                </div>
+                                
+                                <!-- Kanzu Section -->
+                                <div class="bg-white rounded-lg shadow-sm p-4">
+                                    <div class="relative rounded-xl overflow-hidden mb-4 aspect-square">
+                                        <img 
+                                            src="{{ url_for('static', filename='img/fashion/kanzu.jpg') }}" 
+                                            alt="White kanzu robe"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <h3 class="text-lg font-bold text-[#003366] mb-2">Kanzu</h3>
+                                    <p class="text-[#0F2B4C] text-sm mb-3">
+                                        Long white or cream robe worn by men for formal occasions or religious ceremonies.
+                                    </p>
+                                </div>
+                                
+                                <!-- Buibui Section -->
+                                <div class="bg-white rounded-lg shadow-sm p-4">
+                                    <div class="relative rounded-xl overflow-hidden mb-4 aspect-square">
+                                        <img 
+                                            src="{{ url_for('static', filename='img/fashion/buibui.jpg') }}" 
+                                            alt="Woman wearing buibui"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <h3 class="text-lg font-bold text-[#003366] mb-2">Buibui</h3>
+                                    <p class="text-[#0F2B4C] text-sm mb-3">
+                                        Black outer garment worn by many Muslim women in coastal communities, often over colorful dresses.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-[#F0F8FF]/80 rounded-xl p-6">
+                                <h3 class="text-xl font-bold text-[#003366] mb-4">Cultural Significance of Traditional Dress</h3>
+                                <div class="prose prose-lg max-w-none">
+                                    <p>
+                                        Traditional Swahili attire serves as a visual expression of cultural identity, with specific garments and styles often indicating an individual's religious affiliation, marital status, or social position. The detailed craftsmanship involved in creating items like embroidered kofia hats or hand-printed kanga cloths represents cultural knowledge passed down through generations.
+                                    </p>
+                                    <p>
+                                        Beyond their aesthetic value, traditional garments facilitate social communication. Kanga sayings can convey messages that might be difficult to express directly in conversation, while the choice to wear certain styles may indicate respect for cultural occasions or religious observances.
+                                    </p>
+                                    <p>
+                                        While contemporary fashion continues to evolve along the Swahili coast, these traditional elements remain important cultural markers that connect communities to their shared heritage and distinguish Swahili identity within the broader East African context.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contemporary Fashion tab -->
+                        <div x-show="activeTab === 'modern'"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100"
+                        >
+                            {% for adaptation in modern_adaptations %}
+                            <div class="mb-12">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                                    <div class="{% if loop.index is odd %}order-1{% else %}order-1 lg:order-2{% endif %}">
+                                        <span class="inline-block px-3 py-1 bg-[#FF7043]/10 text-[#FF7043] text-sm font-medium rounded-full mb-3">
+                                            {{ adaptation.category }}
+                                        </span>
+                                        
+                                        <h3 class="text-2xl font-bold text-[#003366] mb-3">{{ adaptation.title }}</h3>
+                                        
+                                        <div class="prose prose-lg max-w-none mb-6">
+                                            {{ adaptation.description|safe }}
+                                        </div>
+                                        
+                                        <div class="flex flex-wrap gap-2 mb-6">
+                                            {% for tag in adaptation.tags %}
+                                            <span class="inline-block px-2 py-1 bg-[#FF7043]/10 text-[#FF7043] text-xs font-medium rounded-full">
+                                                {{ tag }}
+                                            </span>
+                                            {% endfor %}
+                                        </div>
+                                        
+                                        {% if adaptation.link %}
+                                        <a href="{{ adaptation.link }}" class="inline-flex items-center gap-2 px-4 py-2 bg-[#FF7043] text-white rounded-full hover:bg-[#F4511E] transition-colors">
+                                            {{ adaptation.link_text }}
+                                            <i data-lucide="external-link" class="size-4"></i>
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="{% if loop.index is odd %}order-2{% else %}order-2 lg:order-1{% endif %}">
+                                        <div class="rounded-xl overflow-hidden shadow-md">
+                                            <img 
+                                                src="{{ adaptation.image }}" 
+                                                alt="{{ adaptation.title }}"
+                                                class="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% if not loop.last %}
+                            <div class="w-full h-px bg-gray-200 my-10"></div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- Designers tab -->
+                        <div x-show="activeTab === 'designers'"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100"
+                        >
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                                {% for designer in designers %}
+                                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                                    <div class="relative aspect-square">
+                                        <img 
+                                            src="{{ designer.image }}" 
+                                            alt="{{ designer.name }}"
+                                            class="w-full h-full object-cover"
+                                        />
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                                        
+                                        <div class="absolute bottom-0 left-0 p-4">
+                                            <h3 class="text-xl font-bold text-white mb-1">{{ designer.name }}</h3>
+                                            <p class="text-white/80 text-sm">{{ designer.location }}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="p-4">
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            {% for style in designer.styles %}
+                                            <span class="inline-block px-2 py-1 bg-[#FF7043]/10 text-[#FF7043] text-xs font-medium rounded-full">
+                                                {{ style }}
+                                            </span>
+                                            {% endfor %}
+                                        </div>
+                                        
+                                        <p class="text-[#0F2B4C] mb-4">{{ designer.bio }}</p>
+                                        
+                                        <div class="flex items-center justify-between">
+                                            <a href="{{ designer.link }}" class="inline-flex items-center text-[#FF7043] hover:text-[#003366] transition-colors">
+                                                View Collection
+                                                <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                                            </a>
+                                            
+                                            <div class="flex items-center gap-2">
+                                                {% if designer.instagram %}
+                                                <a href="{{ designer.instagram }}" target="_blank" rel="noopener" class="text-[#0F2B4C]/60 hover:text-[#FF7043] transition-colors">
+                                                    <i data-lucide="instagram" class="size-5"></i>
+                                                </a>
+                                                {% endif %}
+                                                
+                                                {% if designer.website %}
+                                                <a href="{{ designer.website }}" target="_blank" rel="noopener" class="text-[#0F2B4C]/60 hover:text-[#FF7043] transition-colors">
+                                                    <i data-lucide="globe" class="size-5"></i>
+                                                </a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="bg-[#FF7043]/5 rounded-xl p-6 mb-6">
+                                <h3 class="text-xl font-bold text-[#003366] mb-4">Designer Spotlight</h3>
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                                    <div>
+                                        <h4 class="font-bold text-[#003366] mb-2">Preserving Traditions in Modern Fashion</h4>
+                                        <div class="prose prose-lg max-w-none">
+                                            <p>
+                                                Contemporary Swahili fashion designers navigate the challenge of honoring cultural heritage while creating globally relevant designs. Many use traditional techniques like hand embroidery or incorporate cultural motifs into modern silhouettes, creating pieces that connect past and present.
+                                            </p>
+                                            <p>
+                                                By reimagining traditional textiles in contemporary contexts, these designers help preserve cultural knowledge while demonstrating the continued relevance of Swahili aesthetic traditions in today's fashion landscape.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="aspect-square rounded-lg overflow-hidden">
+                                            <img 
+                                                src="{{ url_for('static', filename='img/fashion/designer-work-1.jpg') }}" 
+                                                alt="Designer creating embroidery"
+                                                class="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <div class="aspect-square rounded-lg overflow-hidden">
+                                            <img 
+                                                src="{{ url_for('static', filename='img/fashion/designer-work-2.jpg') }}" 
+                                                alt="Modern kitenge dress"
+                                                class="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <div class="aspect-square rounded-lg overflow-hidden">
+                                            <img 
+                                                src="{{ url_for('static', filename='img/fashion/designer-work-3.jpg') }}" 
+                                                alt="Contemporary kanga wrap"
+                                                class="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <div class="aspect-square rounded-lg overflow-hidden">
+                                            <img 
+                                                src="{{ url_for('static', filename='img/fashion/designer-work-4.jpg') }}" 
+                                                alt="Modernized kofia hat"
+                                                class="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <a href="/fashion/designers" class="inline-flex items-center gap-2 px-6 py-3 bg-[#FF7043] text-white rounded-full hover:bg-[#F4511E] transition-colors">
+                                    <i data-lucide="users" class="size-5"></i>
+                                    View All Swahili Designers
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fashion Workshops Section -->
+            <div class="mb-16 bg-white rounded-xl overflow-hidden shadow-sm">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="p-6 lg:p-8">
+                        <span class="inline-block px-3 py-1 bg-[#FF7043]/10 text-[#FF7043] text-sm font-medium rounded-full mb-3">
+                            Workshops & Classes
+                        </span>
+                        <h3 class="text-2xl font-bold text-[#003366] mb-4">Learn Traditional Textile Arts</h3>
+                        <p class="text-[#0F2B4C] mb-6">
+                            Join our hands-on workshops to learn traditional Swahili textile techniques from experienced artisans. From kanga printing to embroidery, these classes offer an opportunity to engage with cultural practices while developing creative skills.
+                        </p>
+                        
+                        <ul class="space-y-4 mb-6">
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-[#FF7043]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i data-lucide="check" class="size-3 text-[#FF7043]"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#003366]">Kanga Design Workshop</h4>
+                                    <p class="text-sm text-[#0F2B4C]">Learn traditional motifs and create your own printed cloth</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-[#FF7043]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i data-lucide="check" class="size-3 text-[#FF7043]"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#003366]">Kofia Embroidery Class</h4>
+                                    <p class="text-sm text-[#0F2B4C]">Master the intricate stitching patterns of traditional caps</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-[#FF7043]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i data-lucide="check" class="size-3 text-[#FF7043]"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#003366]">Contemporary Kitenge Fashion</h4>
+                                    <p class="text-sm text-[#0F2B4C]">Create modern garments using traditional fabrics and techniques</p>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <a href="/workshops/textile" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FF7043] text-white rounded-full hover:bg-[#F4511E] transition-colors">
+                            <i data-lucide="calendar" class="size-5"></i>
+                            View Workshop Schedule
+                        </a>
+                    </div>
+                    
+                    <div class="relative h-80 lg:h-auto">
+                        <img 
+                            src="{{ url_for('static', filename='img/fashion/textile-workshop.jpg') }}" 
+                            alt="Textile workshop with participants"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fashion Gallery -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Swahili Fashion Gallery</h3>
+                
+                <div 
+                    x-data="{
+                        imageModal: false,
+                        imageToShow: '',
+                        imageAlt: ''
+                    }"
+                    class="relative"
+                >
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="grid gap-4">
+                            <button 
+                                @click="imageModal = true; imageToShow = '{{ url_for('static', filename='img/fashion/gallery-1.jpg') }}'; imageAlt = 'Woman wearing traditional kanga'"
+                                class="relative overflow-hidden rounded-lg group"
+                            >
+                                <img 
+                                    src="{{ url_for('static', filename='img/fashion/gallery-1.jpg') }}" 
+                                    alt="Woman wearing traditional kanga"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div class="absolute inset-0 bg-[#003366]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i data-lucide="zoom-in" class="size-6 text-white"></i>
+                                </div>
+                            </button>
+                            <button 
+                                @click="imageModal = true; imageToShow = '{{ url_for('static', filename='img/fashion/gallery-2.jpg') }}'; imageAlt = 'Modern kitenge fashion'"
+                                class="relative overflow-hidden rounded-lg group"
+                            >
+                                <img 
+                                    src="{{ url_for('static', filename='img/fashion/gallery-2.jpg') }}" 
+                                    alt="Modern kitenge fashion"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div class="absolute inset-0 bg-[#003366]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i data-lucide="zoom-in" class="size-6 text-white"></i>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="grid gap-4">
+                            <button 
+                                @click="imageModal = true; imageToShow = '{{ url_for('static', filename='img/fashion/gallery-3.jpg') }}'; imageAlt = 'Man wearing traditional kanzu and kofia'"
+                                class="relative overflow-hidden rounded-lg group"
+                            >
+                                <img 
+                                    src="{{ url_for('static', filename='img/fashion/gallery-3.jpg') }}" 
+                                    alt="Man wearing traditional kanzu and kofia"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div class="absolute inset-0 bg-[#003366]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i data-lucide="zoom-in" class="size-6 text-white"></i>
+                                </div>
+                            </button>
+                            <button 
+                                @click="imageModal = true; imageToShow = '{{ url_for('static', filename='img/fashion/gallery-4.jpg') }}'; imageAlt = 'Contemporary designer runway look'"
+                                class="relative overflow-hidden rounded-lg group"
+                            >
+                                <img 
+                                    src="{{ url_for('static', filename='img/fashion/gallery-4.jpg') }}" 
+                                    alt="Contemporary designer runway look"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div class="absolute inset-0 bg-[#003366]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i data-lucide="zoom-in" class="size-6 text-white"></i>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="grid gap-4">
+                            <button 
+                                @click="imageModal = true; imageToShow = '{{ url_for('static', filename='img/fashion/gallery-5.jpg') }}'; imageAlt = 'Traditional embroidery detail'"
+                                class="relative overflow-hidden rounded-lg group"
+                            >
+                                <img 
+                                    src="{{ url_for('static', filename='img/fashion/gallery-5.jpg') }}" 
+                                    alt="Traditional embroidery detail"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div class="absolute inset-0 bg-[#003366]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i data-lucide="zoom-in" class="size-6 text-white"></i>
+                                </div>
+                            </button>
+                            <button 
+                                @click="imageModal = true; imageToShow = '{{ url_for('static', filename='img/fashion/gallery-6.jpg') }}'; imageAlt = 'Wedding attire with Swahili elements'"
+                                class="relative overflow-hidden rounded-lg group"
+                            >
+                                <img 
+                                    src="{{ url_for('static', filename='img/fashion/gallery-6.jpg') }}" 
+                                    alt="Wedding attire with Swahili elements"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div class="absolute inset-0 bg-[#003366]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i data-lucide="zoom-in" class="size-6 text-white"></i>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="grid gap-4">
+                            <button 
+                                @click="imageModal = true; imageToShow = '{{ url_for('static', filename='img/fashion/gallery-7.jpg') }}'; imageAlt = 'Kanga collection with different patterns'"
+                                class="relative overflow-hidden rounded-lg group"
+                            >
+                                <img 
+                                    src="{{ url_for('static', filename='img/fashion/gallery-7.jpg') }}" 
+                                    alt="Kanga collection with different patterns"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div class="absolute inset-0 bg-[#003366]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i data-lucide="zoom-in" class="size-6 text-white"></i>
+                                </div>
+                            </button>
+                            <button 
+                                @click="imageModal = true; imageToShow = '{{ url_for('static', filename='img/fashion/gallery-8.jpg') }}'; imageAlt = 'Traditional and modern fashion fusion'"
+                                class="relative overflow-hidden rounded-lg group"
+                            >
+                                <img 
+                                    src="{{ url_for('static', filename='img/fashion/gallery-8.jpg') }}" 
+                                    alt="Traditional and modern fashion fusion"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div class="absolute inset-0 bg-[#003366]/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i data-lucide="zoom-in" class="size-6 text-white"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Modal -->
+                    <div 
+                        x-show="imageModal" 
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+                        @click.away="imageModal = false"
+                        @keydown.escape.window="imageModal = false"
+                    >
+                        <button @click="imageModal = false" class="absolute top-4 right-4 text-white hover:text-gray-300">
+                            <i data-lucide="x" class="size-8"></i>
+                        </button>
+                        
+                        <img 
+                            :src="imageToShow" 
+                            :alt="imageAlt"
+                            class="max-w-full max-h-[80vh] object-contain"
+                        />
+                    </div>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <a href="/fashion/gallery" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FF7043] text-white rounded-full hover:bg-[#F4511E] transition-colors">
+                        <i data-lucide="image" class="size-5"></i>
+                        Explore Full Gallery
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
