@@ -253,11 +253,164 @@ def heritage():
         region_filter = request.args.get('region', 'all')
         content = cms.get_content(f'heritage?region={region_filter}')
         
-        return render_template('cultural/heritage.html',
-                           sites=content.get('sites'),
-                           regions=content.get('regions'),
-                           current_region=region_filter)
+        # Structure data for the template
+        page_data = {
+            "page_title": "Swahili Heritage",
+            "current_region": region_filter,
+            "hero": {
+                "title": "Swahili Heritage",
+                "subtitle": "Preserving East Africa's Coastal Legacy",
+                "description": "Discover the rich historical legacy of Swahili civilization that developed along the East African coast through centuries of trade, cultural exchange, and urban development.",
+                "background_image": content.get('hero', {}).get('background_image', url_for('static', filename='img/cultural/heritage-hero.jpg')),
+                "primary_button": {
+                    "text": "Explore Historic Sites",
+                    "link": "#sites"
+                },
+                "secondary_button": {
+                    "text": "Preservation Efforts",
+                    "link": "#preservation"
+                },
+                "breadcrumbs": [
+                    {"label": "Cultural Aspects", "link": "/culture"},
+                    {"label": "Heritage", "link": None}
+                ]
+            },
+            "introduction": {
+                "title": "A Rich Cultural Legacy",
+                "description": "Centuries of maritime trade and cultural exchange along the East African coast",
+                "content_paragraphs": [
+                    "Swahili heritage encompasses a rich tapestry of historical, architectural, and cultural elements that have evolved along the East African coast over more than a millennium. This heritage reflects the unique position of Swahili civilization as a mediator between African, Middle Eastern, and Asian cultural spheres.",
+                    "The architectural heritage of Swahili coastal settlements represents one of the most visible aspects of this legacy. Stone Town in Zanzibar stands as a UNESCO World Heritage site exemplifying the characteristic urban planning and building techniques of Swahili culture.",
+                    "Maritime trade lies at the heart of Swahili heritage, with coastal communities having participated in Indian Ocean commercial networks since at least the 8th century. This trade not only brought material goods but facilitated cultural exchange, religious ideas, and technological innovations."
+                ]
+            },
+            "regions": content.get('regions', [
+                {"id": "zanzibar", "name": "Zanzibar"},
+                {"id": "kenya", "name": "Kenyan Coast"},
+                {"id": "tanzania", "name": "Tanzanian Coast"},
+                {"id": "mozambique", "name": "Northern Mozambique"},
+                {"id": "comoros", "name": "Comoros Islands"}
+            ]),
+            "sites": content.get('sites', [
+                {
+                    "name": "Stone Town",
+                    "location": "Zanzibar, Tanzania",
+                    "description": "The historic center of Zanzibar City features a unique mixture of Arab, Persian, Indian, and European elements with distinctly Swahili architectural style. Notable for its carved doors, narrow streets, and coral stone buildings.",
+                    "image": url_for('static', filename='img/heritage/stone-town.jpg'),
+                    "unesco": True,
+                    "featured": True,
+                    "tags": ["Architecture", "UNESCO", "Urban Center"],
+                    "link": "/heritage/stone-town",
+                    "map_link": "https://goo.gl/maps/stonetwon"
+                },
+                {
+                    "name": "Lamu Old Town",
+                    "location": "Lamu Island, Kenya",
+                    "description": "The oldest and best-preserved Swahili settlement in East Africa, featuring traditional Swahili architecture with inner courtyards, verandas, and elaborately carved wooden doors. A living cultural heritage site where traditional lifestyles continue.",
+                    "image": url_for('static', filename='img/heritage/lamu.jpg'),
+                    "unesco": True,
+                    "featured": True,
+                    "tags": ["Architecture", "UNESCO", "Living Heritage"],
+                    "link": "/heritage/lamu",
+                    "map_link": "https://goo.gl/maps/lamu"
+                },
+                {
+                    "name": "Kilwa Kisiwani",
+                    "location": "Southern Tanzania",
+                    "description": "Ruins of a medieval sultanate that was once East Africa's most powerful trading center, controlling gold trade from present-day Zimbabwe. Features impressive palace structures, a Great Mosque, and extensive fortifications.",
+                    "image": url_for('static', filename='img/heritage/kilwa.jpg'),
+                    "unesco": True,
+                    "featured": True,
+                    "tags": ["Archaeological", "UNESCO", "Medieval"],
+                    "link": "/heritage/kilwa",
+                    "map_link": "https://goo.gl/maps/kilwa"
+                },
+                {
+                    "name": "Bagamoyo",
+                    "location": "Tanzanian Coast",
+                    "description": "Former capital of German East Africa and major terminus of slave and ivory caravans from the interior. Historic buildings reflect Swahili, Arab, German colonial, and Indian architectural influences.",
+                    "image": url_for('static', filename='img/heritage/bagamoyo.jpg'),
+                    "unesco": False,
+                    "featured": True,
+                    "tags": ["Colonial", "Slave Trade History", "Port"],
+                    "link": "/heritage/bagamoyo",
+                    "map_link": "https://goo.gl/maps/bagamoyo"
+                },
+                {
+                    "name": "Mombasa Old Town",
+                    "location": "Mombasa, Kenya",
+                    "description": "Historic district featuring narrow streets, carved balconies, and distinctive Swahili doors. The area includes Fort Jesus, a 16th-century Portuguese fortress that demonstrates the strategic importance of Mombasa in colonial history.",
+                    "image": url_for('static', filename='img/heritage/mombasa.jpg'),
+                    "unesco": False,
+                    "featured": True,
+                    "tags": ["Urban", "Colonial", "Mixed Heritage"],
+                    "link": "/heritage/mombasa",
+                    "map_link": "https://goo.gl/maps/mombasa"
+                },
+                {
+                    "name": "Ilha de Moçambique",
+                    "location": "Nampula Province, Mozambique",
+                    "description": "Small island that served as the Portuguese colonial capital for nearly four centuries. Features stone and lime town with Swahili, Arab, and European architectural elements reflecting its complex history.",
+                    "image": url_for('static', filename='img/heritage/mozambique-island.jpg'),
+                    "unesco": True,
+                    "featured": True,
+                    "tags": ["Colonial", "UNESCO", "Island"],
+                    "link": "/heritage/mozambique-island",
+                    "map_link": "https://goo.gl/maps/mozambique"
+                }
+            ]),
+            "events": content.get('events', [
+                {
+                    "title": "Swahili Cultural Heritage Symposium",
+                    "category": "Heritage",
+                    "color": "#D4AF37",
+                    "date": "November 10-12, 2025",
+                    "location": "Zanzibar, Tanzania",
+                    "description": "Academic and community discussions on preserving and promoting Swahili cultural heritage in the modern world, featuring presentations by leading experts and community representatives.",
+                    "link": "/events/swahili-heritage-symposium",
+                    "calendar_link": "#add-to-calendar-1"
+                },
+                {
+                    "title": "Lamu Cultural Festival",
+                    "category": "Heritage",
+                    "color": "#D4AF37",
+                    "date": "December 5-8, 2025",
+                    "location": "Lamu, Kenya",
+                    "description": "Annual celebration of Swahili culture featuring traditional music, dance, dhow races, donkey races, and culinary showcases in the historic UNESCO World Heritage site.",
+                    "link": "/events/lamu-festival-2025",
+                    "calendar_link": "#add-to-calendar-2"
+                }
+            ]),
+            "resources": content.get('resources', [
+                {
+                    "title": "Stone Town Architecture Guide",
+                    "type": "Digital Tour",
+                    "description": "Interactive exploration of architectural features in Zanzibar's historic district with detailed explanations of historical influences and construction techniques.",
+                    "icon": "building",
+                    "color": "#D4AF37",
+                    "link": "/resources/stone-town-architecture"
+                },
+                {
+                    "title": "Swahili Oral Traditions Archive",
+                    "type": "Audio Collection",
+                    "description": "Recorded narratives, songs, and poetic performances preserving the intangible heritage of Swahili communities along the East African coast.",
+                    "icon": "mic",
+                    "color": "#D4AF37",
+                    "link": "/resources/oral-traditions-archive"
+                },
+                {
+                    "title": "Maritime Trade Routes",
+                    "type": "Interactive Map",
+                    "description": "Visualization of historical Indian Ocean trade networks that connected Swahili city-states to ports across Asia, the Middle East, and the African interior.",
+                    "icon": "ship",
+                    "color": "#D4AF37",
+                    "link": "/resources/trade-routes-map"
+                }
+            ])
+        }
+        
+        return render_template('cultural/heritage.html', **page_data)
     except Exception as e:
         current_app.logger.error(f"Heritage page error: {str(e)}")
-        return render_template('cultural/heritage.html',
-                           error=True)
+        return render_template('cultural/heritage.html', error=True)
+    
