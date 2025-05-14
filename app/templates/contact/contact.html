@@ -1,0 +1,522 @@
+{% extends "base.html" %}
+{% from "components/macros.html" import inner_page_hero %}
+
+{% block title %}Contact Us - Swahili Afro Jamboree{% endblock %}
+
+{% block head %}
+<style>
+  .form-input {
+    @apply w-full px-4 py-3 rounded-lg border border-accent/20 focus:border-accent focus:ring focus:ring-accent/20 outline-none transition;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-primary mb-1;
+  }
+  
+  .required:after {
+    content: " *";
+    @apply text-red-500;
+  }
+  
+  .social-icon {
+    @apply flex flex-col items-center bg-white/10 hover:bg-white/20 transition-colors rounded-lg p-4;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+{{ inner_page_hero(
+    title=page_content.hero.title if page_content and page_content.hero else "Contact Us",
+    subtitle=page_content.hero.subtitle if page_content and page_content.hero else "Get in Touch with Our Team",
+    description=page_content.hero.description if page_content and page_content.hero else "Have questions about Swahili Afro Jamboree or want to get involved? We'd love to hear from you.",
+    background_image=page_content.hero.background_image if page_content and page_content.hero else url_for('static', filename='img/contact-hero-bg.jpg'),
+    breadcrumbs=[
+        {"label": "Contact", "link": url_for('contact.contact')}
+    ]
+) }}
+
+<!-- Main Content Section -->
+<section class="py-16 md:py-24 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- Intro Text -->
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h2 class="text-3xl font-bold text-primary mb-4">
+          {{ page_content.intro.title if page_content and page_content.intro else "We're Here to Help" }}
+        </h2>
+        <p class="text-lg text-primary/80">
+          {{ page_content.intro.description if page_content and page_content.intro else "Whether you have questions about our events, want to learn more about Swahili culture, or are interested in collaborating with us, our team is ready to assist you." }}
+        </p>
+      </div>
+      
+      <!-- Contact Form and Info -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- Contact Form -->
+        <div>
+          <h3 class="text-2xl font-bold text-primary mb-6">Send Us a Message</h3>
+          
+          <!-- Flash Messages -->
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="p-4 rounded-lg mb-6 {% if category == 'success' %}bg-green-50 text-green-800{% else %}bg-red-50 text-red-800{% endif %}">
+                  <div class="flex items-center gap-2">
+                    {% if category == 'success' %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    {% else %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-circle"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    {% endif %}
+                    <span>{{ message }}</span>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          
+          <!-- Contact Form with Alpine.js validation -->
+          <form 
+            action="{{ url_for('contact.contact') }}" 
+            method="POST" 
+            x-data="{ 
+              formStatus: { state: null, message: '' },
+              isSubmitting: false
+            }"
+            @submit.prevent="
+              isSubmitting = true;
+              $el.submit();
+            "
+            class="space-y-6"
+          >
+            {{ form.csrf_token }}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="{{ form.name.id }}" class="form-label required">
+                  {{ form.name.label.text }}
+                </label>
+                {{ form.name(class="form-input", placeholder="Enter your full name") }}
+                {% if form.name.errors %}
+                  <p class="text-red-600 text-sm mt-1">{{ form.name.errors[0] }}</p>
+                {% endif %}
+              </div>
+
+              <div>
+                <label for="{{ form.email.id }}" class="form-label required">
+                  {{ form.email.label.text }}
+                </label>
+                {{ form.email(class="form-input", placeholder="Enter your email address") }}
+                {% if form.email.errors %}
+                  <p class="text-red-600 text-sm mt-1">{{ form.email.errors[0] }}</p>
+                {% endif %}
+              </div>
+            </div>
+
+            <div>
+              <label for="{{ form.subject.id }}" class="form-label required">
+                {{ form.subject.label.text }}
+              </label>
+              {{ form.subject(class="w-full px-4 py-3 rounded-lg border border-accent/20 focus:border-accent focus:ring focus:ring-accent/20 outline-none transition") }}
+              {% if form.subject.errors %}
+                <p class="text-red-600 text-sm mt-1">{{ form.subject.errors[0] }}</p>
+              {% endif %}
+            </div>
+
+            <div>
+              <label for="{{ form.message.id }}" class="form-label required">
+                {{ form.message.label.text }}
+              </label>
+              {{ form.message(class="form-input", rows=5, placeholder="Type your message here...") }}
+              {% if form.message.errors %}
+                <p class="text-red-600 text-sm mt-1">{{ form.message.errors[0] }}</p>
+              {% endif %}
+            </div>
+
+            <div class="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="consent"
+                required
+                class="mt-1 h-4 w-4 rounded border-accent/20 text-accent focus:ring-accent/20"
+              />
+              <label for="consent" class="block text-sm text-primary/80">
+                I consent to Swahili Afro Jamboree collecting my information to respond to my inquiry. 
+                I understand my information will be processed in accordance with the privacy policy.
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              :disabled="isSubmitting"
+              class="w-full bg-primary hover:bg-primary/90 text-white py-3 px-6 rounded-full transition-colors font-medium shadow-md"
+            >
+              <span x-show="!isSubmitting">Send Message</span>
+              <span x-show="isSubmitting" class="flex items-center justify-center gap-2">
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+              </span>
+            </button>
+          </form>
+        </div>
+        
+        <!-- Office Locations -->
+        <div>
+          <h3 class="text-2xl font-bold text-primary mb-6">Our Offices</h3>
+          
+          <!-- Tabs using Alpine.js -->
+          <div 
+            x-data="{ activeTab: 'northAmerica' }" 
+            class="mb-8"
+          >
+            <!-- Tab Navigation -->
+            <div class="grid grid-cols-2 mb-4">
+              <button 
+                @click="activeTab = 'northAmerica'" 
+                :class="activeTab === 'northAmerica' ? 'bg-primary text-white' : 'bg-gray-100 text-primary hover:bg-gray-200'" 
+                class="py-2 px-4 font-medium rounded-l-lg transition-colors"
+              >
+                North America
+              </button>
+              <button 
+                @click="activeTab = 'africa'" 
+                :class="activeTab === 'africa' ? 'bg-primary text-white' : 'bg-gray-100 text-primary hover:bg-gray-200'" 
+                class="py-2 px-4 font-medium rounded-r-lg transition-colors"
+              >
+                Africa
+              </button>
+            </div>
+            
+            <!-- North America Office Content -->
+            <div x-show="activeTab === 'northAmerica'" class="bg-white rounded-xl shadow-sm overflow-hidden">
+              <div class="h-48 relative">
+                <!-- Replace with actual map or office image -->
+                <img 
+                  src="{{ url_for('static', filename='img/north-america-office.jpg') }}" 
+                  alt="North America Office" 
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute top-4 left-4">
+                  <div class="bg-white px-3 py-1 rounded-full shadow-md">
+                    <span class="font-medium text-primary">North America Office</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6">
+                <div class="space-y-4">
+                  <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent mt-1 flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <div>
+                      <h4 class="font-medium text-primary mb-1">Address</h4>
+                      <p class="text-primary/80">Registered Office, Swahili Afro Jamboree</p>
+                      <p class="text-primary/80">6208 Alan Linton BLVD W</p>
+                      <p class="text-primary/80">Fredrick, Maryland 21703, USA</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent mt-1 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <div>
+                      <h4 class="font-medium text-primary mb-1">Phone</h4>
+                      <p class="text-primary/80">+1 240 614 1598</p>
+                      <p class="text-primary/80">WhatsApp: +1 240 614 1598</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent mt-1 flex-shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <div>
+                      <h4 class="font-medium text-primary mb-1">Email</h4>
+                      <p class="text-primary/80">pmabby@gmail.com</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent mt-1 flex-shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <div>
+                      <h4 class="font-medium text-primary mb-1">Office Hours</h4>
+                      <p class="text-primary/80">Monday - Friday: 9:00 AM - 5:00 PM (EST)</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-6">
+                  <a 
+                    href="https://maps.google.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="inline-flex items-center gap-2 text-accent hover:text-primary font-medium transition-colors"
+                  >
+                    View on Google Maps
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Africa Office Content -->
+            <div x-show="activeTab === 'africa'" class="bg-white rounded-xl shadow-sm overflow-hidden">
+              <div class="h-48 relative">
+                <!-- Replace with actual map or office image -->
+                <img 
+                  src="{{ url_for('static', filename='img/africa-office.jpg') }}" 
+                  alt="Africa Office" 
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute top-4 left-4">
+                  <div class="bg-white px-3 py-1 rounded-full shadow-md">
+                    <span class="font-medium text-primary">Africa Office</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6">
+                <div class="space-y-4">
+                  <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent mt-1 flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <div>
+                      <h4 class="font-medium text-primary mb-1">Address</h4>
+                      <p class="text-primary/80">8TH Floor Salamanda towers [GSM Building]</p>
+                      <p class="text-primary/80">Samora avenue</p>
+                      <p class="text-primary/80">P.o. Box 90342, Dar es Salaam, Tanzania</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent mt-1 flex-shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <div>
+                      <h4 class="font-medium text-primary mb-1">Phone</h4>
+                      <p class="text-primary/80">+255 764 114 444</p>
+                      <p class="text-primary/80">WhatsApp: +255 764 114 444</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent mt-1 flex-shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <div>
+                      <h4 class="font-medium text-primary mb-1">Email</h4>
+                      <p class="text-primary/80">piimswaz@gmail.com</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent mt-1 flex-shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <div>
+                      <h4 class="font-medium text-primary mb-1">Office Hours</h4>
+                      <p class="text-primary/80">Monday - Friday: 9:00 AM - 5:00 PM (EAT)</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-6">
+                  <a 
+                    href="https://maps.google.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="inline-flex items-center gap-2 text-accent hover:text-primary font-medium transition-colors"
+                  >
+                    View on Google Maps
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Quick Contact Buttons -->
+          <div class="grid grid-cols-2 gap-4 mb-8">
+            <a 
+              href="mailto:pmabby@gmail.com"
+              class="inline-flex justify-center items-center bg-secondary text-primary hover:bg-secondary/90 py-3 px-6 rounded-full transition-colors font-medium shadow-md"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Email Us
+            </a>
+            
+            <a 
+              href="tel:+12406141598"
+              class="inline-flex justify-center items-center bg-accent text-white hover:bg-accent/90 py-3 px-6 rounded-full transition-colors font-medium shadow-md"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Call Us
+            </a>
+          </div>
+          
+          <!-- Social Connect -->
+          <div class="bg-primary text-white rounded-xl p-6 md:p-8">
+            <h3 class="text-xl font-bold mb-4">Connect With Us on Social Media</h3>
+            <p class="text-white/80 mb-6">
+              Follow us on social media for event updates, cultural content, and community stories.
+            </p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <a href="#" target="_blank" rel="noopener noreferrer" class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1877F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                <span class="text-sm">Facebook</span>
+              </a>
+
+              <a href="#" target="_blank" rel="noopener noreferrer" class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1DA1F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                <span class="text-sm">Twitter</span>
+              </a>
+
+              <a href="#" target="_blank" rel="noopener noreferrer" class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#E4405F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                <span class="text-sm">Instagram</span>
+              </a>
+
+              <a href="#" target="_blank" rel="noopener noreferrer" class="social-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0A66C2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                <span class="text-sm">LinkedIn</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- FAQs Section -->
+      <section class="mt-16 py-16 md:py-24 bg-[#F0F8FF]/50 rounded-xl">
+        <div class="max-w-3xl mx-auto px-4">
+          <h2 class="text-3xl font-bold text-primary mb-2 text-center">
+            Frequently Asked Questions
+          </h2>
+          <p class="text-primary/80 text-center mb-12 max-w-3xl mx-auto">
+            Answers to common questions about our events and participation
+          </p>
+          
+          <!-- FAQ Accordion using Alpine.js -->
+          <div 
+            x-data="{ openFaq: null }"
+            class="space-y-4"
+          >
+            {% if page_content and page_content.faqs %}
+              {% for faq in page_content.faqs %}
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <button
+                    @click="openFaq = openFaq === {{ loop.index0 }} ? null : {{ loop.index0 }}"
+                    class="w-full flex justify-between items-center p-4 text-left"
+                  >
+                    <h3 class="font-bold text-primary">{{ faq.question }}</h3>
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="20" 
+                      height="20" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      stroke-width="2" 
+                      stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      class="text-primary transition-transform" 
+                      :class="openFaq === {{ loop.index0 }} ? 'rotate-90' : ''"
+                    >
+                      <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                  </button>
+                  
+                  <div x-show="openFaq === {{ loop.index0 }}" class="px-4 pb-4">
+                    <p class="text-primary/80">{{ faq.answer }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <!-- Default FAQs if none provided from CMS -->
+              {% set default_faqs = [
+                {
+                  "question": "What is the best way to reach your organization?",
+                  "answer": "Email is the most reliable way to reach us for non-urgent matters. For time-sensitive inquiries, please call our office during business hours. We aim to respond to all emails within 2 business days."
+                },
+                {
+                  "question": "Can I visit your offices in person?",
+                  "answer": "Yes, our offices in Maryland, USA and Dar es Salaam, Tanzania welcome visitors during regular business hours. We recommend scheduling an appointment in advance to ensure the appropriate team members are available to assist you."
+                },
+                {
+                  "question": "How can I get involved as a volunteer?",
+                  "answer": "We welcome volunteer support! Please use our contact form to express your interest, selecting 'Membership Information' as the inquiry type, and mentioning your specific areas of interest or expertise. Our volunteer coordinator will reach out with opportunities."
+                },
+                {
+                  "question": "Who should I contact regarding media inquiries or interview requests?",
+                  "answer": "For all media inquiries, press information, or interview requests, please select 'Media & Press' in our contact form or email us directly with 'Media Inquiry' in the subject line. Our communications team will respond promptly."
+                }
+              ] %}
+              
+              {% for faq in default_faqs %}
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <button
+                    @click="openFaq = openFaq === {{ loop.index0 }} ? null : {{ loop.index0 }}"
+                    class="w-full flex justify-between items-center p-4 text-left"
+                  >
+                    <h3 class="font-bold text-primary">{{ faq.question }}</h3>
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="20" 
+                      height="20" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      stroke-width="2" 
+                      stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      class="text-primary transition-transform" 
+                      :class="openFaq === {{ loop.index0 }} ? 'rotate-90' : ''"
+                    >
+                      <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                  </button>
+                  
+                  <div x-show="openFaq === {{ loop.index0 }}" class="px-4 pb-4">
+                    <p class="text-primary/80">{{ faq.answer }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endif %}
+        </div>
+          
+        <div class="mt-12 p-6 bg-white rounded-lg shadow-sm">
+          <p class="text-primary/80 mb-4">
+            Don't see your question answered here? Contact our events team for more information.
+          </p>
+          <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div class="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <span class="text-primary/80">events@swahiliafrojamboree.org</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span class="text-primary/80">+1 (240) 614-1598</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</section>
+
+<!-- Map Section - Full Width -->
+<section class="py-8 md:py-12 bg-gray-100">
+<div class="container mx-auto px-4">
+  <div class="max-w-7xl mx-auto text-center mb-8">
+    <h2 class="text-2xl font-bold text-primary">Find Us</h2>
+    <p class="text-primary/80">Visit our offices in the United States or Tanzania</p>
+  </div>
+  
+  <div class="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-lg">
+    <!-- Replace with actual map iframe or embed code -->
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3087.3848383844288!2d-77.43913188469637!3d39.3943380793355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c9ff66ca53dbbd%3A0x5a91c3c269d21053!2s6208%20Alan%20Linton%20Blvd%20E%2C%20Frederick%2C%20MD%2021703%2C%20USA!5e0!3m2!1sen!2suk!4v1612345678901!5m2!1sen!2suk" 
+      width="100%" 
+      height="450" 
+      style="border:0;" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade"
+      class="w-full h-full"
+    ></iframe>
+  </div>
+</div>
+</section>
+{% endblock %}
