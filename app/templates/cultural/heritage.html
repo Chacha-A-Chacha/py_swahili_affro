@@ -1,0 +1,852 @@
+{% extends "cultural/cultural_base.html" %}
+{% from "components/macros.html" import inner_page_hero, feature_list, content_section, resource_card, event_card %}
+
+{% block cultural_content %}
+<section class="py-16 md:py-24 bg-[#F0F8FF]/30">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#003366] mb-4">Swahili Heritage</h2>
+                <p class="text-[#0F2B4C] max-w-3xl mx-auto">
+                    Discover the rich historical legacy of Swahili civilization and the efforts to preserve this unique cultural heritage
+                </p>
+            </div>
+            
+            <!-- Region filter -->
+            <div class="mb-12 bg-white rounded-xl p-6 shadow-sm">
+                <h3 class="text-xl font-bold text-[#003366] mb-4">Explore by Region</h3>
+                
+                <div 
+                    x-data="{ selectedRegion: '{{ current_region }}' }"
+                    class="flex flex-wrap gap-3"
+                >
+                    <a 
+                        href="?region=all"
+                        @click.prevent="selectedRegion = 'all'; window.location.href = '?region=all'"
+                        :class="[
+                            selectedRegion === 'all' 
+                                ? 'bg-[#D4AF37] text-white' 
+                                : 'bg-white text-[#0F2B4C] hover:bg-[#D4AF37]/10 hover:text-[#D4AF37]',
+                            'px-4 py-2 rounded-full text-sm font-medium transition-colors'
+                        ]"
+                    >
+                        All Regions
+                    </a>
+                    
+                    {% for region in regions %}
+                    <a 
+                        href="?region={{ region.id }}"
+                        @click.prevent="selectedRegion = '{{ region.id }}'; window.location.href = '?region={{ region.id }}'"
+                        :class="[
+                            selectedRegion === '{{ region.id }}' 
+                                ? 'bg-[#D4AF37] text-white' 
+                                : 'bg-white text-[#0F2B4C] hover:bg-[#D4AF37]/10 hover:text-[#D4AF37]',
+                            'px-4 py-2 rounded-full text-sm font-medium transition-colors'
+                        ]"
+                    >
+                        {{ region.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Historical Timeline -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Timeline of Swahili Civilization</h3>
+                
+                <div class="relative">
+                    <!-- Timeline line -->
+                    <div class="absolute left-0 ml-4 w-0.5 h-full bg-[#D4AF37]/20 md:mx-auto md:left-0 md:right-0"></div>
+                    
+                    <!-- Timeline items -->
+                    <div class="space-y-12 relative">
+                        <!-- 8th Century -->
+                        <div class="ml-12 md:ml-0 md:grid md:grid-cols-2 md:gap-8 relative"
+                            x-data="{}"
+                            x-init="
+                                setTimeout(() => {
+                                    $el.classList.add('opacity-100', 'translate-y-0');
+                                    $el.classList.remove('opacity-0', 'translate-y-6');
+                                }, 300)
+                            "
+                            class="opacity-0 translate-y-6 transition-all duration-500"
+                        >
+                            <!-- Timeline dot -->
+                            <div class="absolute -left-4 mt-1.5 md:left-1/2 md:-ml-2 w-8 h-8 rounded-full bg-[#D4AF37] border-4 border-white flex items-center justify-center">
+                                <i data-lucide="landmark" class="size-4 text-white"></i>
+                            </div>
+                            
+                            <!-- Content aligned right (desktop) or below dot (mobile) -->
+                            <div class="md:text-right md:pr-10">
+                                <span class="inline-block px-3 py-1 rounded-full text-sm bg-[#D4AF37]/10 text-[#D4AF37] font-medium mb-2">
+                                    8th Century
+                                </span>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Early Settlements</h4>
+                            </div>
+                            
+                            <!-- Content aligned left (desktop) -->
+                            <div class="md:pl-10">
+                                <p class="text-[#0F2B4C]">
+                                    First permanent Swahili settlements appear along the East African coast, establishing fishing and trading communities that would develop into city-states.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 10th-13th Century -->
+                        <div class="ml-12 md:ml-0 md:grid md:grid-cols-2 md:gap-8 relative"
+                            x-data="{}"
+                            x-init="
+                                setTimeout(() => {
+                                    $el.classList.add('opacity-100', 'translate-y-0');
+                                    $el.classList.remove('opacity-0', 'translate-y-6');
+                                }, 400)
+                            "
+                            class="opacity-0 translate-y-6 transition-all duration-500"
+                        >
+                            <!-- Timeline dot -->
+                            <div class="absolute -left-4 mt-1.5 md:left-1/2 md:-ml-2 w-8 h-8 rounded-full bg-[#D4AF37] border-4 border-white flex items-center justify-center">
+                                <i data-lucide="building" class="size-4 text-white"></i>
+                            </div>
+                            
+                            <!-- Content aligned right (desktop) or below dot (mobile) -->
+                            <div class="md:text-right md:pr-10">
+                                <span class="inline-block px-3 py-1 rounded-full text-sm bg-[#D4AF37]/10 text-[#D4AF37] font-medium mb-2">
+                                    10th-13th Century
+                                </span>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Golden Age of City-States</h4>
+                            </div>
+                            
+                            <!-- Content aligned left (desktop) -->
+                            <div class="md:pl-10">
+                                <p class="text-[#0F2B4C]">
+                                    Prosperous city-states like Kilwa, Mombasa, and Zanzibar flourish through Indian Ocean trade networks, connecting Africa to Arabia, Persia, India, and China.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 14th-15th Century -->
+                        <div class="ml-12 md:ml-0 md:grid md:grid-cols-2 md:gap-8 relative"
+                            x-data="{}"
+                            x-init="
+                                setTimeout(() => {
+                                    $el.classList.add('opacity-100', 'translate-y-0');
+                                    $el.classList.remove('opacity-0', 'translate-y-6');
+                                }, 500)
+                            "
+                            class="opacity-0 translate-y-6 transition-all duration-500"
+                        >
+                            <!-- Timeline dot -->
+                            <div class="absolute -left-4 mt-1.5 md:left-1/2 md:-ml-2 w-8 h-8 rounded-full bg-[#D4AF37] border-4 border-white flex items-center justify-center">
+                                <i data-lucide="ship" class="size-4 text-white"></i>
+                            </div>
+                            
+                            <!-- Content aligned right (desktop) or below dot (mobile) -->
+                            <div class="md:text-right md:pr-10">
+                                <span class="inline-block px-3 py-1 rounded-full text-sm bg-[#D4AF37]/10 text-[#D4AF37] font-medium mb-2">
+                                    14th-15th Century
+                                </span>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Peak of Maritime Trade</h4>
+                            </div>
+                            
+                            <!-- Content aligned left (desktop) -->
+                            <div class="md:pl-10">
+                                <p class="text-[#0F2B4C]">
+                                    Swahili merchants trade gold, ivory, and slaves for textiles, porcelain, and spices. Distinctive Swahili architecture emerges with coral stone buildings featuring elaborate carved doors.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 16th Century -->
+                        <div class="ml-12 md:ml-0 md:grid md:grid-cols-2 md:gap-8 relative"
+                            x-data="{}"
+                            x-init="
+                                setTimeout(() => {
+                                    $el.classList.add('opacity-100', 'translate-y-0');
+                                    $el.classList.remove('opacity-0', 'translate-y-6');
+                                }, 600)
+                            "
+                            class="opacity-0 translate-y-6 transition-all duration-500"
+                        >
+                            <!-- Timeline dot -->
+                            <div class="absolute -left-4 mt-1.5 md:left-1/2 md:-ml-2 w-8 h-8 rounded-full bg-[#D4AF37] border-4 border-white flex items-center justify-center">
+                                <i data-lucide="anchor" class="size-4 text-white"></i>
+                            </div>
+                            
+                            <!-- Content aligned right (desktop) or below dot (mobile) -->
+                            <div class="md:text-right md:pr-10">
+                                <span class="inline-block px-3 py-1 rounded-full text-sm bg-[#D4AF37]/10 text-[#D4AF37] font-medium mb-2">
+                                    16th Century
+                                </span>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Portuguese Contact</h4>
+                            </div>
+                            
+                            <!-- Content aligned left (desktop) -->
+                            <div class="md:pl-10">
+                                <p class="text-[#0F2B4C]">
+                                    Portuguese explorers arrive in the region, disrupting traditional trade networks and establishing military presence. Many city-states resist Portuguese control.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 17th-19th Century -->
+                        <div class="ml-12 md:ml-0 md:grid md:grid-cols-2 md:gap-8 relative"
+                            x-data="{}"
+                            x-init="
+                                setTimeout(() => {
+                                    $el.classList.add('opacity-100', 'translate-y-0');
+                                    $el.classList.remove('opacity-0', 'translate-y-6');
+                                }, 700)
+                            "
+                            class="opacity-0 translate-y-6 transition-all duration-500"
+                        >
+                            <!-- Timeline dot -->
+                            <div class="absolute -left-4 mt-1.5 md:left-1/2 md:-ml-2 w-8 h-8 rounded-full bg-[#D4AF37] border-4 border-white flex items-center justify-center">
+                                <i data-lucide="crown" class="size-4 text-white"></i>
+                            </div>
+                            
+                            <!-- Content aligned right (desktop) or below dot (mobile) -->
+                            <div class="md:text-right md:pr-10">
+                                <span class="inline-block px-3 py-1 rounded-full text-sm bg-[#D4AF37]/10 text-[#D4AF37] font-medium mb-2">
+                                    17th-19th Century
+                                </span>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Omani Influence</h4>
+                            </div>
+                            
+                            <!-- Content aligned left (desktop) -->
+                            <div class="md:pl-10">
+                                <p class="text-[#0F2B4C]">
+                                    Omani Arabs establish political control over much of the Swahili coast, with Zanzibar emerging as the center of a commercial empire based on cloves, coconuts, and the slave trade.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 19th-20th Century -->
+                        <div class="ml-12 md:ml-0 md:grid md:grid-cols-2 md:gap-8 relative"
+                            x-data="{}"
+                            x-init="
+                                setTimeout(() => {
+                                    $el.classList.add('opacity-100', 'translate-y-0');
+                                    $el.classList.remove('opacity-0', 'translate-y-6');
+                                }, 800)
+                            "
+                            class="opacity-0 translate-y-6 transition-all duration-500"
+                        >
+                            <!-- Timeline dot -->
+                            <div class="absolute -left-4 mt-1.5 md:left-1/2 md:-ml-2 w-8 h-8 rounded-full bg-[#D4AF37] border-4 border-white flex items-center justify-center">
+                                <i data-lucide="flag" class="size-4 text-white"></i>
+                            </div>
+                            
+                            <!-- Content aligned right (desktop) or below dot (mobile) -->
+                            <div class="md:text-right md:pr-10">
+                                <span class="inline-block px-3 py-1 rounded-full text-sm bg-[#D4AF37]/10 text-[#D4AF37] font-medium mb-2">
+                                    19th-20th Century
+                                </span>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Colonial Period</h4>
+                            </div>
+                            
+                            <!-- Content aligned left (desktop) -->
+                            <div class="md:pl-10">
+                                <p class="text-[#0F2B4C]">
+                                    European colonial powers divide the Swahili coast among themselves. British and German administrations introduce new political and economic systems that marginalize traditional Swahili elites.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 1960s -->
+                        <div class="ml-12 md:ml-0 md:grid md:grid-cols-2 md:gap-8 relative"
+                            x-data="{}"
+                            x-init="
+                                setTimeout(() => {
+                                    $el.classList.add('opacity-100', 'translate-y-0');
+                                    $el.classList.remove('opacity-0', 'translate-y-6');
+                                }, 900)
+                            "
+                            class="opacity-0 translate-y-6 transition-all duration-500"
+                        >
+                            <!-- Timeline dot -->
+                            <div class="absolute -left-4 mt-1.5 md:left-1/2 md:-ml-2 w-8 h-8 rounded-full bg-[#D4AF37] border-4 border-white flex items-center justify-center">
+                                <i data-lucide="star" class="size-4 text-white"></i>
+                            </div>
+                            
+                            <!-- Content aligned right (desktop) or below dot (mobile) -->
+                            <div class="md:text-right md:pr-10">
+                                <span class="inline-block px-3 py-1 rounded-full text-sm bg-[#D4AF37]/10 text-[#D4AF37] font-medium mb-2">
+                                    1960s
+                                </span>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Independence Era</h4>
+                            </div>
+                            
+                            <!-- Content aligned left (desktop) -->
+                            <div class="md:pl-10">
+                                <p class="text-[#0F2B4C]">
+                                    East African nations gain independence. Swahili language and some cultural elements promoted as unifying forces in nation-building efforts, particularly in Tanzania.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Present Day -->
+                        <div class="ml-12 md:ml-0 md:grid md:grid-cols-2 md:gap-8 relative"
+                            x-data="{}"
+                            x-init="
+                                setTimeout(() => {
+                                    $el.classList.add('opacity-100', 'translate-y-0');
+                                    $el.classList.remove('opacity-0', 'translate-y-6');
+                                }, 1000)
+                            "
+                            class="opacity-0 translate-y-6 transition-all duration-500"
+                        >
+                            <!-- Timeline dot -->
+                            <div class="absolute -left-4 mt-1.5 md:left-1/2 md:-ml-2 w-8 h-8 rounded-full bg-[#D4AF37] border-4 border-white flex items-center justify-center">
+                                <i data-lucide="globe" class="size-4 text-white"></i>
+                            </div>
+                            
+                            <!-- Content aligned right (desktop) or below dot (mobile) -->
+                            <div class="md:text-right md:pr-10">
+                                <span class="inline-block px-3 py-1 rounded-full text-sm bg-[#D4AF37]/10 text-[#D4AF37] font-medium mb-2">
+                                    Present Day
+                                </span>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Cultural Preservation & Tourism</h4>
+                            </div>
+                            
+                            <!-- Content aligned left (desktop) -->
+                            <div class="md:pl-10">
+                                <p class="text-[#0F2B4C]">
+                                    Renewed interest in Swahili heritage with UNESCO World Heritage designations for sites like Stone Town in Zanzibar and Lamu Old Town in Kenya. Tourism becomes important economic driver for many historic Swahili communities.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- UNESCO World Heritage Sites -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">UNESCO World Heritage Sites</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {% for site in sites %}
+                    {% if site.unesco %}
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md group">
+                        <div class="relative aspect-video">
+                            <img 
+                                src="{{ site.image }}" 
+                                alt="{{ site.name }}"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                            
+                            <div class="absolute bottom-0 left-0 p-4">
+                                <span class="inline-block px-3 py-1 bg-[#D4AF37] text-white text-sm font-medium rounded-full mb-2">
+                                    UNESCO World Heritage
+                                </span>
+                                <h4 class="text-xl font-bold text-white">{{ site.name }}</h4>
+                                <p class="text-white/90 text-sm">{{ site.location }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <p class="text-[#0F2B4C] mb-6">{{ site.description }}</p>
+                            
+                            <div class="flex justify-between items-center">
+                                <a 
+                                    href="{{ site.link }}" 
+                                    class="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37] text-[#003366] rounded-full hover:bg-[#C29B2A] transition-colors"
+                                >
+                                    Learn More
+                                </a>
+                                
+                                
+                                    href="{{ site.map_link }}"
+                                    class="flex items-center gap-1 text-[#0F2B4C]/60 hover:text-[#D4AF37] transition-colors"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    <i data-lucide="map" class="size-4"></i>
+                                    <span class="text-sm">View on Map</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Featured Heritage Sites -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Featured Heritage Sites</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for site in sites %}
+                    {% if not site.unesco and site.featured %}
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
+                        <div class="relative aspect-square">
+                            <img 
+                                src="{{ site.image }}" 
+                                alt="{{ site.name }}"
+                                class="w-full h-full object-cover"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+                            
+                            <div class="absolute bottom-0 left-0 p-4">
+                                <h4 class="text-lg font-bold text-white">{{ site.name }}</h4>
+                                <p class="text-white/80 text-sm">{{ site.location }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                {% for tag in site.tags %}
+                                <span class="inline-block px-2 py-1 bg-[#D4AF37]/10 text-[#D4AF37] text-xs font-medium rounded-full">
+                                    {{ tag }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            
+                            <p class="text-[#0F2B4C] text-sm mb-4 line-clamp-3">{{ site.description }}</p>
+                            
+                            <a 
+                                href="{{ site.link }}" 
+                                class="inline-flex items-center text-[#D4AF37] hover:text-[#003366] transition-colors"
+                            >
+                                Learn More
+                                <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <a 
+                        href="/heritage/sites" 
+                        class="inline-flex items-center gap-2 px-6 py-3 bg-[#D4AF37] text-[#003366] rounded-full hover:bg-[#C29B2A] transition-colors"
+                    >
+                        View All Heritage Sites
+                        <i data-lucide="chevron-right" class="size-4"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Architecture Section -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Swahili Architecture</h3>
+                
+                <div class="bg-white rounded-xl p-6 shadow-sm mb-8">
+                    <div class="prose prose-lg max-w-none">
+                        <p>
+                            Swahili architecture represents one of the most distinctive aspects of the region's cultural heritage, combining functional design with aesthetic elements that reflect historical connections across the Indian Ocean world. Key characteristics include:
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
+                            <div>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Coral Stone Construction</h4>
+                                <p class="text-[#0F2B4C]">
+                                    Buildings created from coral rag (limestone formed from coral) harvested from reefs, cut into blocks, and set with lime mortar. This distinctive regional material provides natural insulation against coastal heat.
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Carved Wooden Doors</h4>
+                                <p class="text-[#0F2B4C]">
+                                    Elaborately carved entrance doors featuring geometric patterns, floral motifs, and sometimes Quranic inscriptions. These serve as status symbols and reflect the woodworking traditions of the region.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
+                            <div>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Baraza Seating</h4>
+                                <p class="text-[#0F2B4C]">
+                                    Stone benches built into the external walls of homes and public buildings, providing communal gathering spaces for conversation and commerce.
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-bold text-[#003366] mb-2">Interior Courtyards</h4>
+                                <p class="text-[#0F2B4C]">
+                                    Central open-air spaces that provide ventilation, natural light, and private gathering areas, balancing community interaction with family privacy needs.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="relative rounded-xl overflow-hidden shadow-md group">
+                        <img 
+                            src="{{ url_for('static', filename='img/heritage/carved-door.jpg') }}" 
+                            alt="Traditional carved Swahili door"
+                            class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">The Art of Carved Doors</h4>
+                            <p class="text-white/80 mb-4">Ornate entryways that tell stories of cultural identity, status, and artistic tradition across centuries.</p>
+                            <a href="/heritage/carved-doors" class="inline-flex items-center text-[#D4AF37] hover:text-white transition-colors">
+                                Explore Door Symbolism
+                                <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative rounded-xl overflow-hidden shadow-md group">
+                        <img 
+                            src="{{ url_for('static', filename='img/heritage/stone-town-streets.jpg') }}" 
+                            alt="Narrow streets of Stone Town"
+                            class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+                        
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Urban Planning Traditions</h4>
+                            <p class="text-white/80 mb-4">The narrow, winding streets of Swahili towns designed for pedestrian movement, shade, and natural cooling in tropical environments.</p>
+                            <a href="/heritage/urban-design" class="inline-flex items-center text-[#D4AF37] hover:text-white transition-colors">
+                                Explore Urban Design
+                                <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Oral Traditions Section -->
+            <div class="mb-16 bg-[#F0F8FF]/80 rounded-xl p-6 shadow-sm">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Oral Traditions and Literature</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="prose prose-lg max-w-none">
+                            <p>
+                                Swahili culture possesses a rich literary tradition that spans both written texts and oral performances. The earliest Swahili writings date to the 18th century, composed in Arabic script (later transitioning to Latin script during the colonial period).
+                            </p>
+                            <p>
+                                Epic poems like <em>Utendi wa Tambuka</em> (The Poem of Tambuka) demonstrate sophisticated literary techniques that blend Arabic poetic forms with African storytelling traditions. These works often address historical events, religious themes, and cultural values.
+                            </p>
+                            <p>
+                                Oral traditions remain vital in transmitting historical knowledge and cultural values. Professional storytellers maintain narrative techniques that enliven historical accounts and folk tales through performance elements that include vocal dynamics, gestures, and sometimes musical accompaniment.
+                            </p>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <a 
+                                href="/heritage/literature" 
+                                class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#D4AF37] text-[#003366] rounded-full hover:bg-[#C29B2A] transition-colors"
+                            >
+                                <i data-lucide="book" class="size-5"></i>
+                                Explore Swahili Literature
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-5 shadow-sm">
+                        <h4 class="text-xl font-bold text-[#003366] mb-4">Notable Literary Forms</h4>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <div class="w-12 h-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                    <i data-lucide="book-open" class="size-6 text-[#D4AF37]"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-[#003366]">Utenzi/Utendi</h5>
+                                    <p class="text-[#0F2B4C]">
+                                        Long-form narrative poetry with stanzas of four lines, often dealing with historical or religious themes.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-12 h-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                    <i data-lucide="mic" class="size-6 text-[#D4AF37]"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-[#003366]">Wimbo</h5>
+                                    <p class="text-[#0F2B4C]">
+                                        Lyrical poetry often performed with musical accompaniment, addressing themes of love, social commentary, and celebration.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-12 h-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                    <i data-lucide="message-square" class="size-6 text-[#D4AF37]"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-[#003366]">Methali</h5>
+                                    <p class="text-[#0F2B4C]">
+                                        Proverbs and sayings that condense cultural wisdom into memorable phrases, used in daily conversation and formal discourse.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-12 h-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                    <i data-lucide="users" class="size-6 text-[#D4AF37]"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-[#003366]">Ngano</h5>
+                                    <p class="text-[#0F2B4C]">
+                                        Folk tales that entertain while transmitting cultural values through narrative, often featuring animal characters that represent human traits.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Heritage Preservation -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-[#003366] mb-6">Heritage Preservation Initiatives</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="building" class="size-6 text-[#D4AF37]"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-[#003366]">Architectural Conservation</h4>
+                        </div>
+                        
+                        <p class="text-[#0F2B4C] mb-4">
+                            Projects focused on preserving historic buildings using traditional materials and techniques, maintaining the authentic character of Swahili urban environments.
+                        </p>
+                        
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="size-4 text-[#D4AF37] mt-1 flex-shrink-0"></i>
+                                <span class="text-sm text-[#0F2B4C]">Traditional coral stone masonry workshops</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="size-4 text-[#D4AF37] mt-1 flex-shrink-0"></i>
+                                <span class="text-sm text-[#0F2B4C]">Documentation of historic buildings and techniques</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="size-4 text-[#D4AF37] mt-1 flex-shrink-0"></i>
+                                <span class="text-sm text-[#0F2B4C]">Restoration projects in UNESCO World Heritage sites</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="/heritage/conservation" class="inline-flex items-center text-[#D4AF37] hover:text-[#003366] transition-colors">
+                            Learn More
+                            <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="mic" class="size-6 text-[#D4AF37]"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-[#003366]">Cultural Documentation</h4>
+                        </div>
+                        
+                        <p class="text-[#0F2B4C] mb-4">
+                            Efforts to record and preserve oral traditions, linguistic practices, and performative arts that form the intangible cultural heritage of Swahili communities.
+                        </p>
+                        
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="size-4 text-[#D4AF37] mt-1 flex-shrink-0"></i>
+                                <span class="text-sm text-[#0F2B4C]">Digital archives of oral histories and storytelling</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="size-4 text-[#D4AF37] mt-1 flex-shrink-0"></i>
+                                <span class="text-sm text-[#0F2B4C]">Audio and video recordings of traditional performances</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="size-4 text-[#D4AF37] mt-1 flex-shrink-0"></i>
+                                <span class="text-sm text-[#0F2B4C]">Transcription and translation of historical manuscripts</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="/heritage/documentation" class="inline-flex items-center text-[#D4AF37] hover:text-[#003366] transition-colors">
+                            Learn More
+                            <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="users" class="size-6 text-[#D4AF37]"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-[#003366]">Community Engagement</h4>
+                        </div>
+                        
+                        <p class="text-[#0F2B4C] mb-4">
+                            Programs that involve local communities in heritage preservation, ensuring cultural knowledge is transmitted to younger generations and remains living tradition.
+                        </p>
+                        
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="size-4 text-[#D4AF37] mt-1 flex-shrink-0"></i>
+                                <span class="text-sm text-[#0F2B4C]">Youth education programs in traditional crafts</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="size-4 text-[#D4AF37] mt-1 flex-shrink-0"></i>
+                                <span class="text-sm text-[#0F2B4C]">Cultural festivals celebrating Swahili heritage</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="size-4 text-[#D4AF37] mt-1 flex-shrink-0"></i>
+                                <span class="text-sm text-[#0F2B4C]">Community-based tourism initiatives</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="/heritage/community" class="inline-flex items-center text-[#D4AF37] hover:text-[#003366] transition-colors">
+                            Learn More
+                            <i data-lucide="arrow-right" class="size-4 ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Virtual Heritage Tours -->
+            <div class="bg-white rounded-xl p-6 shadow-sm mb-16">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-bold text-[#003366] mb-2">Virtual Heritage Tours</h3>
+                    <p class="text-[#0F2B4C] max-w-3xl mx-auto">
+                        Explore Swahili heritage sites through immersive digital experiences that provide access to historical locations from anywhere in the world.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <a href="/virtual-tours/stone-town" class="relative rounded-lg overflow-hidden group h-60">
+                        <img 
+                            src="{{ url_for('static', filename='img/heritage/stone-town-tour.jpg') }}" 
+                            alt="Stone Town virtual tour"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        
+                        <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                            <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-[#D4AF37]/80 transition-colors">
+                                <i data-lucide="video" class="size-8 text-white"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white text-center mb-1">Stone Town, Zanzibar</h4>
+                            <p class="text-white/80 text-sm text-center">Winding streets and historic buildings</p>
+                        </div>
+                    </a>
+                    
+                    <a href="/virtual-tours/lamu" class="relative rounded-lg overflow-hidden group h-60">
+                        <img 
+                            src="{{ url_for('static', filename='img/heritage/lamu-tour.jpg') }}" 
+                            alt="Lamu Old Town virtual tour"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        
+                        <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                            <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-[#D4AF37]/80 transition-colors">
+                                <i data-lucide="video" class="size-8 text-white"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white text-center mb-1">Lamu Old Town</h4>
+                            <p class="text-white/80 text-sm text-center">Kenya's oldest continuously inhabited settlement</p>
+                        </div>
+                    </a>
+                    
+                    <a href="/virtual-tours/kilwa" class="relative rounded-lg overflow-hidden group h-60">
+                        <img 
+                            src="{{ url_for('static', filename='img/heritage/kilwa-tour.jpg') }}" 
+                            alt="Kilwa Kisiwani virtual tour"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                        
+                        <div class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                            <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-3 group-hover:bg-[#D4AF37]/80 transition-colors">
+                                <i data-lucide="video" class="size-8 text-white"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-white text-center mb-1">Kilwa Kisiwani</h4>
+                            <p class="text-white/80 text-sm text-center">Medieval trading city and archaeological site</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <a 
+                        href="/virtual-tours" 
+                        class="inline-flex items-center gap-2 px-6 py-3 bg-[#D4AF37] text-[#003366] rounded-full hover:bg-[#C29B2A] transition-colors"
+                    >
+                        <i data-lucide="map" class="size-5"></i>
+                        Explore All Virtual Tours
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Get Involved Section -->
+            <div class="bg-[#003366] text-white rounded-xl p-8">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-3">Get Involved in Heritage Preservation</h3>
+                        <p class="text-white/80">
+                            Join our efforts to preserve and promote Swahili cultural heritage for future generations
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="bg-white/10 rounded-lg p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-12 h-12 rounded-full bg-[#D4AF37] flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="heart-handshake" class="size-6 text-[#003366]"></i>
+                                </div>
+                                <h4 class="text-lg font-bold">Support Preservation Projects</h4>
+                            </div>
+                            
+                            <p class="text-white/80 mb-4">
+                                Contribute to ongoing architectural restoration, cultural documentation, and community heritage initiatives.
+                            </p>
+                            
+                            <a 
+                                href="/support" 
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37] text-[#003366] rounded-full hover:bg-[#C29B2A] transition-colors"
+                            >
+                                Support Projects
+                            </a>
+                        </div>
+                        
+                        <div class="bg-white/10 rounded-lg p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-12 h-12 rounded-full bg-[#D4AF37] flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="calendar" class="size-6 text-[#003366]"></i>
+                                </div>
+                                <h4 class="text-lg font-bold">Volunteer Opportunities</h4>
+                            </div>
+                            
+                            <p class="text-white/80 mb-4">
+                                Join archaeological digs, architectural documentation efforts, oral history collection, and cultural festivals as a volunteer.
+                            </p>
+                            
+                            <a 
+                                href="/volunteer" 
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37] text-[#003366] rounded-full hover:bg-[#C29B2A] transition-colors"
+                            >
+                                Volunteer With Us
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="text-white/80 mb-4">
+                            Subscribe to our newsletter for updates on heritage preservation initiatives, events, and opportunities to get involved.
+                        </p>
+                        
+                        <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                            <input 
+                                type="email" 
+                                placeholder="Your email address" 
+                                class="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] flex-grow"
+                            />
+                            <button 
+                                type="submit"
+                                class="px-4 py-2 bg-[#D4AF37] text-[#003366] rounded-full hover:bg-[#C29B2A] transition-colors font-medium"
+                            >
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
