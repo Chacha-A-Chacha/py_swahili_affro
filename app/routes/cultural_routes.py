@@ -29,7 +29,7 @@ def swahili_language():
                 "title": "Swahili Language",
                 "subtitle": "Explore the Rich Linguistic Heritage",
                 "description": "Discover the rich heritage of Kiswahili, spoken by over 230 million people worldwide, originating from the Bantu languages of East Africa and evolving through centuries of trade and cultural exchange.",
-                "background_image": content.get('hero', {}).get('background_image', url_for('static', filename='img/cultural/swahili-language-hero.jpg')),
+                "background_image": url_for('static', filename='img/cultural/swahili-language-hero.jpg'),
                 "primary_button": {
                     "text": "Start Learning",
                     "link": "#lessons"
@@ -110,7 +110,7 @@ def swahili_language():
                     ]
                 }
             },
-            "lessons": content.get('lessons', [
+            "lessons": [
                 {
                     "title": "Greetings and Introductions",
                     "description": "Learn essential Swahili greetings and how to introduce yourself",
@@ -138,8 +138,8 @@ def swahili_language():
                     "video_url": "#video-lesson-3",
                     "url": "/lessons/swahili/noun-classes"
                 }
-            ]),
-            "events": content.get('events', [
+            ],
+            "events": [
                 {
                     "title": "World Kiswahili Language Day",
                     "category": "Language",
@@ -160,8 +160,8 @@ def swahili_language():
                     "link": "/events/swahili-poetry-evening",
                     "calendar_link": "#add-to-calendar-2"
                 }
-            ]),
-            "resources": content.get('resources', [
+            ],
+            "resources": [
                 {
                     "title": "Comprehensive Swahili Dictionary",
                     "type": "Reference",
@@ -186,7 +186,7 @@ def swahili_language():
                     "color": "#D4AF37",
                     "link": "/resources/swahili-podcast"
                 }
-            ])
+            ]
         }
         
         return render_template('cultural/swahili_language.html', **page_data)
@@ -217,7 +217,7 @@ def music_dance():
                 "title": "Swahili Music & Dance",
                 "subtitle": "Rhythms and Movements of East Africa",
                 "description": "Experience the vibrant musical traditions and dance forms that express the cultural richness of Swahili communities through centuries of cultural exchange.",
-                "background_image": content.get('hero', {}).get('background_image', url_for('static', filename='img/cultural/music-dance-hero.jpg')),
+                "background_image": url_for('static', filename='img/cultural/music-dance-hero.jpg'),
                 "primary_button": {
                     "text": "Explore Music Styles",
                     "link": "#genres"
@@ -240,15 +240,15 @@ def music_dance():
                     "Dance traditions are equally integral to Swahili cultural expression, with various forms serving specific social functions from coming-of-age ceremonies to wedding celebrations, each with its own characteristic movements and accompanying musical styles."
                 ]
             },
-            "regions": content.get('regions', [
+            "regions": [
                 {"id": "all", "name": "All Regions"},
                 {"id": "zanzibar", "name": "Zanzibar"},
                 {"id": "mombasa", "name": "Mombasa"},
                 {"id": "lamu", "name": "Lamu"},
                 {"id": "dar", "name": "Dar es Salaam"},
                 {"id": "tanga", "name": "Tanga"}
-            ]),
-            "performances": content.get('performances', [
+            ],
+            "performances": [
                 {
                     "title": "Chama Dance",
                     "region": "Zanzibar",
@@ -285,8 +285,8 @@ def music_dance():
                     "tags": ["Percussion", "Energetic", "Urban"],
                     "link": "/culture/music/msondo"
                 }
-            ]),
-            "instruments": content.get('instruments', [
+            ],
+            "instruments": [
                 {
                     "name": "Oud",
                     "origin": "Arab-influenced",
@@ -323,8 +323,8 @@ def music_dance():
                     "image": url_for('static', filename='img/instruments/kayamba.jpg'),
                     "description": "A rectangular flat rattle filled with seeds or small stones, played by shaking to produce rhythmic accompaniment in various traditional styles."
                 }
-            ]),
-            "events": content.get('events', [
+            ],
+            "events": [
                 {
                     "title": "Swahili Music Festival",
                     "category": "Music",
@@ -345,8 +345,8 @@ def music_dance():
                     "link": "/events/bongo-flava-showcase-2025",
                     "calendar_link": "#add-to-calendar-2"
                 }
-            ]),
-            "resources": content.get('resources', [
+            ],
+            "resources": [
                 {
                     "title": "Swahili Musical Instruments Guide",
                     "type": "Reference",
@@ -371,7 +371,7 @@ def music_dance():
                     "color": "#C62828",
                     "link": "/resources/swahili-dance-tutorials"
                 }
-            ])
+            ]
         }
         
         return render_template('cultural/music_dance.html', **page_data)
@@ -395,7 +395,7 @@ def swahili_food():
                 "title": "Swahili Cuisine",
                 "subtitle": "The Flavors of East Africa",
                 "description": "Discover the unique flavors influenced by African, Arabic, Indian, and coastal traditions. Swahili cuisine features aromatic spices, coconut, seafood, and staple grains prepared with time-honored techniques.",
-                "background_image": content.get('hero', {}).get('background_image', url_for('static', filename='img/cultural/food-hero.jpg')),
+                "background_image": url_for('static', filename='img/cultural/food-hero.jpg'),
                 "primary_button": {
                     "text": "Explore Recipes",
                     "link": "#recipes"
@@ -418,7 +418,7 @@ def swahili_food():
                     "Seafood naturally plays a central role in coastal Swahili cuisine, with preparations highlighting fresh catches prepared with traditional techniques including grilling, frying, or slow-cooking in flavorful sauces, often featuring coconut milk as a key ingredient."
                 ]
             },
-            "categories": content.get('categories', [
+            "categories": [
                 {"id": "main", "name": "Main Dishes"},
                 {"id": "seafood", "name": "Seafood"},
                 {"id": "rice", "name": "Rice Dishes"},
@@ -426,8 +426,8 @@ def swahili_food():
                 {"id": "street", "name": "Street Food"},
                 {"id": "bread", "name": "Breads"},
                 {"id": "dessert", "name": "Desserts"}
-            ]),
-            "featured_recipes": content.get('featured', [
+            ],
+            "featured_recipes": [
                 {
                     "title": "Pilau ya Nyama",
                     "short_description": "Aromatic spiced rice with tender meat and a blend of traditional spices - the cornerstone of Swahili celebrations.",
@@ -461,8 +461,8 @@ def swahili_food():
                     "image": url_for('static', filename='img/recipes/mandazi.jpg'),
                     "link": "/recipes/mandazi"
                 }
-            ]),
-            "events": content.get('events', [
+            ],
+            "events": [
                 {
                     "title": "Swahili Cuisine Showcase",
                     "category": "Food",
@@ -483,8 +483,8 @@ def swahili_food():
                     "link": "/events/coastal-seafood-festival",
                     "calendar_link": "#add-to-calendar-2"
                 }
-            ]),
-            "resources": content.get('resources', [
+            ],
+            "resources": [
                 {
                     "title": "Swahili Cuisine Cookbook",
                     "type": "Print/Digital",
@@ -509,7 +509,7 @@ def swahili_food():
                     "color": "#006400",
                     "link": "/resources/cooking-methods"
                 }
-            ])
+            ]
         }
         
         return render_template('cultural/swahili_food.html', **page_data)
@@ -531,7 +531,7 @@ def fashion():
                 "title": "Swahili Fashion",
                 "subtitle": "Traditional and Contemporary Textiles",
                 "description": "Explore the colorful textiles and designs that represent Swahili identity. From vibrant kanga and kitenge fabrics to intricate hand-embroidered kofia hats, Swahili fashion blends practicality with artistic expression.",
-                "background_image": content.get('hero', {}).get('background_image', url_for('static', filename='img/cultural/fashion-hero.jpg')),
+                "background_image": url_for('static', filename='img/cultural/fashion-hero.jpg'),
                 "primary_button": {
                     "text": "Explore Traditional Styles",
                     "link": "#traditional"
@@ -554,8 +554,8 @@ def fashion():
                     "From traditional garments with centuries of history to contemporary adaptations by modern designers, Swahili textiles and fashion elements provide insights into cultural values, social communication, and artistic expression."
                 ]
             },
-            "traditional_wear": content.get('traditional', []),
-            "modern_adaptations": content.get('modern', [
+            "traditional_wear": [],
+            "modern_adaptations": [
                 {
                     "title": "Kanga-Inspired Contemporary Fashion",
                     "category": "Textile Innovation",
@@ -583,8 +583,8 @@ def fashion():
                     "link": "/fashion/formal-traditional",
                     "link_text": "View Formal Collections"
                 }
-            ]),
-            "designers": content.get('designers', [
+            ],
+            "designers": [
                 {
                     "name": "Farida Mohamed",
                     "location": "Mombasa, Kenya",
@@ -645,8 +645,8 @@ def fashion():
                     "instagram": "https://instagram.com/abdulrahmanstudio",
                     "website": "https://abdulrahman.studio"
                 }
-            ]),
-            "events": content.get('events', [
+            ],
+            "events": [
                 {
                     "title": "Kanga & Kitenge Exhibition",
                     "category": "Fashion",
@@ -667,8 +667,8 @@ def fashion():
                     "link": "/events/east-african-fashion-week",
                     "calendar_link": "#add-to-calendar-2"
                 }
-            ]),
-            "resources": content.get('resources', [
+            ],
+            "resources": [
                 {
                     "title": "Kanga Messages & Meanings",
                     "type": "Digital Guide",
@@ -693,7 +693,7 @@ def fashion():
                     "color": "#FF7043",
                     "link": "/resources/swahili-fashion-evolution"
                 }
-            ])
+            ]
         }
         
         return render_template('cultural/fashion.html', **page_data)
@@ -717,7 +717,7 @@ def heritage():
                 "title": "Swahili Heritage",
                 "subtitle": "Preserving East Africa's Coastal Legacy",
                 "description": "Discover the rich historical legacy of Swahili civilization that developed along the East African coast through centuries of trade, cultural exchange, and urban development.",
-                "background_image": content.get('hero', {}).get('background_image', url_for('static', filename='img/cultural/heritage-hero.jpg')),
+                "background_image": url_for('static', filename='img/cultural/heritage-hero.jpg'),
                 "primary_button": {
                     "text": "Explore Historic Sites",
                     "link": "#sites"
@@ -740,14 +740,14 @@ def heritage():
                     "Maritime trade lies at the heart of Swahili heritage, with coastal communities having participated in Indian Ocean commercial networks since at least the 8th century. This trade not only brought material goods but facilitated cultural exchange, religious ideas, and technological innovations."
                 ]
             },
-            "regions": content.get('regions', [
+            "regions": [
                 {"id": "zanzibar", "name": "Zanzibar"},
                 {"id": "kenya", "name": "Kenyan Coast"},
                 {"id": "tanzania", "name": "Tanzanian Coast"},
                 {"id": "mozambique", "name": "Northern Mozambique"},
                 {"id": "comoros", "name": "Comoros Islands"}
-            ]),
-            "sites": content.get('sites', [
+            ],
+            "sites": [
                 {
                     "name": "Stone Town",
                     "location": "Zanzibar, Tanzania",
@@ -814,7 +814,7 @@ def heritage():
                     "link": "/heritage/mozambique-island",
                     "map_link": "https://goo.gl/maps/mozambique"
                 }
-            ]),
+            ],
             "events": content.get('events', [
                 {
                     "title": "Swahili Cultural Heritage Symposium",
@@ -837,7 +837,7 @@ def heritage():
                     "calendar_link": "#add-to-calendar-2"
                 }
             ]),
-            "resources": content.get('resources', [
+            "resources": [
                 {
                     "title": "Stone Town Architecture Guide",
                     "type": "Digital Tour",
@@ -862,7 +862,7 @@ def heritage():
                     "color": "#D4AF37",
                     "link": "/resources/trade-routes-map"
                 }
-            ])
+            ]
         }
         
         return render_template('cultural/heritage.html', **page_data)

@@ -52,7 +52,7 @@ def create_app(config_class=Config):
     from app.routes.contact_routes import contact_bp
 
     app.register_blueprint(main_bp)
-    app.register_blueprint(cultural_bp, url_prefix='/cultural')
+    app.register_blueprint(cultural_bp, url_prefix='/culture')
     app.register_blueprint(contact_bp)
 
 
