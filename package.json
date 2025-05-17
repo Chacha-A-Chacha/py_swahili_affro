@@ -1,4 +1,25 @@
 {
+  "name": "py_swahili_affro",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chacha-A-Chacha/py_swahili_affro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Chacha-A-Chacha/py_swahili_affro/issues"
+  },
+  "homepage": "https://github.com/Chacha-A-Chacha/py_swahili_affro#readme",
+  "description": "",
+
   "dependencies": {
     "@tailwindcss/cli": "^4.1.7",
     "tailwindcss": "^4.1.7"
