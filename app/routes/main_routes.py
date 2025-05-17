@@ -4,6 +4,7 @@
 # File: py_swahili_afro/app/routes/main_routes.py
 
 from flask import Blueprint, render_template, current_app, request, url_for, redirect, flash
+import json
 from app.services.cms_client import CMSClient
 from app.utils.cache import cache
 
@@ -29,7 +30,7 @@ def home():
             "text": "Learn More",
             "url": "/about"
         },
-        "main_image": "/static/img/kinu.jpg",
+        "main_image": "/img/kinu.jpg",
         "image_alt": "Swahili cultural celebration",
         "overlay_title": "Experience Swahili Culture",
         "overlay_subtitle": "Music, art, dance, language and cuisine",
