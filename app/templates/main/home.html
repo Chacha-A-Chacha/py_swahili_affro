@@ -77,7 +77,7 @@
         <!-- Main Image -->
         <div class="relative z-10 rounded-2xl overflow-hidden shadow-xl border-4 border-white">
           <img
-            src="{{ url_for('static', filename=hero_content.main_image|default('img/kinu.jpg')) }}"
+            src="{{ url_for('static', filename=hero_content.main_image|default('images/kinu.jpg')) }}"
             alt="{{ hero_content.image_alt|default('Swahili cultural celebration') }}"
             class="w-full h-[500px] object-cover"
           />
@@ -239,208 +239,85 @@
   </div>
 </section>
 
-<section class="py-16 bg-[#F0F8FF]/50"
-  x-data="{ message: 'Hello Alpine' }"
-  x-init="console.log(message)"
->
-  <div class="container mx-auto px-4">
-    <h2 class="text-3xl font-bold text-[#003366] mb-6">Alpine.js Example</h2>
-    <p class="text-lg text-[#0F2B4C] mb-6">This is a simple Alpine.js example.</p>
-    <button @click="alert(message)" class="bg-[#003366] text-white rounded-full px-6 py-3 shadow-md transition-colors">
-      Show Message
-    </button>
-  </div>
-</section>
-
 <!-- Events Section -->
-<section class="py-16 bg-[#F0F8FF]/50" 
-x-data="{
-    // State properties
-    currentIndex: 0,
-    cardsToShow: 3,
-    maxIndex: 0,
-    
-    // Computed properties
-    get events() {
-      return {{ featured.events | tojson | safe }} || [];
-    },
-
-    destroy() {
-      window.removeEventListener('resize', this.$el._resizeHandler);
-    }
-    
-    // Initialization
-    init() {
-      this.events = this.events.filter(e => e.id && e.title && e.date && e.url);
-      
-      // Set initial values
-      this.setCardsToShow();
-      this.updateMaxIndex();
-      
-      // Responsive handler
-      const resizeHandler = () => {
-        this.setCardsToShow();
-        this.updateMaxIndex();
-      };
-      
-      window.addEventListener('resize', resizeHandler);
-      this.$el._resizeHandler = resizeHandler;
-    },
-    
-    // Methods
-    setCardsToShow() {
-      if (window.innerWidth < 640) this.cardsToShow = 1;
-      else if (window.innerWidth < 1024) this.cardsToShow = 2;
-      else this.cardsToShow = 3;
-    },
-    
-    updateMaxIndex() {
-      this.maxIndex = Math.max(0, Math.ceil(this.events.length / this.cardsToShow) - 1);
-      if (this.currentIndex > this.maxIndex) {
-        this.currentIndex = this.maxIndex;
-      }
-    },
-    
-    nextSlide() {
-      this.currentIndex = (this.currentIndex >= this.maxIndex) ? 0 : this.currentIndex + 1;
-    },
-    
-    prevSlide() {
-      this.currentIndex = (this.currentIndex <= 0) ? this.maxIndex : this.currentIndex - 1;
-    }
-  }"
-  x-init="init()"
-  x-effect="updateMaxIndex()"
-  >
+<section class="py-16 bg-[#F0F8FF]/50" id="events-section">
   <div class="container mx-auto px-4">
     <!-- Section header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
       <div>
         <h2 class="text-sm font-medium text-[#2D8C9E] tracking-wider uppercase mb-2">
-          {{ featured.events_section.tag|default('Join Us') }}
+          Join Us
         </h2>
         <h3 class="text-3xl sm:text-4xl font-bold text-[#003366] mb-2">
-          {{ featured.events_section.title|default('Upcoming Events') }}
+          Upcoming Events
         </h3>
         <p class="text-[#0F2B4C] max-w-xl">
-          {{ featured.events_section.description|default('Experience the richness of Swahili culture through our carefully curated events spanning multiple continents.') }}
+          Experience the richness of Swahili culture through our carefully curated events spanning multiple continents.
         </p>
       </div>
       
       <!-- Navigation arrows for larger screens -->
       <div class="hidden md:flex items-center gap-2 mt-4 md:mt-0">
-        <button
-          @click="prevSlide()"
-          :disabled="currentIndex === 0"
-          class="rounded-full border border-[#2D8C9E] text-[#003366] hover:bg-[#2D8C9E] hover:text-white p-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <i data-lucide="chevron-left" class="size-5"></i>
+        <button id="prev-button" class="rounded-full border border-[#2D8C9E] text-[#003366] hover:bg-[#2D8C9E] hover:text-white p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"><path d="m15 18-6-6 6-6"></path></svg>
         </button>
-        <button
-          @click="nextSlide()"
-          :disabled="currentIndex === maxIndex"
-          class="rounded-full border border-[#2D8C9E] text-[#003366] hover:bg-[#2D8C9E] hover:text-white p-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <i data-lucide="chevron-right" class="size-5"></i>
+        <button id="next-button" class="rounded-full border border-[#2D8C9E] text-[#003366] hover:bg-[#2D8C9E] hover:text-white p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5"><path d="m9 18 6-6-6-6"></path></svg>
         </button>
       </div>
     </div>
 
-    <!-- Card slider/carousel -->
-    <div class="relative overflow-hidden">
-      <div class="flex gap-6 transition-transform duration-500 ease-in-out"
-           :style="`transform: translateX(-${currentIndex * (100 / cardsToShow)}%)`">
-        <template x-for="(event, index) in events" :key="event.id">
-          <div :class="`${
-            cardsToShow === 1 
-              ? 'w-full flex-shrink-0' 
-              : cardsToShow === 2 
-                ? 'w-1/2 flex-shrink-0' 
-                : 'w-1/3 flex-shrink-0'
-          }`">
-            <div class="h-full overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow bg-white rounded-lg">
-              <div class="relative h-48 overflow-hidden">
-                <img
-                  :src="event.image"
-                  :alt="event.title"
-                  class="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
-                />
-                <div class="absolute top-4 left-4">
-                  <span class="bg-[#D4AF37] text-[#003366] font-medium px-3 py-1 rounded-full text-sm" x-text="event.tag"></span>
-                </div>
-              </div>
-              
-              <div class="pt-6 px-6">
-                <h4 class="text-xl font-bold text-[#003366] mb-3 truncate" x-text="event.title"></h4>
-                
-                <div class="space-y-2 mb-4">
-                  <div class="flex items-center gap-2 text-sm text-[#0F2B4C]">
-                    <i data-lucide="calendar" class="size-4 text-[#2D8C9E]"></i>
-                    <span x-text="event.date"></span>
-                  </div>
-                  <div class="flex items-center gap-2 text-sm text-[#0F2B4C]">
-                    <i data-lucide="clock" class="size-4 text-[#2D8C9E]"></i>
-                    <span x-text="event.time"></span>
-                  </div>
-                  <div class="flex items-center gap-2 text-sm text-[#0F2B4C]">
-                    <i data-lucide="map-pin" class="size-4 text-[#2D8C9E]"></i>
-                    <span x-text="event.location"></span>
-                  </div>
-                </div>
-                
-                <p class="text-sm text-[#0F2B4C] line-clamp-2 mb-4" x-text="event.description"></p>
-              </div>
-              
-              <div class="px-6 pb-6">
-                <a :href="event.url" class="block w-full text-center py-2 px-4 bg-transparent hover:bg-transparent text-[#2D8C9E] hover:text-[#003366] border border-[#2D8C9E] hover:border-[#003366] rounded-lg transition-colors">
-                  Learn More
-                </a>
-              </div>
-            </div>
-          </div>
-        </template>
+    <!-- Loading state -->
+    <div id="loading-state" class="text-center py-12 bg-white rounded-lg shadow-sm">
+      <div class="animate-pulse flex flex-col items-center">
+        <div class="rounded-full bg-[#2D8C9E]/20 h-12 w-12 mb-4"></div>
+        <div class="h-4 bg-[#2D8C9E]/20 rounded w-48 mb-2"></div>
+        <div class="h-3 bg-[#2D8C9E]/10 rounded w-36"></div>
+      </div>
+    </div>
+
+    <!-- Error state -->
+    <div id="error-state" class="text-center py-12 bg-white rounded-lg shadow-sm hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-12 mx-auto text-[#C62828]/70 mb-4"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+      <p class="text-lg text-[#0F2B4C]">Unable to load events</p>
+      <p class="text-[#0F2B4C]/70 mt-1">Please try again later</p>
+    </div>
+
+    <!-- Empty state - no events -->
+    <div id="empty-state" class="text-center py-12 bg-white rounded-lg shadow-sm hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-12 mx-auto text-[#2D8C9E]/30 mb-4"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="m14 14-4 4"></path><path d="m10 14 4 4"></path></svg>
+      <p class="text-lg text-[#0F2B4C]">No upcoming events available at the moment.</p>
+      <p class="text-[#0F2B4C]/70 mt-1">Check back soon for updates!</p>
+    </div>
+
+    <!-- Carousel container -->
+    <div id="carousel-container" class="relative overflow-hidden hidden">
+      <div id="carousel-slider" class="flex gap-6 transition-transform duration-500 ease-in-out">
+        <!-- Events will be inserted here by JavaScript -->
       </div>
       
       <!-- Pagination indicators -->
-      <div class="flex justify-center items-center gap-2 mt-8">
-        <template x-for="(_, index) in Array.from({ length: maxIndex + 1 })" :key="index">
-          <button
-            @click="currentIndex = index"
-            :class="`h-2 rounded-full transition-all ${
-              currentIndex === index
-                ? 'w-8 bg-[#2D8C9E]'
-                : 'w-2 bg-[#2D8C9E]/30'
-            }`"
-            :aria-label="`Go to slide ${index + 1}`"
-          ></button>
-        </template>
+      <div id="pagination-container" class="flex justify-center items-center gap-2 mt-8">
+        <!-- Pagination dots will be inserted here by JavaScript -->
       </div>
       
       <!-- Mobile navigation arrows -->
-      <div class="flex items-center justify-between mt-6 md:hidden">
-        <button
-          @click="prevSlide()"
-          :disabled="currentIndex === 0"
-          class="rounded-full border border-[#2D8C9E] text-[#003366] px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-        >
-          <i data-lucide="chevron-left" class="size-4 mr-1"></i>
+      <div id="mobile-nav" class="flex items-center justify-between mt-6 md:hidden">
+        <button id="mobile-prev-button" class="rounded-full border border-[#2D8C9E] text-[#003366] px-3 py-1 text-sm flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 mr-1"><path d="m15 18-6-6 6-6"></path></svg>
           Previous
         </button>
-        <button
-          @click="nextSlide()"
-          :disabled="currentIndex === maxIndex"
-          class="rounded-full border border-[#2D8C9E] text-[#003366] px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-        >
+        <button id="mobile-next-button" class="rounded-full border border-[#2D8C9E] text-[#003366] px-3 py-1 text-sm flex items-center">
           Next
-          <i data-lucide="chevron-right" class="size-4 ml-1"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 ml-1"><path d="m9 18 6-6-6-6"></path></svg>
         </button>
       </div>
     </div>
     
     <!-- View all events button -->
     <div class="flex justify-center mt-12">
-      <a href="{{ featured.events_section.button_url|default('/events') }}" class="inline-block bg-[#003366] text-white hover:bg-[#0A4380] rounded-full px-6 py-3 shadow-md transition-colors">
-        {{ featured.events_section.button_text|default('View All Events') }}
+      <a href="/events" class="inline-block bg-[#003366] text-white hover:bg-[#0A4380] rounded-full px-6 py-3 shadow-md transition-colors">
+        View All Events
       </a>
     </div>
   </div>
@@ -724,6 +601,357 @@ document.addEventListener('DOMContentLoaded', function() {
   // Check if Alpine.js is loaded properly
   if (typeof Alpine === 'undefined') {
     console.error('Alpine.js is not loaded. Please check the script inclusion in base.html');
+  }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Event carousel functionality
+  const eventCarousel = {
+    // Elements
+    container: document.getElementById('carousel-container'),
+    slider: document.getElementById('carousel-slider'),
+    prevBtn: document.getElementById('prev-button'),
+    nextBtn: document.getElementById('next-button'),
+    mobilePrevBtn: document.getElementById('mobile-prev-button'),
+    mobileNextBtn: document.getElementById('mobile-next-button'),
+    paginationContainer: document.getElementById('pagination-container'),
+    loadingState: document.getElementById('loading-state'),
+    errorState: document.getElementById('error-state'),
+    emptyState: document.getElementById('empty-state'),
+    
+    // State
+    events: [],
+    currentIndex: 0,
+    cardsToShow: 3,
+    maxIndex: 0,
+    
+    // Initialize the carousel
+    init: function() {
+      this.loadEvents();
+      this.setupEventListeners();
+      this.handleResize();
+      
+      // Set up resize handler
+      window.addEventListener('resize', this.handleResize.bind(this));
+    },
+    
+    // Load event data
+    loadEvents: function() {
+      // Hardcoded event data as fallback
+      this.events = [
+        {
+          id: 1,
+          title: 'World Kiswahili Language Day',
+          date: 'July 7, 2025',
+          time: '10:00 AM - 6:00 PM',
+          location: 'Global Event (Online & In-Person)',
+          description: 'Join us for the global celebration of the first African language recognized by the UN. Experience panels, performances, and cultural showcases.',
+          image: '/static/img/events/kiswahili-day.jpg',
+          tag: 'Featured',
+          url: '/events/1'
+        },
+        {
+          id: 2,
+          title: 'EAKC Swahili Conference',
+          date: 'July 5-7, 2025',
+          time: '9:00 AM - 5:00 PM',
+          location: 'Dar es Salaam, Tanzania',
+          description: 'Three days of academic and cultural exchange focused on the Swahili language and its global impact.',
+          image: '/static/img/events/conference.jpg',
+          tag: 'Conference',
+          url: '/events/2'
+        },
+        {
+          id: 3,
+          title: 'Swahili Jamboree Gathering',
+          date: 'August 2025',
+          time: 'All Day Event',
+          location: 'Maryland, USA',
+          description: 'Experience the vibrant celebration of Swahili culture through food, music, dance, and more.',
+          image: '/static/img/events/gathering.jpg',
+          tag: 'Festival',
+          url: '/events/3'
+        },
+        {
+          id: 4,
+          title: 'Swahili Jamboree Annual Event',
+          date: 'July 2026',
+          time: 'All Day Event',
+          location: 'Maryland, USA',
+          description: 'Our flagship annual event bringing together Swahili enthusiasts from around the world.',
+          image: '/static/img/events/annual.jpg',
+          tag: 'Annual',
+          url: '/events/4'
+        }
+      ];
+      
+      // Hide loading state
+      this.loadingState.classList.add('hidden');
+      
+      // Check if we have events
+      if (this.events.length === 0) {
+        this.emptyState.classList.remove('hidden');
+      } else {
+        this.container.classList.remove('hidden');
+        this.renderEvents();
+        this.updateMaxIndex();
+        this.updatePagination();
+        this.updateSliderPosition();
+      }
+    },
+    
+    // Set up event listeners
+    setupEventListeners: function() {
+      // Desktop navigation
+      this.prevBtn.addEventListener('click', () => this.prevSlide());
+      this.nextBtn.addEventListener('click', () => this.nextSlide());
+      
+      // Mobile navigation
+      this.mobilePrevBtn.addEventListener('click', () => this.prevSlide());
+      this.mobileNextBtn.addEventListener('click', () => this.nextSlide());
+    },
+    
+    // Handle window resize
+    handleResize: function() {
+      const width = window.innerWidth;
+      const oldCardsToShow = this.cardsToShow;
+      
+      if (width < 640) {
+        this.cardsToShow = 1;
+      } else if (width < 1024) {
+        this.cardsToShow = 2;
+      } else {
+        this.cardsToShow = 3;
+      }
+      
+      // Only update if cards to show has changed
+      if (oldCardsToShow !== this.cardsToShow) {
+        this.updateMaxIndex();
+        this.updatePagination();
+        this.updateSliderPosition();
+        this.updateCardWidths();
+      }
+    },
+    
+    // Create and render event cards
+    renderEvents: function() {
+      // Clear existing content
+      this.slider.innerHTML = '';
+      
+      // Create event cards
+      this.events.forEach(event => {
+        const card = document.createElement('div');
+        
+        // Set width class based on cards to show
+        this.setCardWidth(card);
+        
+        card.innerHTML = `
+          <div class="h-full overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow bg-white rounded-lg">
+            <div class="relative h-48 overflow-hidden">
+              <img
+                src="${event.image || '/static/img/placeholder-event.jpg'}"
+                alt="${event.title || 'Event'}"
+                onerror="this.src='/static/img/placeholder-event.jpg'"
+                class="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
+              />
+              ${event.tag ? `
+                <div class="absolute top-4 left-4">
+                  <span class="bg-[#D4AF37] text-[#003366] font-medium px-3 py-1 rounded-full text-sm">${event.tag}</span>
+                </div>
+              ` : ''}
+            </div>
+            
+            <div class="pt-6 px-6">
+              <h4 class="text-xl font-bold text-[#003366] mb-3 truncate">${event.title || 'Untitled Event'}</h4>
+              
+              <div class="space-y-2 mb-4">
+                ${event.date ? `
+                  <div class="flex items-center gap-2 text-sm text-[#0F2B4C]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 text-[#2D8C9E]"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+                    <span>${event.date}</span>
+                  </div>
+                ` : ''}
+                ${event.time ? `
+                  <div class="flex items-center gap-2 text-sm text-[#0F2B4C]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 text-[#2D8C9E]"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>${event.time}</span>
+                  </div>
+                ` : ''}
+                ${event.location ? `
+                  <div class="flex items-center gap-2 text-sm text-[#0F2B4C]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 text-[#2D8C9E]"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>${event.location}</span>
+                  </div>
+                ` : ''}
+              </div>
+              
+              <p class="text-sm text-[#0F2B4C] line-clamp-2 mb-4">${event.description || 'No description available.'}</p>
+            </div>
+            
+            <div class="px-6 pb-6">
+              <a href="${event.url || '#'}" class="block w-full text-center py-2 px-4 bg-transparent hover:bg-transparent text-[#2D8C9E] hover:text-[#003366] border border-[#2D8C9E] hover:border-[#003366] rounded-lg transition-colors">
+                Learn More
+              </a>
+            </div>
+          </div>
+        `;
+        
+        this.slider.appendChild(card);
+      });
+    },
+    
+    // Set card width based on cardsToShow
+    setCardWidth: function(card) {
+      // Remove existing width classes
+      card.classList.remove('w-full', 'w-1/2', 'w-1/3', 'flex-shrink-0');
+      
+      // Add appropriate width class
+      if (this.cardsToShow === 1) {
+        card.classList.add('w-full', 'flex-shrink-0');
+      } else if (this.cardsToShow === 2) {
+        card.classList.add('w-1/2', 'flex-shrink-0');
+      } else {
+        card.classList.add('w-1/3', 'flex-shrink-0');
+      }
+    },
+    
+    // Update all card widths
+    updateCardWidths: function() {
+      const cards = this.slider.children;
+      for (let i = 0; i < cards.length; i++) {
+        this.setCardWidth(cards[i]);
+      }
+    },
+    
+    // Calculate maxIndex based on events length and cardsToShow
+    updateMaxIndex: function() {
+      if (!this.events || !this.events.length) {
+        this.maxIndex = 0;
+        return;
+      }
+      
+      // Calculate how many "pages" we need
+      this.maxIndex = Math.max(0, Math.floor((this.events.length - 1) / this.cardsToShow));
+      
+      // Keep current index within bounds
+      if (this.currentIndex > this.maxIndex) {
+        this.currentIndex = this.maxIndex;
+      }
+      
+      // Update navigation buttons state
+      this.updateButtonStates();
+      
+      // Show or hide pagination based on maxIndex
+      if (this.maxIndex > 0) {
+        this.paginationContainer.classList.remove('hidden');
+        document.getElementById('mobile-nav').classList.remove('hidden');
+      } else {
+        this.paginationContainer.classList.add('hidden');
+        document.getElementById('mobile-nav').classList.add('hidden');
+      }
+    },
+    
+    // Create pagination dots
+    updatePagination: function() {
+      // Clear existing pagination
+      this.paginationContainer.innerHTML = '';
+      
+      // Create pagination dots
+      for (let i = 0; i <= this.maxIndex; i++) {
+        const dot = document.createElement('button');
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        
+        // Add active or inactive class
+        if (i === this.currentIndex) {
+          dot.className = 'h-2 w-8 rounded-full bg-[#2D8C9E] transition-all';
+        } else {
+          dot.className = 'h-2 w-2 rounded-full bg-[#2D8C9E]/30 transition-all';
+        }
+        
+        // Add click handler
+        dot.addEventListener('click', () => {
+          this.goToSlide(i);
+        });
+        
+        this.paginationContainer.appendChild(dot);
+      }
+    },
+    
+    // Go to previous slide
+    prevSlide: function() {
+      if (this.currentIndex <= 0) {
+        this.currentIndex = this.maxIndex;
+      } else {
+        this.currentIndex--;
+      }
+      
+      this.updateSliderPosition();
+      this.updatePagination();
+      this.updateButtonStates();
+    },
+    
+    // Go to next slide
+    nextSlide: function() {
+      if (this.currentIndex >= this.maxIndex) {
+        this.currentIndex = 0;
+      } else {
+        this.currentIndex++;
+      }
+      
+      this.updateSliderPosition();
+      this.updatePagination();
+      this.updateButtonStates();
+    },
+    
+    // Go to specific slide
+    goToSlide: function(index) {
+      this.currentIndex = index;
+      
+      this.updateSliderPosition();
+      this.updatePagination();
+      this.updateButtonStates();
+    },
+    
+    // Update the slider position
+    updateSliderPosition: function() {
+      this.slider.style.transform = `translateX(-${this.currentIndex * 100}%)`;
+    },
+    
+    // Update navigation button states
+    updateButtonStates: function() {
+      const disableButtons = this.events.length <= this.cardsToShow || this.maxIndex === 0;
+      
+      // Desktop buttons
+      this.prevBtn.disabled = disableButtons;
+      this.nextBtn.disabled = disableButtons;
+      
+      // Mobile buttons
+      this.mobilePrevBtn.disabled = disableButtons;
+      this.mobileNextBtn.disabled = disableButtons;
+      
+      // Add or remove disabled styles
+      if (disableButtons) {
+        this.prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        this.nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        this.mobilePrevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        this.mobileNextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      } else {
+        this.prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        this.nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        this.mobilePrevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        this.mobileNextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      }
+    }
+  };
+  
+  // Initialize the carousel
+  eventCarousel.init();
+
+  // Initialize Lucide icons if available
+  if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+    lucide.createIcons();
   }
 });
 </script>

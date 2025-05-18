@@ -30,7 +30,7 @@ def home():
             "text": "Learn More",
             "url": "/about"
         },
-        "main_image": "/img/kinu.jpg",
+        "main_image": "/images/kinu.jpg",
         "image_alt": "Swahili cultural celebration",
         "overlay_title": "Experience Swahili Culture",
         "overlay_subtitle": "Music, art, dance, language and cuisine",
@@ -60,7 +60,7 @@ def home():
                 "time": "10:00 AM - 6:00 PM",
                 "location": "Global Event (Online & In-Person)",
                 "description": "Join us for the global celebration of the first African language recognized by the UN. Experience panels, performances, and cultural showcases.",
-                "image": "/static/img/events/kiswahili-day.jpg",
+                "image": url_for('static', filename='img/events/kiswahili-day.jpg'),
                 "tag": "Featured",
                 "url": "/events/1"
             },
@@ -71,7 +71,7 @@ def home():
                 "time": "9:00 AM - 5:00 PM",
                 "location": "Dar es Salaam, Tanzania",
                 "description": "Three days of academic and cultural exchange focused on the Swahili language and its global impact.",
-                "image": "/static/img/events/conference.jpg",
+                "image": url_for('static', filename='img/events/conference.jpg'),                
                 "tag": "Conference",
                 "url": "/events/2"
             },
@@ -82,7 +82,7 @@ def home():
                 "time": "All Day Event",
                 "location": "Maryland, USA",
                 "description": "Experience the vibrant celebration of Swahili culture through food, music, dance, and more.",
-                "image": "/static/img/events/gathering.jpg",
+                "image": url_for('static', filename='img/events/gathering.jpg'),
                 "tag": "Festival",
                 "url": "/events/3"
             },
@@ -93,7 +93,7 @@ def home():
                 "time": "All Day Event",
                 "location": "Maryland, USA",
                 "description": "Our flagship annual event bringing together Swahili enthusiasts from around the world.",
-                "image": "/static/img/events/annual.jpg",
+                "image": url_for('static', filename='img/events/annual.jpg'),
                 "tag": "Annual",
                 "url": "/events/4"
             }
