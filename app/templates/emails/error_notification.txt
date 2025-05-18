@@ -1,0 +1,15 @@
+<!-- File: py_swahili_afro/app/templates/emails/error_notification.txt -->
+SWAHILI AFRO JAMBOREE ERROR ALERT
+
+ERROR DETAILS
+-------------
+Type: {{ error.error_type }}
+Message: {{ error.error_message }}
+
+{% if error.additional_context %}
+ADDITIONAL CONTEXT
+-----------------
+{{ error.additional_context | pprint }}
+{% endif %}
+
+This is an automated message from the Swahili Afro Jamboree application.

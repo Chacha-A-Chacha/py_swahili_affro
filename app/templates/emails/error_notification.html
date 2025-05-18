@@ -1,0 +1,30 @@
+<!-- File: py_swahili_afro/app/templates/emails/error_notification.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .error-box { padding: 15px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 20px; }
+        .context-box { padding: 15px; background-color: #e2e3e5; border: 1px solid #d6d8db; border-radius: 4px; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow: auto; }
+        .header { color: #721c24; }
+    </style>
+</head>
+<body>
+    <h2>Swahili Afro Jamboree Error Alert</h2>
+    <div class="error-box">
+        <h3 class="header">Error Details</h3>
+        <p><strong>Type:</strong> {{ error.error_type }}</p>
+        <p><strong>Message:</strong> {{ error.error_message }}</p>
+    </div>
+    
+    {% if error.additional_context %}
+    <div class="context-box">
+        <h3>Additional Context</h3>
+        <pre>{{ error.additional_context | pprint }}</pre>
+    </div>
+    {% endif %}
+    
+    <p>This is an automated message from the Swahili Afro Jamboree application.</p>
+</body>
+</html>

@@ -111,5 +111,4 @@ def configure_logging(app: Flask):
     app.logger.setLevel(logging.INFO)
     
     # Log application startup
-    app.logger.info(f"Swahili Afro Jamboree application started in {app.config['ENV']} mode")
-    
+    # app.logger.info(f"Swahili Afro Jamboree application started in {app.config['ENV']} mode")

@@ -33,6 +33,13 @@ class Config:
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', '')
+
+    MAIL_DEFAULT_SENDER_NAME = os.getenv('MAIL_DEFAULT_SENDER_NAME', 'Swahili Jamboree')
+    ERROR_ADMIN_EMAILS = os.getenv('ERROR_ADMIN_EMAILS', 'maintainance@swahilijamboree.org')
+    
+    # Logging configuration
+    LOG_TO_STDOUT = os.getenv('LOG_TO_STDOUT', 'False').lower() in ['true', '1']
+    LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
                                     
     # Cache Configuration
     CACHE_TYPE = os.getenv('CACHE_TYPE', 'simple')
