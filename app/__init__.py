@@ -13,6 +13,7 @@ from flask_mail import Mail
 from flask_wtf import CSRFProtect
 
 from .config import Config
+from .middleware import RequestLoggingMiddleware
 from app.utils.cache import configure_cache
 from app.utils.logging_config import configure_logging
 
@@ -41,6 +42,9 @@ def create_app(config_class=Config):
 
     # Configure logging
     configure_logging(app)
+
+    # app middleware
+    RequestLoggingMiddleware(app)
 
     # Initialize extensions
     db.init_app(app)
