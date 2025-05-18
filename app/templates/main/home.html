@@ -751,9 +751,9 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="h-full overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow bg-white rounded-lg">
             <div class="relative h-48 overflow-hidden">
               <img
-                src="${event.image || '/static/img/placeholder-event.jpg'}"
+                src="${event.image || '/static/images/placeholder/placeholder-event.jpg'}"
                 alt="${event.title || 'Event'}"
-                onerror="this.src='/static/img/placeholder-event.jpg'"
+                onerror="this.src='/static/images/placeholder/placeholder-event.jpg'"
                 class="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
               />
               ${event.tag ? `
@@ -1103,7 +1103,7 @@ x-data="{
                 <img
                   :src="event.image"
                   :alt="event.title"
-                  @error="$el.src = '/static/img/placeholder-event.jpg'"
+                  @error="$el.src = '/static/images/placeholder/placeholder-event.jpg'"
                   class="w-full h-full object-cover transition-transform hover:scale-105 duration-700"
                 />
                 <div class="absolute top-4 left-4" x-show="event.tag">
