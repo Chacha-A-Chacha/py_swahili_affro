@@ -4,6 +4,14 @@
 
 
 /node_modules
+/logs
+*.log
+
+*.sqlite3
+*.db
+
+__pycache__/
+
 
 
 run.py
