@@ -101,6 +101,8 @@ def contact():
             contact_data = {
                 'name': form.name.data,
                 'email': form.email.data,
+                'phone': form.phone.data,
+                'inquiry_type': form.inquiry_type.data,
                 'subject': form.subject.data,
                 'message': form.message.data
             }
